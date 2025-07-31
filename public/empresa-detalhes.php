@@ -241,19 +241,17 @@ try {
                             </h3>
                             <div class="location-section">
                                 <div class="location-map">
-                                    <div class="map-placeholder">
-                                        <i class="fas fa-map fa-2x mb-2"></i>
-                                        <p>Mapa interativo</p>
-                                        <div class="map-controls">
-                                            <button class="map-control">+</button>
-                                            <button class="map-control">-</button>
-                                        </div>
-                                    </div>
+                                    <div id="map" style="height: 350px; width: 100%; border-radius: 8px; background: #f8f9fa; margin-bottom: 15px;"></div>
                                 </div>
-                                <div class="location-info mt-3">
+                                <div class="location-info">
                                     <p><strong>Endereço:</strong></p>
-                                    <p><?php echo htmlspecialchars($company['endereco'] ?? 'Endereço não informado'); ?></p>
+                                    <?php if ($company['endereco'] && trim($company['endereco'])): ?>
+                                        <p><?php echo htmlspecialchars($company['endereco']); ?></p>
+                                    <?php endif; ?>
                                     <p><?php echo htmlspecialchars($company['cidade']); ?>, <?php echo htmlspecialchars($company['estado']); ?></p>
+                                    <?php if ($company['telefone']): ?>
+                                        <p><i class="fas fa-phone"></i> <?php echo htmlspecialchars($company['telefone']); ?></p>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -443,5 +441,155 @@ try {
     <?php include '../includes/footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Leaflet Maps (OpenStreetMap) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dados da empresa do PHP
+            const companyName = <?php echo json_encode($company['nome']); ?>;
+            const companyCity = <?php echo json_encode($company['cidade']); ?>;
+            const companyState = <?php echo json_encode($company['estado']); ?>;
+            const companyAddress = <?php echo json_encode($company['endereco'] ?? ''); ?>;
+            
+            // Endereço completo para geocoding
+            let fullAddress = companyCity + ', ' + companyState + ', Brasil';
+            if (companyAddress && companyAddress.trim()) {
+                fullAddress = companyAddress + ', ' + fullAddress;
+            }
+            
+            // Inicializar mapa centrado no Brasil
+            const map = L.map('map').setView([-15.7942, -47.8822], 5);
+            
+            // Adicionar tiles do OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            
+            // Função para geocoding usando Nominatim (OpenStreetMap)
+            function geocodeAddress(address) {
+                const encodedAddress = encodeURIComponent(address);
+                const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodedAddress}&limit=1`;
+                
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            const result = data[0];
+                            const lat = parseFloat(result.lat);
+                            const lon = parseFloat(result.lon);
+                            
+                            // Centralizar mapa na localização encontrada
+                            map.setView([lat, lon], 15);
+                            
+                            // Criar ícone personalizado ANETI
+                            const customIcon = L.divIcon({
+                                className: 'custom-marker',
+                                html: `
+                                    <div style="
+                                        width: 30px; 
+                                        height: 30px; 
+                                        background: #012d6a; 
+                                        border: 3px solid white; 
+                                        border-radius: 50%; 
+                                        display: flex; 
+                                        align-items: center; 
+                                        justify-content: center;
+                                        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+                                    ">
+                                        <div style="
+                                            width: 12px; 
+                                            height: 12px; 
+                                            background: white; 
+                                            border-radius: 50%;
+                                        "></div>
+                                    </div>
+                                `,
+                                iconSize: [30, 30],
+                                iconAnchor: [15, 15]
+                            });
+                            
+                            // Adicionar marcador
+                            const marker = L.marker([lat, lon], { icon: customIcon }).addTo(map);
+                            
+                            // Popup com informações da empresa
+                            const popupContent = `
+                                <div style="max-width: 250px;">
+                                    <h6 style="margin: 0 0 8px 0; color: #012d6a; font-weight: bold;">${companyName}</h6>
+                                    <p style="margin: 0; font-size: 14px;">${result.display_name}</p>
+                                    ${companyAddress ? `<p style="margin: 4px 0 0 0; font-size: 12px; color: #666;">${companyAddress}</p>` : ''}
+                                </div>
+                            `;
+                            
+                            marker.bindPopup(popupContent);
+                            
+                            // Abrir popup automaticamente após 1 segundo
+                            setTimeout(() => {
+                                marker.openPopup();
+                            }, 1000);
+                            
+                        } else {
+                            // Tentar geocoding apenas com cidade e estado
+                            fallbackGeocode();
+                        }
+                    })
+                    .catch(error => {
+                        console.log('Erro no geocoding:', error);
+                        fallbackGeocode();
+                    });
+            }
+            
+            function fallbackGeocode() {
+                const fallbackAddress = companyCity + ', ' + companyState + ', Brasil';
+                const encodedAddress = encodeURIComponent(fallbackAddress);
+                const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodedAddress}&limit=1`;
+                
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            const result = data[0];
+                            const lat = parseFloat(result.lat);
+                            const lon = parseFloat(result.lon);
+                            
+                            map.setView([lat, lon], 12);
+                            
+                            const marker = L.marker([lat, lon]).addTo(map);
+                            const popupContent = `
+                                <div style="max-width: 200px;">
+                                    <h6 style="margin: 0 0 8px 0; color: #012d6a; font-weight: bold;">${companyName}</h6>
+                                    <p style="margin: 0; font-size: 14px;">${companyCity}, ${companyState}</p>
+                                    <p style="margin: 4px 0 0 0; font-size: 12px; color: #666;">Localização aproximada</p>
+                                </div>
+                            `;
+                            marker.bindPopup(popupContent);
+                        } else {
+                            showMapError();
+                        }
+                    })
+                    .catch(error => {
+                        console.log('Erro no fallback geocoding:', error);
+                        showMapError();
+                    });
+            }
+            
+            function showMapError() {
+                document.getElementById('map').innerHTML = `
+                    <div style="height: 100%; display: flex; align-items: center; justify-content: center; background: #f8f9fa; border-radius: 8px;">
+                        <div style="text-align: center; color: #666;">
+                            <i class="fas fa-map-marker-alt fa-2x mb-2"></i>
+                            <p style="margin: 8px 0 4px 0;">Localização não encontrada</p>
+                            <small>${companyCity}, ${companyState}</small>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Iniciar geocoding
+            geocodeAddress(fullAddress);
+        });
+    </script>
 </body>
 </html>

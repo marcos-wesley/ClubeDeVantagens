@@ -25,21 +25,51 @@ if ($_POST) {
     } elseif (!validateEmail($email)) {
         $error = 'E-mail inválido.';
     } else {
-        // Handle logo upload
+        // Handle file uploads
         $logo_filename = null;
+        $imagem_detalhes_filename = null;
+        
+        $upload_dir = '../uploads/';
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0755, true);
+        }
+        
+        // Handle logo upload
         if (isset($_FILES['logo']) && $_FILES['logo']['size'] > 0) {
-            $upload_result = uploadFile($_FILES['logo']);
-            if ($upload_result['success']) {
-                $logo_filename = $upload_result['filename'];
+            $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+            if (in_array($_FILES['logo']['type'], $allowed_types) && $_FILES['logo']['size'] <= 5 * 1024 * 1024) {
+                $extension = pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION);
+                $logo_filename = uniqid() . '.' . $extension;
+                $upload_path = $upload_dir . $logo_filename;
+                
+                if (!move_uploaded_file($_FILES['logo']['tmp_name'], $upload_path)) {
+                    $error = 'Erro ao fazer upload da logo.';
+                }
             } else {
-                $error = $upload_result['message'];
+                $error = 'Arquivo de logo inválido. Use JPG, PNG ou GIF até 5MB.';
+            }
+        }
+        
+        // Handle detail image upload
+        if (!$error && isset($_FILES['imagem_detalhes']) && $_FILES['imagem_detalhes']['size'] > 0) {
+            $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+            if (in_array($_FILES['imagem_detalhes']['type'], $allowed_types) && $_FILES['imagem_detalhes']['size'] <= 5 * 1024 * 1024) {
+                $extension = pathinfo($_FILES['imagem_detalhes']['name'], PATHINFO_EXTENSION);
+                $imagem_detalhes_filename = uniqid() . '.' . $extension;
+                $upload_path = $upload_dir . $imagem_detalhes_filename;
+                
+                if (!move_uploaded_file($_FILES['imagem_detalhes']['tmp_name'], $upload_path)) {
+                    $error = 'Erro ao fazer upload da imagem de detalhes.';
+                }
+            } else {
+                $error = 'Arquivo de imagem de detalhes inválido. Use JPG, PNG ou GIF até 5MB.';
             }
         }
         
         if (!$error) {
             try {
-                $stmt = $conn->prepare("INSERT INTO empresas (nome, cnpj, logo, endereco, cidade, estado, email, telefone, website, categoria, descricao, regras, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pendente', NOW())");
-                $stmt->execute([$nome, $cnpj, $logo_filename, $endereco, $cidade, $estado, $email, $telefone, $website, $categoria, $descricao, $regras]);
+                $stmt = $conn->prepare("INSERT INTO empresas (nome, cnpj, logo, imagem_detalhes, endereco, cidade, estado, email, telefone, website, categoria, descricao, regras, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pendente', NOW())");
+                $stmt->execute([$nome, $cnpj, $logo_filename, $imagem_detalhes_filename, $endereco, $cidade, $estado, $email, $telefone, $website, $categoria, $descricao, $regras]);
                 
                 redirect('sucesso.php');
             } catch (PDOException $e) {
@@ -102,6 +132,12 @@ $categories = getCategories($conn);
                                 <label for="logo" class="form-label">Logo da Empresa</label>
                                 <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
                                 <div class="form-text">Formatos aceitos: JPG, PNG, GIF. Tamanho máximo: 5MB</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="imagem_detalhes" class="form-label">Imagem de Detalhes</label>
+                                <input type="file" class="form-control" id="imagem_detalhes" name="imagem_detalhes" accept="image/*">
+                                <div class="form-text">Imagem que aparece na página de detalhes da empresa. Formatos aceitos: JPG, PNG, GIF. Tamanho máximo: 5MB</div>
                             </div>
 
                             <div class="mb-3">
