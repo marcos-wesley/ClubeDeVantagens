@@ -1509,3 +1509,376 @@
     color: var(--aneti-primary);
     font-weight: 600;
 }
+
+
+/* Modern Benefit Page Styles - Following Parque da Mônica Model */
+.benefit-header {
+    background: white;
+    padding: 2rem 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.benefit-logo {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+}
+
+.benefit-logo-placeholder {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #012d6a, #1e40af);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    border-radius: 12px;
+    margin: 0 auto;
+}
+
+.benefit-title {
+    color: #012d6a;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.benefit-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stars {
+    color: #fbbf24;
+    font-size: 1.2rem;
+}
+
+.rating-text {
+    font-weight: 600;
+    color: #374151;
+}
+
+.benefit-category {
+    color: #6b7280;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.benefit-discount {
+    color: #059669;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.benefit-tabs {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.benefit-nav .nav-link {
+    border: none;
+    color: #6b7280;
+    font-weight: 500;
+    padding: 1rem 1.5rem;
+}
+
+.benefit-nav .nav-link.active {
+    color: #012d6a;
+    background: white;
+    border-bottom: 3px solid #012d6a;
+}
+
+.benefit-actions {
+    background: white;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn-action-icon {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: #6b7280;
+    cursor: pointer;
+    transition: color 0.2s;
+    min-width: 80px;
+}
+
+.btn-action-icon:hover {
+    color: #012d6a;
+}
+
+.btn-action-icon i {
+    font-size: 1.5rem;
+}
+
+.btn-action-icon span {
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+.benefit-main-image {
+    background: #f8f9fa;
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.benefit-placeholder-image {
+    text-align: center;
+    color: #9ca3af;
+    padding: 4rem;
+}
+
+.benefit-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.benefit-section-title {
+    color: #7c3aed;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.how-it-works {
+    padding-left: 1rem;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.step-number {
+    color: #7c3aed;
+    font-weight: 600;
+    min-width: 30px;
+}
+
+.step-text {
+    color: #374151;
+}
+
+.regulation-content {
+    padding-left: 1rem;
+}
+
+.regulation-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.regulation-number {
+    color: #374151;
+    font-weight: 600;
+    min-width: 30px;
+}
+
+.regulation-text {
+    color: #6b7280;
+}
+
+.location-section {
+    text-align: center;
+}
+
+.location-map {
+    margin-bottom: 1.5rem;
+}
+
+.map-placeholder {
+    background: #f3f4f6;
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    color: #9ca3af;
+    position: relative;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.map-controls {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.map-control {
+    width: 35px;
+    height: 35px;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #374151;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.map-control:hover {
+    background: #f9fafb;
+}
+
+.location-info {
+    text-align: left;
+}
+
+.benefit-sidebar {
+    position: sticky;
+    top: 20px;
+}
+
+.use-button-container {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.btn-use {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 3rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    margin-bottom: 1.5rem;
+}
+
+.btn-use:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+    color: white;
+}
+
+.company-mini-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.company-mini-logo img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.logo-placeholder-mini {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #012d6a, #1e40af);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 12px;
+    margin: 0 auto;
+}
+
+.company-description {
+    background: #f8fafc;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.company-description p {
+    color: #4a5568;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.contact-info p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.contact-info i {
+    color: #6b7280;
+    width: 16px;
+}
+
+.contact-info a {
+    color: #012d6a;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .benefit-title {
+        font-size: 2rem;
+    }
+
+    .action-buttons {
+        gap: 1rem;
+        justify-content: space-around;
+    }
+
+    .btn-action-icon {
+        min-width: 60px;
+    }
+
+    .btn-action-icon span {
+        font-size: 0.75rem;
+    }
+
+    .benefit-section {
+        padding: 1.5rem;
+    }
+
+    .company-description {
+        padding: 1.5rem;
+    }
+}

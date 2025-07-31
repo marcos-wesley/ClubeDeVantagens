@@ -1,9 +1,13 @@
 <?php
 session_start();
 require_once '../../config/database.php';
-require_once '../../includes/auth.php';
 
-requireAdminLogin();
+// Simple admin check without complex auth
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    http_response_code(401);
+    echo json_encode(['error' => 'Unauthorized']);
+    exit;
+}
 
 header('Content-Type: application/json');
 

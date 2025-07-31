@@ -1,0 +1,94 @@
+Olá, tudo bem?
+
+Solicito a reformulação completa da página de detalhe da empresa parceira (benefício) do Clube de Vantagens da ANETI, seguindo fielmente o layout de referência enviado (modelo “Parque da Mônica”).
+
+🎯 Objetivo:
+Modernizar e reorganizar a página de exibição do benefício, tornando-a mais visual, interativa e clara, com estética semelhante ao layout da imagem enviada (Parque da Mônica).
+
+🛠️ Alterações e elementos obrigatórios:
+1. Topo da Página
+Mostrar:
+
+Logo da empresa (ou imagem ilustrativa)
+
+Nome da empresa em destaque
+
+Categoria (ex: “Viagem”, “Educação” etc.)
+
+Localização (cidade/estado)
+
+Frase curta de benefício (ex: “20% de desconto em hospedagens”)
+
+Abaixo, incluir abas (mesmo que só “Detalhes” e “Avaliações” inicialmente)
+
+2. Botões de ação abaixo do título
+Ícones com texto:
+
+“Traçar Rota”
+
+“Salvar este benefício”
+
+“Compartilhar”
+
+“Avaliar este parceiro”
+
+“Reportar um problema”
+
+3. Imagem Destacada
+Espaço grande para imagem/banner da empresa ou do benefício
+
+Deve ser centralizado e ocupar a largura da coluna principal
+
+4. Botão de Ação (Gerar Cupom/Usar)
+Coluna lateral à direita com botão grande:
+
+Cor de destaque (pode ser verde ou azul ANETI)
+
+Texto: “USAR” ou “GERAR CUPOM”
+
+Logo da empresa abaixo do botão
+
+Abaixo do botão:
+
+Descrição institucional da empresa ou explicação do benefício
+
+Estilo de card com borda e fundo claro
+
+5. Seção “Como Funciona”
+Usar o mesmo estilo do modelo: título com destaque (cor azul), conteúdo numerado
+
+Exemplo:
+
+pgsql
+Copiar
+Editar
+1) Clique no botão USAR
+2) Faça seu login e gere seu cupom
+3) Apresente o cupom à empresa parceira
+6. Seção “Regulamento”
+Estilo de bloco abaixo do “Como Funciona”
+
+Texto direto sobre regras do benefício
+
+Pode usar ícone no título
+
+7. Seção “Localização”
+Mapa integrado ou imagem de localização
+
+Mostrar endereço completo se possível
+
+📐 Diretrizes Visuais
+Seguir o visual e estrutura da imagem enviada como modelo
+
+Adaptar às cores da ANETI: azul escuro #012d6a, branco e cinza claro
+
+Layout responsivo (testar em mobile)
+
+Tipografia moderna e amigável
+
+🧠 Observações Finais:
+A nova página deve substituir o modelo anterior entregue (print enviado)
+
+Importante manter a performance e garantir clareza no CTA (botão de ação)
+
+Se possível, deixar a estrutura modular para reaproveitar em outras empresas

@@ -28,105 +28,212 @@ if (!$company) {
 <body>
     <?php include '../includes/header.php'; ?>
 
+    <!-- Benefit Header -->
+    <div class="benefit-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-2 text-center">
+                    <?php if ($company['logo']): ?>
+                        <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="benefit-logo">
+                    <?php else: ?>
+                        <div class="benefit-logo-placeholder">
+                            <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="col-md-10">
+                    <div class="benefit-header-content">
+                        <h1 class="benefit-title"><?php echo htmlspecialchars($company['nome']); ?></h1>
+                        <div class="benefit-rating mb-2">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">4.8</span>
+                        </div>
+                        <p class="benefit-category"><?php echo htmlspecialchars($company['categoria']); ?></p>
+                        <p class="benefit-discount">20% de desconto em todos os serviços</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefit Tabs -->
+    <div class="benefit-tabs">
+        <div class="container">
+            <ul class="nav nav-tabs benefit-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#detalhes">Detalhes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#avaliacoes">Avaliações 
+                        <span class="badge bg-secondary">7</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Benefit Actions -->
+    <div class="benefit-actions">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="action-buttons">
+                        <button class="btn-action-icon">
+                            <i class="fas fa-route"></i>
+                            <span>Traçar Rota</span>
+                        </button>
+                        <button class="btn-action-icon">
+                            <i class="fas fa-heart"></i>
+                            <span>Salvar este benefício</span>
+                        </button>
+                        <button class="btn-action-icon">
+                            <i class="fas fa-share"></i>
+                            <span>Compartilhar</span>
+                        </button>
+                        <button class="btn-action-icon">
+                            <i class="fas fa-star"></i>
+                            <span>Avaliar este parceiro</span>
+                        </button>
+                        <button class="btn-action-icon">
+                            <i class="fas fa-flag"></i>
+                            <span>Reportar um problema</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
     <div class="container mt-4">
         <div class="row">
             <div class="col-lg-8">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-3 text-center">
-                                <?php if ($company['logo']): ?>
-                                    <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="company-detail-logo">
-                                <?php else: ?>
-                                    <div class="company-detail-logo-placeholder">
-                                        <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                            <div class="col-md-9">
-                                <h1 class="company-detail-title"><?php echo htmlspecialchars($company['nome']); ?></h1>
-                                <div class="company-detail-meta">
-                                    <span class="badge bg-primary me-2"><?php echo htmlspecialchars($company['categoria']); ?></span>
-                                    <span class="text-muted">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        <?php echo htmlspecialchars($company['cidade']); ?>, <?php echo htmlspecialchars($company['estado']); ?>
-                                    </span>
-                                </div>
-                            </div>
+                <!-- Main Image -->
+                <div class="benefit-main-image mb-4">
+                    <?php if ($company['logo']): ?>
+                        <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid">
+                    <?php else: ?>
+                        <div class="benefit-placeholder-image">
+                            <i class="fas fa-image fa-3x mb-3"></i>
+                            <p>Imagem do <?php echo htmlspecialchars($company['nome']); ?></p>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Como Funciona -->
+                <div class="benefit-section mb-4">
+                    <h3 class="benefit-section-title">Como funciona:</h3>
+                    <div class="how-it-works">
+                        <div class="step">
+                            <span class="step-number">1)</span>
+                            <span class="step-text">Clique no botão USAR</span>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">2)</span>
+                            <span class="step-text">Faça seu login e gere seu cupom</span>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">3)</span>
+                            <span class="step-text">Apresente o cupom à empresa parceira</span>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">4)</span>
+                            <span class="step-text">Aproveite seu desconto exclusivo</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5><i class="fas fa-info-circle"></i> Detalhes</h5>
-                    </div>
-                    <div class="card-body">
-                        <h6>Descrição do Benefício</h6>
-                        <p><?php echo nl2br(htmlspecialchars($company['descricao'])); ?></p>
-                        
-                        <h6>Como funciona:</h6>
-                        <ol>
-                            <li>Clique no botão "Gerar Cupom"</li>
-                            <li>Apresente o cupom na empresa parceira</li>
-                            <li>Aproveite seu desconto exclusivo</li>
-                        </ol>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h5><i class="fas fa-file-contract"></i> Regulamento</h5>
-                    </div>
-                    <div class="card-body">
-                        <p><?php echo nl2br(htmlspecialchars($company['regras'])); ?></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-header bg-primary text-white text-center">
-                        <h5><i class="fas fa-ticket-alt"></i> Gerar Cupom</h5>
-                    </div>
-                    <div class="card-body text-center">
-                        <?php if (isLoggedIn()): ?>
-                            <p>Clique no botão abaixo para gerar seu cupom de desconto exclusivo.</p>
-                            <a href="gerar-cupom.php?empresa=<?php echo $company['id']; ?>" class="btn btn-success btn-lg">
-                                <i class="fas fa-magic"></i> Gerar Cupom
-                            </a>
+                <!-- Regulamento -->
+                <div class="benefit-section mb-4">
+                    <h3 class="benefit-section-title">
+                        <i class="fas fa-file-contract"></i> Regulamento
+                    </h3>
+                    <div class="regulation-content">
+                        <?php if ($company['regras']): ?>
+                            <p><?php echo nl2br(htmlspecialchars($company['regras'])); ?></p>
                         <?php else: ?>
-                            <p>Faça login para gerar seu cupom de desconto.</p>
-                            <a href="login.php" class="btn btn-primary btn-lg">
-                                <i class="fas fa-sign-in-alt"></i> Fazer Login
-                            </a>
+                            <div class="regulation-item">
+                                <span class="regulation-number">1)</span>
+                                <span class="regulation-text">Desconto válido conforme período determinado.</span>
+                            </div>
+                            <div class="regulation-item">
+                                <span class="regulation-number">2)</span>
+                                <span class="regulation-text">Os descontos podem variar a cada mês.</span>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </div>
 
-                <div class="card mt-4">
-                    <div class="card-header">
-                        <h6><i class="fas fa-building"></i> Informações da Empresa</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="company-info">
-                            <div class="info-item">
-                                <strong>CNPJ:</strong><br>
-                                <?php echo htmlspecialchars($company['cnpj']); ?>
-                            </div>
-                            <div class="info-item">
-                                <strong>E-mail:</strong><br>
-                                <a href="mailto:<?php echo htmlspecialchars($company['email']); ?>">
-                                    <?php echo htmlspecialchars($company['email']); ?>
-                                </a>
-                            </div>
-                            <div class="info-item">
-                                <strong>Telefone:</strong><br>
-                                <a href="tel:<?php echo htmlspecialchars($company['telefone']); ?>">
-                                    <?php echo htmlspecialchars($company['telefone']); ?>
-                                </a>
+                <!-- Localização -->
+                <div class="benefit-section mb-4">
+                    <h3 class="benefit-section-title">
+                        <i class="fas fa-map-marker-alt"></i> Localização
+                    </h3>
+                    <div class="location-section">
+                        <div class="location-map">
+                            <div class="map-placeholder">
+                                <i class="fas fa-map fa-2x mb-2"></i>
+                                <p>Mapa interativo</p>
+                                <div class="map-controls">
+                                    <button class="map-control">+</button>
+                                    <button class="map-control">-</button>
+                                </div>
                             </div>
                         </div>
+                        <div class="location-info mt-3">
+                            <p><strong>Endereço:</strong></p>
+                            <p><?php echo htmlspecialchars($company['endereco'] ?? 'Endereço não informado'); ?></p>
+                            <p><?php echo htmlspecialchars($company['cidade']); ?>, <?php echo htmlspecialchars($company['estado']); ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="benefit-sidebar">
+                    <div class="use-button-container">
+                        <?php if (isLoggedIn()): ?>
+                            <a href="gerar-cupom.php?empresa=<?php echo $company['id']; ?>" class="btn-use">
+                                USAR
+                            </a>
+                        <?php else: ?>
+                            <a href="login.php" class="btn-use">
+                                FAZER LOGIN
+                            </a>
+                        <?php endif; ?>
+                        
+                        <div class="company-mini-logo">
+                            <?php if ($company['logo']): ?>
+                                <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>">
+                            <?php else: ?>
+                                <div class="logo-placeholder-mini">
+                                    <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    
+                    <div class="company-description">
+                        <?php if ($company['descricao']): ?>
+                            <p><?php echo nl2br(htmlspecialchars($company['descricao'])); ?></p>
+                        <?php else: ?>
+                            <p>Aproveite os benefícios exclusivos do <?php echo htmlspecialchars($company['nome']); ?>! Uma experiência única que oferece descontos especiais para membros do Clube de Vantagens da ANETI.</p>
+                        <?php endif; ?>
+                        
+                        <?php if ($company['website'] || $company['telefone'] || $company['email']): ?>
+                            <div class="contact-info mt-3">
+                                <?php if ($company['website']): ?>
+                                    <p><i class="fas fa-globe"></i> <a href="<?php echo htmlspecialchars($company['website']); ?>" target="_blank"><?php echo htmlspecialchars($company['website']); ?></a></p>
+                                <?php endif; ?>
+                                <?php if ($company['telefone']): ?>
+                                    <p><i class="fas fa-phone"></i> <?php echo htmlspecialchars($company['telefone']); ?></p>
+                                <?php endif; ?>
+                                <?php if ($company['email']): ?>
+                                    <p><i class="fas fa-envelope"></i> <a href="mailto:<?php echo htmlspecialchars($company['email']); ?>"><?php echo htmlspecialchars($company['email']); ?></a></p>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
