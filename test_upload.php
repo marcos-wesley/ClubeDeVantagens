@@ -102,8 +102,58 @@ try {
     $result = $stmt->fetch();
     echo "✅ Total de empresas: " . $result['total'] . "<br>";
     
+    // Verificar empresas com/sem logos
+    $stmt = $conn->query("SELECT COUNT(*) as com_logo FROM empresas WHERE logo IS NOT NULL AND logo != ''");
+    $com_logo = $stmt->fetch()['com_logo'];
+    echo "✅ Empresas com logo: $com_logo<br>";
+    
+    // Mostrar algumas empresas
+    $stmt = $conn->query("SELECT id, nome, logo FROM empresas LIMIT 3");
+    $empresas = $stmt->fetchAll();
+    echo "<br><strong>Exemplos de empresas:</strong><br>";
+    foreach ($empresas as $emp) {
+        $logo_exists = $emp['logo'] && file_exists('uploads/' . $emp['logo']) ? '✅' : '❌';
+        echo "• {$emp['nome']} - Logo: {$emp['logo']} $logo_exists<br>";
+    }
+    
 } catch (Exception $e) {
     echo "❌ Erro na conexão: " . $e->getMessage() . "<br>";
+}
+echo "<hr>";
+
+// Verificar se imagens das empresas existem
+echo "<h3>Verificação de Imagens das Empresas</h3>";
+try {
+    $stmt = $conn->query("SELECT nome, logo, imagem_detalhes FROM empresas WHERE logo IS NOT NULL OR imagem_detalhes IS NOT NULL LIMIT 5");
+    $empresas = $stmt->fetchAll();
+    
+    foreach ($empresas as $empresa) {
+        echo "<strong>{$empresa['nome']}:</strong><br>";
+        
+        if ($empresa['logo']) {
+            $logo_path = 'uploads/' . $empresa['logo'];
+            $exists = file_exists($logo_path) ? '✅ Existe' : '❌ Não encontrada';
+            echo "&nbsp;&nbsp;Logo: {$empresa['logo']} - $exists";
+            if (file_exists($logo_path)) {
+                echo " (" . number_format(filesize($logo_path)/1024, 1) . " KB)";
+            }
+            echo "<br>";
+        }
+        
+        if ($empresa['imagem_detalhes']) {
+            $img_path = 'uploads/' . $empresa['imagem_detalhes'];
+            $exists = file_exists($img_path) ? '✅ Existe' : '❌ Não encontrada';
+            echo "&nbsp;&nbsp;Imagem detalhes: {$empresa['imagem_detalhes']} - $exists";
+            if (file_exists($img_path)) {
+                echo " (" . number_format(filesize($img_path)/1024, 1) . " KB)";
+            }
+            echo "<br>";
+        }
+        echo "<br>";
+    }
+    
+} catch (Exception $e) {
+    echo "❌ Erro: " . $e->getMessage() . "<br>";
 }
 echo "<hr>";
 ?>
