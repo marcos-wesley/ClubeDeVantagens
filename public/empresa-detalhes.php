@@ -366,34 +366,26 @@ try {
             font-size: 1.5rem;
             font-weight: bold;
         }
-        /* Layout corrections */
-        .container .row {
-            display: flex !important;
+        .row {
+            display: flex;
             flex-wrap: wrap;
-            margin: 0 -15px;
         }
-        .container .row .col-lg-8 {
-            flex: 0 0 66.666667% !important;
-            max-width: 66.666667% !important;
-            padding: 0 15px;
-            display: block !important;
+        .col-lg-8, .col-lg-4 {
+            display: flex;
+            flex-direction: column;
         }
-        .container .row .col-lg-4 {
-            flex: 0 0 33.333333% !important;
-            max-width: 33.333333% !important;
-            padding: 0 15px;
-            display: block !important;
+        .col-lg-8 {
+            flex: 0 0 66.666667%;
+            max-width: 66.666667%;
         }
-        @media (min-width: 992px) {
-            .container .row {
-                align-items: flex-start;
-            }
+        .col-lg-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
         }
         @media (max-width: 991.98px) {
-            .container .row .col-lg-8, 
-            .container .row .col-lg-4 {
-                flex: 0 0 100% !important;
-                max-width: 100% !important;
+            .col-lg-8, .col-lg-4 {
+                flex: 0 0 100%;
+                max-width: 100%;
             }
         }
         @media (max-width: 768px) {
