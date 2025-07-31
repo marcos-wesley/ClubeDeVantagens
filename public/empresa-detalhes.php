@@ -369,10 +369,13 @@ try {
         .row {
             display: flex;
             flex-wrap: wrap;
+            margin-left: -15px;
+            margin-right: -15px;
         }
         .col-lg-8, .col-lg-4 {
-            display: flex;
-            flex-direction: column;
+            padding-left: 15px;
+            padding-right: 15px;
+            box-sizing: border-box;
         }
         .col-lg-8 {
             flex: 0 0 66.666667%;
@@ -386,6 +389,15 @@ try {
             .col-lg-8, .col-lg-4 {
                 flex: 0 0 100%;
                 max-width: 100%;
+                margin-bottom: 2rem;
+            }
+            .row {
+                margin-left: 0;
+                margin-right: 0;
+            }
+            .col-lg-8, .col-lg-4 {
+                padding-left: 0;
+                padding-right: 0;
             }
         }
         @media (max-width: 768px) {
