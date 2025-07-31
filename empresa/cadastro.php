@@ -98,7 +98,7 @@ $categories = getCategories($conn);
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card">
-                    <div class="card-header bg-primary text-white">
+                    <div class="card-header text-white" style="background: #012d6a;">
                         <h4><i class="fas fa-store"></i> Cadastro de Empresa Parceira</h4>
                     </div>
                     <div class="card-body">
