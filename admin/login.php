@@ -37,13 +37,43 @@ if ($_POST) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">
+    <style>
+        .admin-login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        .admin-card {
+            max-width: 400px;
+            width: 100%;
+        }
+        .aneti-btn {
+            background: #012d6a;
+            border-color: #012d6a;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .aneti-btn:hover {
+            background: #25a244;
+            border-color: #25a244;
+            color: white;
+        }
+        .aneti-header {
+            background: linear-gradient(135deg, #012d6a 0%, #25a244 100%);
+        }
+        .demo-card {
+            background: #f8f9fa;
+            border-left: 4px solid #012d6a;
+        }
+    </style>
 </head>
-<body class="bg-light">
-    <div class="container">
-        <div class="row justify-content-center" style="min-height: 100vh; align-items: center;">
-            <div class="col-md-6 col-lg-4">
-                <div class="card shadow">
-                    <div class="card-header bg-dark text-white text-center">
+<body>
+    <div class="container admin-login-container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="card shadow admin-card mx-auto">
+                    <div class="card-header text-white text-center aneti-header">
                         <h4><i class="fas fa-user-shield"></i> Admin Login</h4>
                         <p class="mb-0">Clube de Vantagens ANETI</p>
                     </div>
@@ -64,7 +94,7 @@ if ($_POST) {
                             </div>
                             
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-dark">
+                                <button type="submit" class="btn aneti-btn">
                                     <i class="fas fa-sign-in-alt"></i> Entrar
                                 </button>
                             </div>
@@ -80,9 +110,9 @@ if ($_POST) {
                 </div>
                 
                 <!-- Demo Admin -->
-                <div class="card mt-3">
-                    <div class="card-header">
-                        <h6>Admin de Demo</h6>
+                <div class="card mt-3 demo-card">
+                    <div class="card-header" style="background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
+                        <h6 class="mb-0" style="color: #012d6a;"><i class="fas fa-info-circle"></i> Admin de Demo</h6>
                     </div>
                     <div class="card-body">
                         <small class="text-muted">

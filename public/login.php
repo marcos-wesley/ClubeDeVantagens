@@ -32,16 +32,42 @@ if ($_POST) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">
+    <style>
+        .login-container {
+            min-height: calc(100vh - 180px);
+            display: flex;
+            align-items: center;
+            padding: 2rem 0;
+        }
+        .login-card {
+            max-width: 400px;
+            width: 100%;
+        }
+        .aneti-btn {
+            background: #012d6a;
+            border-color: #012d6a;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .aneti-btn:hover {
+            background: #25a244;
+            border-color: #25a244;
+            color: white;
+        }
+        .aneti-header {
+            background: linear-gradient(135deg, #012d6a 0%, #25a244 100%);
+        }
+    </style>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
 
-    <div class="container mt-5">
+    <div class="container login-container">
         <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <div class="card shadow">
-                    <div class="card-header bg-primary text-white text-center">
-                        <h4><i class="fas fa-user-circle"></i> Login de Membro</h4>
+            <div class="col-12">
+                <div class="card shadow login-card mx-auto">
+                    <div class="card-header text-white text-center aneti-header">
+                        <h4 class="mb-0"><i class="fas fa-user-circle"></i> Login de Membro</h4>
                     </div>
                     <div class="card-body">
                         <?php if ($error): ?>
@@ -60,7 +86,7 @@ if ($_POST) {
                             </div>
                             
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn aneti-btn">
                                     <i class="fas fa-sign-in-alt"></i> Entrar
                                 </button>
                             </div>
