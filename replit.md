@@ -6,13 +6,13 @@ This is a comprehensive web system for ANETI's Benefits Club (Clube de Vantagens
 
 ## Recent Changes (January 31, 2025)
 
-### Header Section Complete Redesign - ANETI Branding
-- **Fixed Header**: Novo header fixo (sticky top) com fundo branco/azul-claro
-- **Logo ANETI**: Implementada logo oficial da ANETI (PNG transparente)
-- **Layout Estruturado**: À esquerda (logo + "Clube ANETI"), centro (menu), direita (ações)
-- **Menu Principal**: Início, Buscar, Categorias com hover effects
-- **Botões CTA**: "Entrar" simples + "Cadastre sua Empresa" destacado
-- **Cores ANETI**: Azul institucional #012d6a em toda identidade visual
+### Header Complete Redesign - Gradient Model
+- **Two-Line Header**: Header em duas linhas seguindo modelo de referência visual
+- **Gradient Background**: Degradê rosa → roxo → laranja (linear-gradient(to right, #ac2bff, #f14d71, #ff9b3f))
+- **Line 1**: Logo ANETI branca + campo de busca central + botão "Entrar"
+- **Line 2**: Menu horizontal de categorias com ícones (10 categorias principais)
+- **White Elements**: Logo em branco, texto branco, ícones brancos flat design
+- **Responsive**: Scroll horizontal para categorias em mobile, layout adaptável
 
 ### Homepage Complete Redesign - Following Reference Model
 - **Benefits in Highlight**: Redesigned carousel with real company logos (120x150px) and names

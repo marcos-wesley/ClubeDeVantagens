@@ -23,50 +23,95 @@ $categories = getCategories($conn);
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
 <body>
-    <!-- ANETI Header - Fixed Top -->
-    <header class="aneti-header fixed-top">
-        <div class="container-fluid">
-            <div class="row align-items-center py-3">
-                <!-- Logo e Nome do Projeto (À esquerda) -->
-                <div class="col-md-4">
-                    <div class="aneti-brand d-flex align-items-center">
-                        <img src="assets/images/logo-aneti.png" alt="ANETI" class="aneti-logo me-3">
-                        <div class="brand-text">
-                            <h2 class="aneti-title mb-0">Clube ANETI</h2>
+    <!-- Header com Degradê - Modelo Referência -->
+    <header class="gradient-header fixed-top">
+        <!-- Linha 1: Barra Superior -->
+        <div class="header-top-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center py-2">
+                    <!-- Logo ANETI (À esquerda) -->
+                    <div class="col-md-3">
+                        <div class="brand-section d-flex align-items-center">
+                            <img src="assets/images/logo-aneti.png" alt="ANETI" class="brand-logo me-2">
+                            <span class="brand-name">Clube ANETI</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Campo de Busca (Ao centro) -->
+                    <div class="col-md-6">
+                        <div class="search-container">
+                            <form action="public/buscar.php" method="GET" class="header-search-form">
+                                <div class="search-input-group">
+                                    <input type="text" name="q" class="search-input" placeholder="Encontrar um benefício">
+                                    <button type="submit" class="search-btn">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Botão Entrar (À direita) -->
+                    <div class="col-md-3">
+                        <div class="header-actions text-end">
+                            <a href="public/login.php" class="login-button">Entrar</a>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Menu Principal (Ao centro) -->
-                <div class="col-md-4">
-                    <nav class="aneti-nav">
-                        <ul class="nav justify-content-center">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="index.php">Início</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="public/buscar.php">Buscar</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="public/categorias.php">Categorias</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                
-                <!-- Botões de Ação (À direita) -->
-                <div class="col-md-4">
-                    <div class="aneti-actions d-flex justify-content-end align-items-center">
-                        <a href="public/login.php" class="aneti-login-btn me-3">Entrar</a>
-                        <a href="empresa/cadastro.php" class="aneti-cta-btn">Cadastre sua Empresa</a>
-                    </div>
+            </div>
+        </div>
+        
+        <!-- Linha 2: Menu de Categorias -->
+        <div class="categories-bar">
+            <div class="container-fluid">
+                <div class="categories-menu">
+                    <a href="public/categorias.php?cat=destaque" class="category-item">
+                        <i class="fas fa-star"></i>
+                        <span>Destaque</span>
+                    </a>
+                    <a href="public/categorias.php?cat=comer-beber" class="category-item">
+                        <i class="fas fa-utensils"></i>
+                        <span>Comer e Beber</span>
+                    </a>
+                    <a href="public/categorias.php?cat=compras" class="category-item">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Compras</span>
+                    </a>
+                    <a href="public/categorias.php?cat=conveniencia" class="category-item">
+                        <i class="fas fa-store"></i>
+                        <span>Conveniência</span>
+                    </a>
+                    <a href="public/categorias.php?cat=cultura-educacao" class="category-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Cultura e Educação</span>
+                    </a>
+                    <a href="public/categorias.php?cat=lazer-diversao" class="category-item">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Lazer e Diversão</span>
+                    </a>
+                    <a href="public/categorias.php?cat=mundo-pet" class="category-item">
+                        <i class="fas fa-paw"></i>
+                        <span>Mundo Pet</span>
+                    </a>
+                    <a href="public/categorias.php?cat=saude-bem-estar" class="category-item">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>Saúde e Bem-estar</span>
+                    </a>
+                    <a href="public/categorias.php?cat=servicos" class="category-item">
+                        <i class="fas fa-tools"></i>
+                        <span>Serviços</span>
+                    </a>
+                    <a href="public/categorias.php?cat=viagem-turismo" class="category-item">
+                        <i class="fas fa-plane"></i>
+                        <span>Viagem e Turismo</span>
+                    </a>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Spacer para Header Fixed -->
-    <div style="height: 120px;"></div>
+    <div style="height: 140px;"></div>
     
     <!-- Hero Section -->
     <section class="hero-section">
