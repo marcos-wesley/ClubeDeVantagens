@@ -33,16 +33,16 @@ Plataforma completa de benefícios para membros da ANETI, desenvolvida em PHP co
 
 ## Mudanças Recentes (31/07/2025)
 
-### ✅ Melhorias na Página de Detalhes da Empresa
-- **Cards organizados**: Todas as seções agora usam cards Bootstrap com sombras e hover effects
-- **Como Funciona**: Layout em grid 2x2 com badges numerados e descrições detalhadas
-- **Regulamento**: Design melhorado com badges numerados
-- **Localização**: Mapa na esquerda, informações de contato na direita
-- **Sidebar modernizada**: 
-  - Card principal com logo circular, nome da empresa e botão de ação destacado
-  - Card de informações sobre a empresa
-  - Card de contato com ícones organizados
-  - Sidebar com posição sticky para melhor usabilidade
+### ✅ Reformulação Completa da Página de Detalhes (Baseada no Modelo de Referência)
+- **Layout duas colunas**: Imagem principal grande na esquerda (col-lg-8), sidebar estreita na direita (col-lg-4)
+- **Botão "USAR" destacado**: Botão principal rosa/vermelho grande (1.8rem) na sidebar, seguindo o modelo visual
+- **Seções simplificadas**: "Como funciona" e "Regulamento" sem cards, design mais limpo e direto
+- **Sidebar otimizada**:
+  - Botão "USAR" como elemento principal em destaque
+  - Logo circular da empresa (100px x 100px)
+  - Descrição da empresa em caixa cinza clara
+  - Posição sticky para melhor usabilidade
+- **Imagem principal**: Maior destaque na área de conteúdo com sombra sutil
 
 ### ✅ Sistema de Avaliações Aprimorado
 - **Resumo visual**: Círculo com nota média e breakdown de estrelas com barras de progresso

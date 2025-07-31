@@ -2799,18 +2799,19 @@
 .btn-use-main {
     display: block;
     width: 100%;
-    padding: 20px;
+    padding: 25px;
     background: linear-gradient(135deg, #e91e63, #f06292);
-    color: white;
+    color: white !important;
     text-decoration: none;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
     transition: all 0.3s ease;
     border: none;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 .btn-use-main:hover {
@@ -2839,4 +2840,38 @@
 /* Sidebar Improvements */
 .benefit-sidebar {
     padding: 0;
+}
+
+/* Additional styles for better visual match */
+.benefit-main-image img {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.company-description {
+    background: #f8f9fa !important;
+    border: 1px solid #e9ecef;
+    font-size: 0.85rem;
+}
+
+.how-it-works .step {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.how-it-works .step:last-child {
+    border-bottom: none;
+}
+
+.regulation-content .regulation-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.regulation-content .regulation-item:last-child {
+    border-bottom: none;
+}
+
+/* Force cache refresh */
+.btn-use-main {
+    margin-bottom: 20px !important;
 }
