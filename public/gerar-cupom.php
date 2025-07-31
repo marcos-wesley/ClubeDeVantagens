@@ -75,60 +75,44 @@ if ($_POST && isset($_POST['confirm'])) {
         
         /* Print Styles - Only show coupon */
         @media print {
-            body {
-                margin: 0 !important;
-                padding: 0 !important;
-                background: white !important;
-                font-size: 12pt;
-            }
-            
-            /* Hide everything except the coupon */
+            /* Hide non-essential elements */
+            .no-print,
             .main-header,
             .main-footer,
-            .container,
-            .card,
-            .no-print,
-            .btn-group,
-            .btn,
-            .text-center.mt-4,
-            .text-center.mt-3,
+            .card-header,
             .alert,
-            .row:not(.coupon-display .row),
-            .col-lg-8,
+            .btn,
+            .btn-group,
             nav,
             footer {
                 display: none !important;
             }
             
-            /* Force show only coupon */
-            body * {
-                visibility: hidden;
+            /* Reset body */
+            body {
+                margin: 0 !important;
+                padding: 20px !important;
+                background: white !important;
+                font-size: 12pt;
             }
             
-            .coupon-display,
-            .coupon-display * {
-                visibility: visible;
-            }
-            
-            /* Show only coupon display */
+            /* Show and center coupon */
             .coupon-display {
                 display: block !important;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 18cm !important;
-                height: auto !important;
+                width: 100% !important;
+                max-width: 18cm !important;
+                margin: 0 auto !important;
                 border: 2px solid #000 !important;
-                padding: 1.5cm !important;
+                padding: 20px !important;
                 background: white !important;
                 page-break-inside: avoid;
             }
             
-            /* Optimize coupon for A4 */
-            .coupon-header h4 {
+            /* Optimize coupon typography */
+            .coupon-company-name {
                 font-size: 18pt !important;
                 margin-bottom: 10pt !important;
+                color: #000 !important;
             }
             
             .coupon-logo {
@@ -140,17 +124,30 @@ if ($_POST && isset($_POST['confirm'])) {
                 font-size: 16pt !important;
                 font-weight: bold !important;
                 border: 2px dashed #000 !important;
-                padding: 8pt !important;
-                margin: 8pt 0 !important;
+                padding: 10px !important;
+                margin: 10px 0 !important;
                 text-align: center !important;
+                background: #f8f9fa !important;
             }
             
             .coupon-info strong {
-                font-size: 11pt !important;
+                font-size: 12pt !important;
+                color: #000 !important;
             }
             
             .coupon-footer small {
                 font-size: 10pt !important;
+                color: #000 !important;
+            }
+            
+            /* Remove container constraints */
+            .container,
+            .row,
+            .col-lg-8,
+            .card,
+            .card-body {
+                all: unset !important;
+                display: block !important;
             }
             
             /* Set page size */
@@ -314,7 +311,7 @@ if ($_POST && isset($_POST['confirm'])) {
 
                             <div class="text-center mt-4 no-print">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-primary" onclick="window.print()">
+                                    <button type="button" class="btn btn-primary" onclick="printCoupon()">
                                         <i class="fas fa-print"></i> Imprimir Cupom
                                     </button>
                                     <button type="button" class="btn btn-outline-primary" onclick="downloadCoupon()">
@@ -342,6 +339,76 @@ if ($_POST && isset($_POST['confirm'])) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        function printCoupon() {
+            // Create a new window for printing only the coupon
+            const couponHtml = document.getElementById('couponDisplay').innerHTML;
+            const printWindow = window.open('', '_blank', 'width=800,height=600');
+            
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Cupom - <?php echo htmlspecialchars($company['nome']); ?></title>
+                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+                    <style>
+                        body { 
+                            padding: 20px; 
+                            font-family: Arial, sans-serif;
+                        }
+                        .coupon-display {
+                            border: 2px solid #000;
+                            padding: 20px;
+                            margin: 20px auto;
+                            max-width: 18cm;
+                            background: white;
+                        }
+                        .coupon-logo {
+                            max-width: 80px;
+                            max-height: 80px;
+                        }
+                        .coupon-code {
+                            font-size: 18px;
+                            font-weight: bold;
+                            border: 2px dashed #000;
+                            padding: 10px;
+                            margin: 10px 0;
+                            text-align: center;
+                            background: #f8f9fa;
+                        }
+                        .coupon-company-name {
+                            font-size: 24px;
+                            font-weight: bold;
+                            margin-bottom: 10px;
+                        }
+                        @media print {
+                            body { margin: 0; padding: 10px; }
+                            .coupon-display { margin: 0; }
+                        }
+                        @page {
+                            size: A4;
+                            margin: 2cm;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="coupon-display">
+                        ${couponHtml}
+                    </div>
+                </body>
+                </html>
+            `);
+            
+            printWindow.document.close();
+            printWindow.focus();
+            
+            // Wait for content to load then print
+            setTimeout(() => {
+                printWindow.print();
+                printWindow.close();
+            }, 500);
+        }
+        
         function downloadCoupon() {
             const couponHtml = document.getElementById('couponDisplay').outerHTML;
             const fullHtml = `
@@ -351,12 +418,25 @@ if ($_POST && isset($_POST['confirm'])) {
                     <meta charset="UTF-8">
                     <title>Cupom - <?php echo htmlspecialchars($company['nome']); ?></title>
                     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-                    <link href="../assets/css/style.css" rel="stylesheet">
                     <style>
                         body { padding: 20px; }
+                        .coupon-display {
+                            border: 2px solid #000;
+                            padding: 20px;
+                            max-width: 18cm;
+                            margin: 0 auto;
+                        }
+                        .coupon-code {
+                            font-size: 18px;
+                            font-weight: bold;
+                            border: 2px dashed #000;
+                            padding: 10px;
+                            margin: 10px 0;
+                            text-align: center;
+                            background: #f8f9fa;
+                        }
                         @media print { 
                             body { margin: 0; }
-                            .no-print { display: none; }
                         }
                     </style>
                 </head>
