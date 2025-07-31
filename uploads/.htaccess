@@ -1,0 +1,74 @@
+# Security settings for uploads directory
+# Prevent execution of PHP files and other potentially dangerous files
+
+# Deny access to PHP files
+<Files "*.php">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Deny access to other executable file types
+<FilesMatch "\.(php|php3|php4|php5|phtml|pl|py|jsp|asp|sh|cgi)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Allow only image files
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|bmp|ico)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Prevent direct access to .htaccess
+<Files ".htaccess">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Disable directory browsing
+Options -Indexes
+
+# Set appropriate MIME types for images
+<IfModule mod_mime.c>
+    AddType image/jpeg .jpg .jpeg
+    AddType image/png .png
+    AddType image/gif .gif
+    AddType image/webp .webp
+    AddType image/svg+xml .svg
+    AddType image/bmp .bmp
+    AddType image/x-icon .ico
+</IfModule>
+
+# Enable compression for images (if mod_deflate is available)
+<IfModule mod_deflate.c>
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg)$">
+        SetOutputFilter DEFLATE
+    </FilesMatch>
+</IfModule>
+
+# Set cache headers for images
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+</IfModule>
+
+# Prevent hotlinking (optional - uncomment and adjust domain)
+# RewriteEngine On
+# RewriteCond %{HTTP_REFERER} !^$
+# RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?yourdomain.com [NC]
+# RewriteRule \.(jpg|jpeg|png|gif|webp|svg)$ - [F]
+
+# Set file size limits (adjust as needed)
+LimitRequestBody 5242880
+
+# Additional security headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+</IfModule>
