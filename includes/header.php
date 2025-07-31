@@ -116,12 +116,43 @@ $user_name = $is_logged_in ? $_SESSION['user_nome'] : '';
 <script>
 // Initialize dropdown functionality
 document.addEventListener('DOMContentLoaded', function() {
-    var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+    console.log('Initializing dropdowns...');
     
-    if (typeof bootstrap !== 'undefined') {
-        var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
-            return new bootstrap.Dropdown(dropdownToggleEl);
+    // Force initialize all dropdowns
+    var dropdowns = document.querySelectorAll('[data-bs-toggle="dropdown"]');
+    dropdowns.forEach(function(dropdown) {
+        console.log('Found dropdown:', dropdown);
+        if (typeof bootstrap !== 'undefined') {
+            new bootstrap.Dropdown(dropdown);
+        }
+    });
+    
+    // Manual click handler as backup
+    document.querySelectorAll('.dropdown-toggle').forEach(function(toggle) {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Manual dropdown click');
+            var menu = this.nextElementSibling;
+            if (menu && menu.classList.contains('dropdown-menu')) {
+                // Close other open menus
+                document.querySelectorAll('.dropdown-menu.show').forEach(function(openMenu) {
+                    if (openMenu !== menu) {
+                        openMenu.classList.remove('show');
+                    }
+                });
+                // Toggle current menu
+                menu.classList.toggle('show');
+            }
         });
-    }
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown-menu.show').forEach(function(menu) {
+                menu.classList.remove('show');
+            });
+        }
+    });
 });
 </script>
