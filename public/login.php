@@ -140,7 +140,9 @@ if ($_POST) {
                         <hr>
                         <div class="text-center">
                             <p class="mb-0">Ainda não é membro da ANETI?</p>
-                            <small class="text-muted">Entre em contato conosco para se associar</small>
+                            <a href="http://aneti.org.br/" target="_blank" class="text-decoration-none" style="color: #012d6a; font-weight: 500;">
+                                <i class="fas fa-external-link-alt me-1"></i>Clique aqui para se associar
+                            </a>
                         </div>
                     </div>
                 </div>
