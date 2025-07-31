@@ -16,6 +16,11 @@ function loginUser($conn, $email, $password) {
     error_log("Login attempt: email=$email, password_hash=" . md5($password));
     if ($user) {
         error_log("User found: " . json_encode($user));
+        error_log("Password field exists: " . (isset($user['password']) ? 'YES' : 'NO'));
+        if (isset($user['password'])) {
+            error_log("Stored password hash: " . $user['password']);
+            error_log("Password match: " . (md5($password) === $user['password'] ? 'YES' : 'NO'));
+        }
     } else {
         error_log("User not found for email: $email");
     }
