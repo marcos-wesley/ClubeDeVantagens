@@ -55,6 +55,11 @@ $base_path = $is_subdirectory ? '../' : '';
                                 <i class="fas fa-handshake me-2"></i>Seja Parceiro
                             </a>
                         </li>
+                        <li class="mb-2">
+                            <a href="<?= $base_path ?>admin/login.php" class="footer-link admin-link">
+                                <i class="fas fa-cog me-2"></i>Área Admin
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -164,6 +169,19 @@ $base_path = $is_subdirectory ? '../' : '';
     color: #25a244;
     text-decoration: none;
     transform: translateX(5px);
+}
+
+.admin-link {
+    position: relative;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(5px);
+}
+
+.admin-link:hover {
+    background: rgba(37, 162, 68, 0.2);
+    color: #25a244;
 }
 
 .social-link {
