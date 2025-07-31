@@ -6,6 +6,21 @@ This is a comprehensive web system for ANETI's Benefits Club (Clube de Vantagens
 
 ## Recent Changes (January 31, 2025)
 
+### Homepage Complete Redesign - Following Reference Model
+- **Benefits in Highlight**: Redesigned carousel with real company logos (120x150px) and names
+- **Recently Added**: New card design with cover images, circular logos, ratings, and categories
+- **ANETI Colors**: Replaced all purple elements with ANETI blue (#012d6a)
+- **Professional Layout**: Cards with rounded corners, shadows, and responsive design
+- **Interactive Features**: Functional favorite buttons with localStorage persistence
+
+### New Homepage Features
+- **Carousel Style Benefits**: 8+ companies displayed horizontally with logos and names
+- **Modern Card Design**: Cover image + circular logo overlay + detailed information
+- **Rating System**: Star ratings with averages displayed on each card
+- **Favorite System**: Heart buttons to save benefits locally
+- **Category Badges**: Color-coded category labels for easy identification
+- **Responsive Grid**: 3-4 columns adaptable to screen size
+
 ### Administrative Dashboard Redesign
 - Complete dashboard overhaul following ANETI brand guidelines
 - Replaced purple colors with ANETI blue (#012d6a) throughout the interface

@@ -114,21 +114,23 @@ $categories = getCategories($conn);
     <section class="benefits-section">
         <div class="container">
             <h2 class="section-title">Benefícios em Destaque</h2>
-            <div class="benefits-grid">
-                <?php foreach ($featured_companies as $company): ?>
-                <a href="public/empresa-detalhes.php?id=<?php echo $company['id']; ?>" class="benefit-item">
-                    <div class="benefit-logo">
-                        <?php if ($company['logo']): ?>
-                            <img src="uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>">
-                        <?php else: ?>
-                            <div class="benefit-placeholder">
-                                <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                    <h6 class="benefit-name"><?php echo htmlspecialchars($company['nome']); ?></h6>
-                </a>
-                <?php endforeach; ?>
+            <div class="benefits-carousel-container">
+                <div class="benefits-carousel">
+                    <?php foreach ($featured_companies as $company): ?>
+                    <a href="public/empresa-detalhes.php?id=<?php echo $company['id']; ?>" class="benefit-card">
+                        <div class="benefit-logo">
+                            <?php if ($company['logo']): ?>
+                                <img src="uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>">
+                            <?php else: ?>
+                                <div class="benefit-placeholder">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="benefit-name"><?php echo htmlspecialchars($company['nome']); ?></div>
+                    </a>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </div>
     </section>
@@ -139,33 +141,83 @@ $categories = getCategories($conn);
             <h2 class="section-title">Adicionados recentemente</h2>
             <div class="recent-grid">
                 <?php foreach ($recent_companies as $company): ?>
-                <a href="public/empresa-detalhes.php?id=<?php echo $company['id']; ?>" class="recent-card">
-                    <div class="recent-card-image">
-                        <div class="recent-card-overlay">
+                <div class="recent-card">
+                    <!-- Imagem de capa da empresa -->
+                    <div class="recent-card-cover">
+                        <?php if ($company['imagem_detalhes']): ?>
+                            <img src="uploads/<?php echo htmlspecialchars($company['imagem_detalhes']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>">
+                        <?php else: ?>
+                            <div class="recent-card-cover-placeholder">
+                                <i class="fas fa-image"></i>
+                            </div>
+                        <?php endif; ?>
+                        
+                        <!-- Logo circular sobreposto -->
+                        <div class="recent-card-logo">
                             <?php if ($company['logo']): ?>
                                 <img src="uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>">
                             <?php else: ?>
-                                <div class="recent-card-placeholder">
-                                    <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
+                                <div class="recent-card-logo-placeholder">
+                                    <i class="fas fa-building"></i>
                                 </div>
                             <?php endif; ?>
                         </div>
+                        
+                        <!-- Botão de favoritar -->
+                        <button class="favorite-btn" onclick="toggleFavorite(<?php echo $company['id']; ?>, event)">
+                            <i class="far fa-heart"></i>
+                        </button>
                     </div>
+                    
+                    <!-- Conteúdo do card -->
                     <div class="recent-card-content">
                         <h3 class="recent-card-title"><?php echo htmlspecialchars($company['nome']); ?></h3>
-                        <div class="recent-card-category"><?php echo htmlspecialchars($company['categoria']); ?></div>
-                        <p class="recent-card-description"><?php echo htmlspecialchars(substr($company['descricao'], 0, 120)); ?>...</p>
-                        <div class="recent-card-meta">
-                            <div class="recent-card-location">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <?php echo htmlspecialchars($company['cidade']); ?>
-                            </div>
-                            <div class="favorite-btn">
-                                <i class="far fa-heart"></i>
-                            </div>
+                        
+                        <div class="recent-card-category">
+                            <span class="category-badge"><?php echo htmlspecialchars($company['categoria']); ?></span>
                         </div>
+                        
+                        <p class="recent-card-description">
+                            <?php 
+                            $description = $company['descricao'] ?: 'Aproveite os benefícios exclusivos para membros da ANETI com descontos especiais.';
+                            echo htmlspecialchars(substr($description, 0, 100)) . (strlen($description) > 100 ? '...' : ''); 
+                            ?>
+                        </p>
+                        
+                        <!-- Avaliação com estrelas -->
+                        <?php
+                        // Buscar avaliação média da empresa
+                        $rating_query = $pdo->prepare("
+                            SELECT AVG(nota) as media, COUNT(*) as total 
+                            FROM avaliacoes 
+                            WHERE empresa_id = ? AND status = 'aprovada'
+                        ");
+                        $rating_query->execute([$company['id']]);
+                        $rating = $rating_query->fetch();
+                        $avg_rating = $rating['media'] ? round($rating['media'], 1) : 0;
+                        ?>
+                        
+                        <div class="recent-card-rating">
+                            <div class="stars">
+                                <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <span class="star <?php echo $i <= $avg_rating ? 'filled' : ''; ?>">★</span>
+                                <?php endfor; ?>
+                            </div>
+                            <span class="rating-value"><?php echo $avg_rating; ?></span>
+                        </div>
+                        
+                        <!-- Localização -->
+                        <div class="recent-card-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span><?php echo htmlspecialchars($company['cidade']); ?></span>
+                        </div>
+                        
+                        <!-- Link para detalhes -->
+                        <a href="public/empresa-detalhes.php?id=<?php echo $company['id']; ?>" class="recent-card-link">
+                            Ver detalhes
+                        </a>
                     </div>
-                </a>
+                </div>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -175,5 +227,46 @@ $categories = getCategories($conn);
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/main.js"></script>
+    
+    <script>
+        // Função para favoritar empresas
+        function toggleFavorite(companyId, event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            let favorites = JSON.parse(localStorage.getItem('favoriteCompanies') || '[]');
+            const isFavorited = favorites.includes(companyId);
+            const btn = event.currentTarget;
+            const icon = btn.querySelector('i');
+            
+            if (isFavorited) {
+                // Remover dos favoritos
+                favorites = favorites.filter(id => id !== companyId);
+                icon.className = 'far fa-heart';
+                btn.style.background = 'rgba(255, 255, 255, 0.9)';
+            } else {
+                // Adicionar aos favoritos
+                favorites.push(companyId);
+                icon.className = 'fas fa-heart';
+                btn.style.background = 'rgba(220, 53, 69, 0.1)';
+            }
+            
+            localStorage.setItem('favoriteCompanies', JSON.stringify(favorites));
+        }
+        
+        // Verificar favoritos ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            const favorites = JSON.parse(localStorage.getItem('favoriteCompanies') || '[]');
+            
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                const companyId = parseInt(btn.getAttribute('onclick').match(/\d+/)[0]);
+                if (favorites.includes(companyId)) {
+                    const icon = btn.querySelector('i');
+                    icon.className = 'fas fa-heart';
+                    btn.style.background = 'rgba(220, 53, 69, 0.1)';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
