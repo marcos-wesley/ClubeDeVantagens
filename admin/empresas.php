@@ -67,6 +67,7 @@ $companies = $stmt->fetchAll();
                 <a class="nav-link active" href="empresas.php"><i class="fas fa-store"></i> Empresas</a>
                 <a class="nav-link" href="cupons.php"><i class="fas fa-ticket-alt"></i> Cupons</a>
                 <a class="nav-link" href="categorias.php"><i class="fas fa-tags"></i> Categorias</a>
+                <a class="nav-link" href="membros.php"><i class="fas fa-users"></i> Membros</a>
                 <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> Sair</a>
             </div>
         </div>
@@ -77,6 +78,9 @@ $companies = $stmt->fetchAll();
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2><i class="fas fa-store"></i> Gerenciar Empresas</h2>
+                    <a href="empresa-cadastro.php" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Nova Empresa
+                    </a>
                 </div>
 
                 <?php if ($message): ?>
@@ -160,7 +164,7 @@ $companies = $stmt->fetchAll();
                                                     <br><small class="text-muted"><?php echo htmlspecialchars($company['email']); ?></small>
                                                 </td>
                                                 <td><?php echo htmlspecialchars($company['categoria']); ?></td>
-                                                <td><?php echo htmlspecialchars($company['cidade']); ?>, <?php echo htmlspecialchars($company['estado']); ?></td>
+                                                <td><?php echo htmlspecialchars($company['cidade']); ?></td>
                                                 <td>
                                                     <span class="badge bg-<?php echo $company['status'] == 'aprovada' ? 'success' : ($company['status'] == 'pendente' ? 'warning' : 'danger'); ?>">
                                                         <?php echo ucfirst($company['status']); ?>
@@ -169,23 +173,26 @@ $companies = $stmt->fetchAll();
                                                         <span class="badge bg-primary">Destaque</span>
                                                     <?php endif; ?>
                                                 </td>
-                                                <td><?php echo formatDate($company['created_at']); ?></td>
+                                                <td><?php echo date('d/m/Y', strtotime($company['created_at'])); ?></td>
                                                 <td>
                                                     <div class="btn-group btn-group-sm">
-                                                        <button type="button" class="btn btn-outline-info" onclick="viewCompany(<?php echo $company['id']; ?>)" title="Ver detalhes">
+                                                        <a href="empresa-cadastro.php?id=<?php echo $company['id']; ?>" class="btn btn-outline-primary btn-sm" title="Editar">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                        <button type="button" class="btn btn-outline-info btn-sm" onclick="viewCompany(<?php echo $company['id']; ?>)" title="Ver detalhes">
                                                             <i class="fas fa-eye"></i>
                                                         </button>
                                                         
                                                         <?php if ($company['status'] == 'pendente'): ?>
-                                                            <button type="button" class="btn btn-outline-success" onclick="approveCompany(<?php echo $company['id']; ?>)" title="Aprovar">
+                                                            <button type="button" class="btn btn-outline-success btn-sm" onclick="approveCompany(<?php echo $company['id']; ?>)" title="Aprovar">
                                                                 <i class="fas fa-check"></i>
                                                             </button>
-                                                            <button type="button" class="btn btn-outline-danger" onclick="rejectCompany(<?php echo $company['id']; ?>)" title="Rejeitar">
+                                                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="rejectCompany(<?php echo $company['id']; ?>)" title="Rejeitar">
                                                                 <i class="fas fa-times"></i>
                                                             </button>
                                                         <?php endif; ?>
                                                         
-                                                        <button type="button" class="btn btn-outline-danger" onclick="deleteCompany(<?php echo $company['id']; ?>)" title="Excluir">
+                                                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteCompany(<?php echo $company['id']; ?>)" title="Excluir">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </div>
@@ -254,19 +261,77 @@ $companies = $stmt->fetchAll();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function viewCompany(id) {
-            // Fetch company details via AJAX (simplified for demo)
-            fetch(`../public/empresa-detalhes.php?id=${id}`)
-                .then(response => response.text())
-                .then(html => {
-                    // Extract content (in production, create a proper API endpoint)
-                    document.getElementById('companyDetails').innerHTML = '<p>Detalhes da empresa ID: ' + id + '</p>';
-                    new bootstrap.Modal(document.getElementById('companyModal')).show();
+            fetch(`empresa-detalhes-api.php?id=${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const company = data.company;
+                        document.getElementById('companyDetails').innerHTML = `
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6><i class="fas fa-store"></i> Informações Básicas</h6>
+                                    <p><strong>Nome:</strong> ${company.nome}</p>
+                                    <p><strong>Categoria:</strong> ${company.categoria}</p>
+                                    <p><strong>Email:</strong> ${company.email || 'Não informado'}</p>
+                                    <p><strong>Telefone:</strong> ${company.telefone || 'Não informado'}</p>
+                                    <p><strong>Website:</strong> ${company.website || 'Não informado'}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6><i class="fas fa-map-marker-alt"></i> Localização</h6>
+                                    <p><strong>Cidade:</strong> ${company.cidade || 'Não informado'}</p>
+                                    <p><strong>Endereço:</strong> ${company.endereco || 'Não informado'}</p>
+                                    <h6><i class="fas fa-info-circle"></i> Status</h6>
+                                    <p><strong>Status:</strong> <span class="badge bg-${company.status == 'aprovada' ? 'success' : (company.status == 'pendente' ? 'warning' : 'danger')}">${company.status}</span></p>
+                                    <p><strong>Destaque:</strong> ${company.destaque ? 'Sim' : 'Não'}</p>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <h6><i class="fas fa-align-left"></i> Descrição</h6>
+                                <p>${company.descricao}</p>
+                                <h6><i class="fas fa-gift"></i> Regras do Benefício</h6>
+                                <p>${company.regras_beneficio || 'Não informado'}</p>
+                            </div>
+                        `;
+                        new bootstrap.Modal(document.getElementById('companyModal')).show();
+                    } else {
+                        alert('Erro ao carregar detalhes da empresa');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Erro ao carregar detalhes da empresa');
                 });
         }
         
         function approveCompany(id) {
             document.getElementById('approvalEmpresaId').value = id;
             new bootstrap.Modal(document.getElementById('approvalModal')).show();
+        }
+        
+        function rejectCompany(id) {
+            if (confirm('Tem certeza que deseja rejeitar esta empresa?')) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.innerHTML = `
+                    <input type="hidden" name="action" value="rejeitar">
+                    <input type="hidden" name="empresa_id" value="${id}">
+                `;
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+        
+        function deleteCompany(id) {
+            if (confirm('Tem certeza que deseja excluir esta empresa? Esta ação não pode ser desfeita.')) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.innerHTML = `
+                    <input type="hidden" name="action" value="excluir">
+                    <input type="hidden" name="empresa_id" value="${id}">
+                `;
+                document.body.appendChild(form);
+                form.submit();
+            }
         }
         
         function rejectCompany(id) {

@@ -22,11 +22,11 @@ $params = [];
 $where_conditions = [];
 
 if ($date_filter == 'hoje') {
-    $where_conditions[] = "DATE(c.created_at) = CURDATE()";
+    $where_conditions[] = "DATE(c.created_at) = CURRENT_DATE";
 } elseif ($date_filter == 'semana') {
-    $where_conditions[] = "c.created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
+    $where_conditions[] = "c.created_at >= CURRENT_DATE - INTERVAL '7 days'";
 } elseif ($date_filter == 'mes') {
-    $where_conditions[] = "c.created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)";
+    $where_conditions[] = "c.created_at >= CURRENT_DATE - INTERVAL '30 days'";
 }
 
 if ($empresa_filter) {
@@ -50,9 +50,9 @@ $companies = $conn->query("SELECT id, nome FROM empresas WHERE status = 'aprovad
 // Statistics
 $stats = [
     'total' => count($coupons),
-    'hoje' => $conn->query("SELECT COUNT(*) as total FROM cupons WHERE DATE(created_at) = CURDATE()")->fetch()['total'],
-    'semana' => $conn->query("SELECT COUNT(*) as total FROM cupons WHERE created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)")->fetch()['total'],
-    'mes' => $conn->query("SELECT COUNT(*) as total FROM cupons WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)")->fetch()['total']
+    'hoje' => $conn->query("SELECT COUNT(*) as total FROM cupons WHERE DATE(created_at) = CURRENT_DATE")->fetch()['total'],
+    'semana' => $conn->query("SELECT COUNT(*) as total FROM cupons WHERE created_at >= CURRENT_DATE - INTERVAL '7 days'")->fetch()['total'],
+    'mes' => $conn->query("SELECT COUNT(*) as total FROM cupons WHERE created_at >= CURRENT_DATE - INTERVAL '30 days'")->fetch()['total']
 ];
 ?>
 <!DOCTYPE html>

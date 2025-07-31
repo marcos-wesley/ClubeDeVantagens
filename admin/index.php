@@ -70,6 +70,11 @@ $recent_coupons = $conn->query("
                             <i class="fas fa-tags"></i> Categorias
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="membros.php">
+                            <i class="fas fa-users"></i> Membros
+                        </a>
+                    </li>
                 </ul>
                 
                 <ul class="navbar-nav">
