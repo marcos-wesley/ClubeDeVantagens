@@ -193,11 +193,16 @@ $categories = getCategories($conn);
             border-radius: 10px;
             margin-bottom: 0.5rem;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            color: #333;
         }
         .benefit-item i {
             color: #25a244;
             margin-right: 1rem;
             font-size: 1.2rem;
+        }
+        .benefit-item span {
+            color: #333;
+            font-weight: 500;
         }
         @media (max-width: 768px) {
             body {
