@@ -1,0 +1,13 @@
+# Configuração básica para WampServer
+Options +FollowSymLinks
+DirectoryIndex index.php index.html
+
+# Permitir acesso a arquivos de imagem
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|css|js|ico)$">
+    Allow from all
+</FilesMatch>
+
+# Configurações básicas de segurança
+<Files ".ht*">
+    Deny from all
+</Files>
