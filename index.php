@@ -32,11 +32,10 @@ $categories = getCategories($conn);
         <div class="header-top-bar">
             <div class="container-fluid">
                 <div class="row align-items-center py-2">
-                    <!-- Logo ANETI (À esquerda) -->
+                    <!-- Nome do Clube (À esquerda) -->
                     <div class="col-md-3">
                         <div class="brand-section d-flex align-items-center">
-                            <img src="assets/images/logo-aneti.png" alt="ANETI" class="brand-logo me-2">
-                            <span class="brand-name">Clube ANETI</span>
+                            <span class="brand-name">Clube de Benefícios ANETI</span>
                         </div>
                     </div>
                     
@@ -54,10 +53,11 @@ $categories = getCategories($conn);
                         </div>
                     </div>
                     
-                    <!-- Botão Entrar (À direita) -->
+                    <!-- Botões (À direita) -->
                     <div class="col-md-3">
                         <div class="header-actions text-end">
-                            <a href="public/login.php" class="login-button">Entrar</a>
+                            <a href="public/login.php" class="login-button me-2">Entrar</a>
+                            <a href="empresa/cadastro.php" class="partner-button">Seja um Parceiro</a>
                         </div>
                     </div>
                 </div>

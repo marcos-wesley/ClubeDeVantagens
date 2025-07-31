@@ -47,7 +47,7 @@
 
 /* Header com Degradê - Modelo Referência */
 .gradient-header {
-    background: linear-gradient(to right, #ac2bff, #f14d71, #ff9b3f);
+    background: linear-gradient(to right, #012d6a, #25a244);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     z-index: 1030;
 }
@@ -63,9 +63,7 @@
 }
 
 .brand-logo {
-    height: 40px;
-    width: auto;
-    filter: brightness(0) invert(1); /* Torna a logo branca */
+    display: none; /* Logo removida */
 }
 
 .brand-name {
@@ -121,21 +119,41 @@
     color: #333;
 }
 
-/* Botão Entrar */
+/* Botões do Header */
 .login-button {
     background: rgba(0, 0, 0, 0.2);
     color: white;
     text-decoration: none;
-    padding: 8px 20px;
+    padding: 8px 15px;
     border-radius: 20px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.3);
+    display: inline-block;
 }
 
 .login-button:hover {
     background: rgba(0, 0, 0, 0.3);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.partner-button {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    display: inline-block;
+}
+
+.partner-button:hover {
+    background: rgba(255, 255, 255, 0.3);
     color: white;
     transform: translateY(-1px);
 }
@@ -169,10 +187,15 @@
     flex-shrink: 0;
 }
 
-.category-item:hover {
+.category-item:hover,
+.category-item.active {
     color: white;
     background: rgba(255, 255, 255, 0.15);
     transform: translateY(-2px);
+}
+
+.category-item.active {
+    background: rgba(255, 255, 255, 0.25);
 }
 
 .category-item i {
@@ -208,6 +231,12 @@
         text-align: center !important;
     }
     
+    .header-actions .login-button,
+    .header-actions .partner-button {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+    
     .categories-menu {
         gap: 20px;
         justify-content: flex-start;
@@ -221,12 +250,8 @@
         font-size: 10px;
     }
     
-    .brand-logo {
-        height: 35px;
-    }
-    
     .brand-name {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 }
 
