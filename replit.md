@@ -4,7 +4,18 @@
 
 This is a comprehensive web system for ANETI's Benefits Club (Clube de Vantagens da ANETI) built with pure PHP, HTML, CSS, and Bootstrap. The system provides a complete membership benefits platform with advanced administrative management, partner company discount access, coupon generation, and detailed analytics dashboard.
 
-## Recent Changes (January 31, 2025)
+## Recent Changes (July 31, 2025)
+
+### Database Migration: PostgreSQL → MySQL
+- **Complete Migration**: Sistema migrado de PostgreSQL para MySQL 8.0
+- **MySQL Server**: Configurado para rodar na porta 3306 com socket local
+- **Schema Updated**: Schema MySQL aplicado com todas as tabelas e dados
+- **Connection Fixed**: Conexão PHP atualizada para usar MySQL com socket
+- **New Tables**: Adicionada tabela slides_banner e membros
+- **Enhanced Fields**: Empresas agora têm campos desconto, website, endereco, imagem_detalhes
+- **SQL Fixes**: Corrigidas funções PHP para compatibilidade com MySQL (LIMIT com prepared statements)
+
+## Previous Changes (January 31, 2025)
 
 ### Header Final Implementation - ANETI Colors
 - **Two-Line Header**: Header em duas linhas com identidade visual ANETI
@@ -71,9 +82,10 @@ Preferred communication style: Simple, everyday language.
 - **File Structure**: Modular approach with separate files for different functionalities
 
 ### Data Storage
-- **Database**: Not yet implemented (will likely use MySQL/PostgreSQL when added)
-- **Current State**: System appears to be in early development phase
-- **Future Implementation**: Will need database for storing users, companies, coupons, and member data
+- **Database**: MySQL 8.0 running locally with socket connection
+- **Tables**: Complete schema with empresas, usuarios, membros, admins, categorias, cupons, slides_banner
+- **Data**: Populated with demo data including 8 companies, 6 users, 12 categories, 8 coupons
+- **Views**: Statistical views for analytics (vw_empresa_stats, vw_usuario_stats)
 
 ## Key Components
 
