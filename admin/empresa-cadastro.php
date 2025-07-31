@@ -30,14 +30,14 @@ if ($_POST) {
     $nome = sanitizeInput($_POST['nome']);
     $categoria = sanitizeInput($_POST['categoria']);
     $descricao = sanitizeInput($_POST['descricao']);
+    $cnpj = sanitizeInput($_POST['cnpj']);
     $endereco = sanitizeInput($_POST['endereco']);
     $cidade = sanitizeInput($_POST['cidade']);
     $telefone = sanitizeInput($_POST['telefone']);
     $email = sanitizeInput($_POST['email']);
     $website = sanitizeInput($_POST['website']);
     $regras_beneficio = sanitizeInput($_POST['regras_beneficio']);
-    $desconto = sanitizeInput($_POST['desconto']);
-    // $avaliacao field removed - using avaliacao_media from database
+    $desconto = (int)sanitizeInput($_POST['desconto']);
     $status = sanitizeInput($_POST['status']);
     $destaque = isset($_POST['destaque']) ? true : false;
     
@@ -93,13 +93,13 @@ if ($_POST) {
                 $estado = sanitizeInput($_POST['estado'] ?? '');
                 $stmt = $conn->prepare("
                     UPDATE empresas SET 
-                    nome = ?, categoria = ?, descricao = ?, endereco = ?, 
+                    nome = ?, cnpj = ?, categoria = ?, descricao = ?, endereco = ?, 
                     cidade = ?, estado = ?, telefone = ?, email = ?, website = ?, logo = ?, imagem_detalhes = ?,
                     regras = ?, desconto = ?, status = ?, destaque = ?, updated_at = NOW()
                     WHERE id = ?
                 ");
                 $stmt->execute([
-                    $nome, $categoria, $descricao, $endereco, 
+                    $nome, $cnpj, $categoria, $descricao, $endereco, 
                     $cidade, $estado, $telefone, $email, $website, $logo_filename, $imagem_detalhes_filename,
                     $regras_beneficio, $desconto, $status, $destaque, $empresa_id
                 ]);
@@ -115,13 +115,13 @@ if ($_POST) {
                 $estado = sanitizeInput($_POST['estado'] ?? '');
                 $stmt = $conn->prepare("
                     INSERT INTO empresas (
-                        nome, categoria, descricao, endereco, cidade, estado,
+                        nome, cnpj, categoria, descricao, endereco, cidade, estado,
                         telefone, email, website, logo, imagem_detalhes, regras, desconto,
                         status, destaque, created_at, updated_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
                 ");
                 $stmt->execute([
-                    $nome, $categoria, $descricao, $endereco, $cidade, $estado,
+                    $nome, $cnpj, $categoria, $descricao, $endereco, $cidade, $estado,
                     $telefone, $email, $website, $logo_filename, $imagem_detalhes_filename, $regras_beneficio, 
                     $desconto, $status, $destaque
                 ]);
@@ -271,23 +271,19 @@ $categories = getCategories($conn);
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Desconto Oferecido (%)</label>
-                                        <input type="number" class="form-control" name="desconto" min="1" max="100"
-                                               value="<?php echo htmlspecialchars($empresa['desconto'] ?? ''); ?>" 
-                                               placeholder="Ex: 20">
+                                        <label class="form-label">CNPJ</label>
+                                        <input type="text" class="form-control" name="cnpj" 
+                                               value="<?php echo htmlspecialchars($empresa['cnpj'] ?? ''); ?>" 
+                                               placeholder="00.000.000/0000-00">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Avaliação Média</label>
-                                        <select class="form-select" name="avaliacao">
-                                            <option value="">Sem avaliação</option>
-                                            <option value="1" <?php echo ($empresa['avaliacao'] ?? '') == '1' ? 'selected' : ''; ?>>⭐ (1.0)</option>
-                                            <option value="2" <?php echo ($empresa['avaliacao'] ?? '') == '2' ? 'selected' : ''; ?>>⭐⭐ (2.0)</option>
-                                            <option value="3" <?php echo ($empresa['avaliacao'] ?? '') == '3' ? 'selected' : ''; ?>>⭐⭐⭐ (3.0)</option>
-                                            <option value="4" <?php echo ($empresa['avaliacao'] ?? '') == '4' ? 'selected' : ''; ?>>⭐⭐⭐⭐ (4.0)</option>
-                                            <option value="5" <?php echo ($empresa['avaliacao'] ?? '') == '5' ? 'selected' : ''; ?>>⭐⭐⭐⭐⭐ (5.0)</option>
-                                        </select>
+                                        <label class="form-label">Desconto Oferecido (%)</label>
+                                        <input type="number" class="form-control" name="desconto" min="0" max="100"
+                                               value="<?php echo htmlspecialchars($empresa['desconto'] ?? ''); ?>" 
+                                               placeholder="Ex: 20">
+                                        <div class="form-text">Percentual de desconto para membros ANETI</div>
                                     </div>
                                 </div>
                             </div>
