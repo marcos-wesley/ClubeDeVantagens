@@ -34,6 +34,12 @@
 
 /* Header styles */
 .main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    width: 100%;
     border-bottom: 3px solid var(--aneti-primary);
 }
 

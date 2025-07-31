@@ -82,11 +82,11 @@ $total_empresas = count($empresas);
     <div style="height: 140px;"></div>
     
     <!-- Page Header -->
-    <section class="page-header" style="background: linear-gradient(135deg, #012d6a 0%, #25a244 100%); padding: 40px 0; color: white;">
+    <section class="page-header" style="background: linear-gradient(135deg, #012d6a 0%, #25a244 100%); padding: 30px 0; color: white;">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h1 class="mb-2" style="font-size: 2.5rem; font-weight: 700;">
+                    <h1 class="mb-2" style="font-size: 2rem; font-weight: 700;">
                         <i class="fas <?php 
                             echo $categoria_nome === 'Destaque' ? 'fa-star' : 
                                 ($categoria_nome === 'Alimentação' ? 'fa-utensils' : 
@@ -101,7 +101,7 @@ $total_empresas = count($empresas);
                         ?>" style="margin-right: 15px;"></i>
                         <?php echo htmlspecialchars($page_title); ?>
                     </h1>
-                    <p class="mb-0" style="font-size: 1.1rem; opacity: 0.9;">
+                    <p class="mb-0" style="font-size: 1rem; opacity: 0.9;">
                         <?php echo $total_empresas; ?> benefício<?php echo $total_empresas !== 1 ? 's' : ''; ?> encontrado<?php echo $total_empresas !== 1 ? 's' : ''; ?>
                     </p>
                 </div>
@@ -117,7 +117,7 @@ $total_empresas = count($empresas);
     </section>
 
     <!-- Companies Grid - Same as Homepage Layout -->
-    <section class="companies-grid" style="padding: 40px 0; background: #f8f9fa;">
+    <section class="companies-grid" style="padding: 40px 0 60px 0; background: #f8f9fa;">
         <div class="container">
             <?php if (!empty($empresas)): ?>
                 <div class="row g-4">
