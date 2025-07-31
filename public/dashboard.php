@@ -210,7 +210,7 @@ $user_coupons = getUserCoupons($conn, $_SESSION['user_id']);
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="window.print()">
+                    <button type="button" class="btn btn-primary" onclick="printModalCoupon()">
                         <i class="fas fa-print"></i> Imprimir
                     </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -230,6 +230,102 @@ $user_coupons = getUserCoupons($conn, $_SESSION['user_id']);
             
             const modal = new bootstrap.Modal(document.getElementById('couponModal'));
             modal.show();
+        }
+        
+        function printModalCoupon() {
+            // Get modal content
+            const empresaNome = document.getElementById('modalEmpresaNome').textContent;
+            const codigo = document.getElementById('modalCouponCodigo').textContent;
+            const data = document.getElementById('modalCouponData').textContent;
+            
+            // Create print window
+            const printWindow = window.open('', '_blank', 'width=800,height=600');
+            
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Cupom - ${empresaNome}</title>
+                    <style>
+                        body { 
+                            padding: 20px; 
+                            font-family: Arial, sans-serif;
+                        }
+                        .coupon-display {
+                            border: 2px solid #000;
+                            padding: 30px;
+                            margin: 20px auto;
+                            max-width: 18cm;
+                            background: white;
+                            text-align: center;
+                        }
+                        .coupon-company-name {
+                            font-size: 24px;
+                            font-weight: bold;
+                            margin-bottom: 20px;
+                            color: #012d6a;
+                        }
+                        .coupon-code-label {
+                            font-size: 14px;
+                            font-weight: bold;
+                            margin-bottom: 10px;
+                            color: #000;
+                        }
+                        .coupon-code {
+                            font-size: 18px;
+                            font-weight: bold;
+                            border: 2px dashed #000;
+                            padding: 15px;
+                            margin: 15px 0;
+                            background: #f8f9fa;
+                            letter-spacing: 2px;
+                        }
+                        .coupon-date {
+                            font-size: 12px;
+                            color: #666;
+                            margin-top: 20px;
+                        }
+                        .coupon-footer {
+                            margin-top: 30px;
+                            font-size: 12px;
+                            color: #666;
+                            border-top: 1px solid #ddd;
+                            padding-top: 15px;
+                        }
+                        @media print {
+                            body { margin: 0; padding: 10px; }
+                            .coupon-display { margin: 0; }
+                        }
+                        @page {
+                            size: A4;
+                            margin: 2cm;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="coupon-display">
+                        <div class="coupon-company-name">${empresaNome}</div>
+                        <div class="coupon-code-label">CÓDIGO DO CUPOM</div>
+                        <div class="coupon-code">${codigo}</div>
+                        <div class="coupon-date">Gerado em: ${data}</div>
+                        <div class="coupon-footer">
+                            <strong>Clube de Benefícios ANETI</strong><br>
+                            Apresente este cupom na empresa parceira para aproveitar seu desconto.
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `);
+            
+            printWindow.document.close();
+            printWindow.focus();
+            
+            // Wait for content to load then print
+            setTimeout(() => {
+                printWindow.print();
+                printWindow.close();
+            }, 500);
         }
     </script>
 </body>
