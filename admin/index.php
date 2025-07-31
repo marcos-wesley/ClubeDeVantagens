@@ -95,6 +95,11 @@ foreach ($active_users as $index => $user) {
                             <i class="fas fa-users"></i> Membros
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="slides-banner.php">
+                            <i class="fas fa-images"></i> Slides do Banner
+                        </a>
+                    </li>
                 </ul>
                 
                 <ul class="navbar-nav">

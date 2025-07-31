@@ -244,13 +244,153 @@
     border-radius: 2px;
 }
 
-/* Hero section with ANETI design */
-.hero-section {
+/* Banner Slides System */
+.banner-slides {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.banner-slide-image {
+    height: 450px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+}
+
+/* Slide padrão quando não há slides ativos */
+.default-slide {
     background: linear-gradient(135deg, var(--aneti-primary) 0%, #0056b3 100%);
-    color: white;
-    padding: 3rem 0 4rem;
     position: relative;
-    overflow: hidden;
+}
+
+.default-slide-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    color: white;
+    z-index: 2;
+}
+
+.banner-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.banner-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+    font-weight: 400;
+}
+
+.banner-illustration svg {
+    max-width: 300px;
+    height: auto;
+}
+
+/* Controles do carousel */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 50px;
+    height: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.carousel-control-prev {
+    left: 20px;
+}
+
+.carousel-control-next {
+    right: 20px;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Indicadores do carousel */
+.carousel-indicators {
+    bottom: 20px;
+    margin-bottom: 0;
+}
+
+.carousel-indicators [data-bs-target] {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 0 6px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.carousel-indicators .active {
+    background-color: white;
+    transform: scale(1.2);
+}
+
+/* Responsive para slides */
+@media (max-width: 768px) {
+    .banner-slide-image {
+        height: 300px;
+    }
+    
+    .banner-title {
+        font-size: 2rem;
+    }
+    
+    .banner-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .carousel-control-prev {
+        left: 10px;
+    }
+    
+    .carousel-control-next {
+        right: 10px;
+    }
+    
+    .banner-illustration svg {
+        max-width: 250px;
+    }
+}
+
+@media (max-width: 576px) {
+    .banner-slide-image {
+        height: 250px;
+    }
+    
+    .default-slide-content .col-lg-4 {
+        display: none;
+    }
 }
 
 .hero-section::before {

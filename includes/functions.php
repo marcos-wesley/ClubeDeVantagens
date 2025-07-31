@@ -68,6 +68,80 @@ function getCategoryIcon($category) {
 }
 
 /**
+ * Get active banner slides
+ */
+function getBannerSlides($conn) {
+    try {
+        $stmt = $conn->prepare("SELECT * FROM slides_banner WHERE status = 'ativo' ORDER BY ordem ASC");
+        $stmt->execute();
+        return $stmt->fetchAll();
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
+/**
+ * Get all banner slides (admin)
+ */
+function getAllBannerSlides($conn) {
+    try {
+        $stmt = $conn->prepare("SELECT * FROM slides_banner ORDER BY ordem ASC");
+        $stmt->execute();
+        return $stmt->fetchAll();
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
+/**
+ * Add banner slide
+ */
+function addBannerSlide($conn, $imagem, $ordem, $status = 'ativo') {
+    try {
+        $stmt = $conn->prepare("INSERT INTO slides_banner (imagem, ordem, status) VALUES (?, ?, ?)");
+        return $stmt->execute([$imagem, $ordem, $status]);
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+/**
+ * Update banner slide
+ */
+function updateBannerSlide($conn, $id, $imagem, $ordem, $status) {
+    try {
+        $stmt = $conn->prepare("UPDATE slides_banner SET imagem = ?, ordem = ?, status = ?, data_atualizacao = CURRENT_TIMESTAMP WHERE id = ?");
+        return $stmt->execute([$imagem, $ordem, $status, $id]);
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+/**
+ * Delete banner slide
+ */
+function deleteBannerSlide($conn, $id) {
+    try {
+        $stmt = $conn->prepare("DELETE FROM slides_banner WHERE id = ?");
+        return $stmt->execute([$id]);
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+/**
+ * Toggle slide status
+ */
+function toggleSlideStatus($conn, $id) {
+    try {
+        $stmt = $conn->prepare("UPDATE slides_banner SET status = CASE WHEN status = 'ativo' THEN 'inativo' ELSE 'ativo' END WHERE id = ?");
+        return $stmt->execute([$id]);
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+/**
  * Search companies
  */
 function searchCompanies($conn, $query, $categoria = null, $cidade = null) {

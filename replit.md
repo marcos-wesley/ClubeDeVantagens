@@ -14,6 +14,14 @@ This is a comprehensive web system for ANETI's Benefits Club (Clube de Vantagens
 - **White Elements**: Logo em branco, texto branco, ícones brancos flat design
 - **Responsive**: Scroll horizontal para categorias em mobile, layout adaptável
 
+### Banner Slide System Implementation
+- **Database**: Tabela slides_banner com campos (id, imagem, ordem, status, datas)
+- **Frontend**: Carousel Bootstrap com auto-rotation (5s), controles manuais, indicadores
+- **Full Width**: Slides ocupam 100% largura, altura 450px (300px mobile)
+- **Admin Panel**: "Slides do Banner" - upload, ativar/desativar, reordenar, deletar
+- **Default Slide**: Slide padrão ANETI quando não há slides ativos
+- **Image Management**: Upload para /uploads/slides/, tamanho recomendado 1920x500px
+
 ### Homepage Complete Redesign - Following Reference Model
 - **Benefits in Highlight**: Redesigned carousel with real company logos (120x150px) and names
 - **Recently Added**: New card design with cover images, circular logos, ratings, and categories

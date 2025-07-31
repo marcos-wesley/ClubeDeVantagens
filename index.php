@@ -3,6 +3,9 @@ session_start();
 require_once 'config/database.php';
 require_once 'includes/functions.php';
 
+// Get banner slides
+$banner_slides = getBannerSlides($conn);
+
 // Get featured companies
 $featured_companies = getFeaturedCompanies($conn);
 
@@ -113,51 +116,80 @@ $categories = getCategories($conn);
     <!-- Spacer para Header Fixed -->
     <div style="height: 140px;"></div>
     
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="hero-content">
-                <div class="row align-items-center">
-                    <div class="col-lg-8">
-                        <h1 class="hero-title">Seja bem-vindo ao<br><strong>Clube ANETI</strong></h1>
-                        <p class="hero-subtitle">Descubra benefícios exclusivos para membros da ANETI</p>
-                        
-                        <!-- Search Form -->
-                        <div class="hero-search">
-                            <form action="public/buscar.php" method="GET" class="search-form">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="q" placeholder="Encontrar um benefício" aria-label="Buscar">
-                                    <button class="btn" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </form>
+    <!-- Banner Slides -->
+    <section class="banner-slides">
+        <?php if (!empty($banner_slides)): ?>
+            <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+                <!-- Slides -->
+                <div class="carousel-inner">
+                    <?php foreach ($banner_slides as $index => $slide): ?>
+                        <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                            <div class="banner-slide-image" style="background-image: url('uploads/slides/<?php echo htmlspecialchars($slide['imagem']); ?>');">
+                            </div>
                         </div>
+                    <?php endforeach; ?>
+                </div>
+                
+                <!-- Navigation arrows -->
+                <?php if (count($banner_slides) > 1): ?>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Próximo</span>
+                    </button>
+                <?php endif; ?>
+                
+                <!-- Indicators -->
+                <?php if (count($banner_slides) > 1): ?>
+                    <div class="carousel-indicators">
+                        <?php foreach ($banner_slides as $index => $slide): ?>
+                            <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="<?php echo $index; ?>" 
+                                    class="<?php echo $index === 0 ? 'active' : ''; ?>" aria-current="true" aria-label="Slide <?php echo $index + 1; ?>"></button>
+                        <?php endforeach; ?>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="hero-illustration">
-                            <svg class="hero-people" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Background discount circle -->
-                                <circle cx="200" cy="150" r="120" fill="rgba(1,45,106,0.1)" opacity="0.5"/>
-                                <text x="200" y="165" text-anchor="middle" font-size="60" fill="rgba(1,45,106,0.3)" font-weight="bold">%</text>
-                                
-                                <!-- Person 1 -->
-                                <circle cx="140" cy="120" r="25" fill="rgba(1,45,106,0.8)"/>
-                                <rect x="115" y="145" width="50" height="70" rx="25" fill="rgba(1,45,106,0.6)"/>
-                                
-                                <!-- Person 2 -->
-                                <circle cx="200" cy="100" r="22" fill="rgba(1,45,106,0.7)"/>
-                                <rect x="178" y="122" width="44" height="65" rx="22" fill="rgba(1,45,106,0.5)"/>
-                                
-                                <!-- Person 3 -->
-                                <circle cx="260" cy="130" r="20" fill="rgba(1,45,106,0.6)"/>
-                                <rect x="240" y="150" width="40" height="60" rx="20" fill="rgba(1,45,106,0.4)"/>
-                            </svg>
+                <?php endif; ?>
+            </div>
+        <?php else: ?>
+            <!-- Slide padrão ANETI -->
+            <div class="banner-slide-default">
+                <div class="banner-slide-image default-slide" style="background-image: url('assets/images/banner-default.jpg');">
+                    <div class="default-slide-content">
+                        <div class="container">
+                            <div class="row align-items-center">
+                                <div class="col-lg-8">
+                                    <h1 class="banner-title">Seja bem-vindo ao<br><strong>Clube ANETI</strong></h1>
+                                    <p class="banner-subtitle">Descubra benefícios exclusivos para membros da ANETI</p>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="banner-illustration">
+                                        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                                            <!-- Background discount circle -->
+                                            <circle cx="200" cy="150" r="120" fill="rgba(255,255,255,0.1)" opacity="0.5"/>
+                                            <text x="200" y="165" text-anchor="middle" font-size="60" fill="rgba(255,255,255,0.6)" font-weight="bold">%</text>
+                                            
+                                            <!-- Person 1 -->
+                                            <circle cx="140" cy="120" r="25" fill="rgba(255,255,255,0.8)"/>
+                                            <rect x="115" y="145" width="50" height="70" rx="25" fill="rgba(255,255,255,0.6)"/>
+                                            
+                                            <!-- Person 2 -->
+                                            <circle cx="200" cy="100" r="22" fill="rgba(255,255,255,0.7)"/>
+                                            <rect x="178" y="122" width="44" height="65" rx="22" fill="rgba(255,255,255,0.5)"/>
+                                            
+                                            <!-- Person 3 -->
+                                            <circle cx="260" cy="130" r="20" fill="rgba(255,255,255,0.6)"/>
+                                            <rect x="240" y="150" width="40" height="60" rx="20" fill="rgba(255,255,255,0.4)"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
     </section>
 
     <!-- Benefits Section -->
