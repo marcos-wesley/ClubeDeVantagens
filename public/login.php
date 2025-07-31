@@ -4,6 +4,11 @@ require_once '../config/database.php';
 require_once '../includes/functions.php';
 require_once '../includes/auth.php';
 
+// If user is already logged in, redirect to dashboard
+if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
+    redirect('dashboard.php');
+}
+
 $error = '';
 $success = '';
 
