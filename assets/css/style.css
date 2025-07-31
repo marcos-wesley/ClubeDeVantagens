@@ -2795,23 +2795,49 @@
     color: #333;
 }
 
-/* Main Use Button */
-.btn-use-main {
-    display: block;
-    width: 100%;
-    padding: 25px;
-    background: linear-gradient(135deg, #e91e63, #f06292);
+/* Botão USAR Destacado */
+.btn-usar-destaque {
+    background: linear-gradient(135deg, #e91e63, #f06292) !important;
+    border: none !important;
     color: white !important;
-    text-decoration: none;
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: bold;
-    border-radius: 10px;
-    box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
-    transition: all 0.3s ease;
-    border: none;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    padding: 15px 30px !important;
+    border-radius: 8px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-usar-destaque:hover {
+    background: linear-gradient(135deg, #d81b60, #ec407a) !important;
+    color: white !important;
+    text-decoration: none !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4) !important;
+}
+
+.btn-login-destaque {
+    background: linear-gradient(135deg, #e91e63, #f06292) !important;
+    border: none !important;
+    color: white !important;
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    padding: 15px 30px !important;
+    border-radius: 8px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-login-destaque:hover {
+    background: linear-gradient(135deg, #d81b60, #ec407a) !important;
+    color: white !important;
+    text-decoration: none !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4) !important;
 }
 
 .btn-use-main:hover {
@@ -2874,4 +2900,89 @@
 /* Force cache refresh */
 .btn-use-main {
     margin-bottom: 20px !important;
+}
+
+/* Sidebar Styles */
+.sidebar-content {
+    position: sticky;
+    top: 100px;
+}
+
+.company-logo-sidebar {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border: 3px solid #e9ecef;
+}
+
+.company-logo-placeholder {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #8B5CF6, #A855F7);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.company-name-sidebar {
+    color: #333;
+    font-weight: 600;
+}
+
+.company-description-text {
+    line-height: 1.5;
+    color: #666;
+}
+
+/* Cards Enhancement */
+.card {
+    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
+    transform: translateY(-1px);
+}
+
+.card-header {
+    background-color: #f8f9fa !important;
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* Step and Regulation Items */
+.step-item, .regulation-item {
+    align-items: flex-start;
+    padding: 0.5rem 0;
+}
+
+.step-number, .regulation-number {
+    min-width: auto;
+    font-size: 0.8rem;
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.1rem;
+}
+
+.step-text, .regulation-text {
+    line-height: 1.4;
+    color: #555;
+}
+
+/* Action Button Section */
+.action-button-section {
+    margin-bottom: 1.5rem;
+}
+
+/* Map styling */
+#map {
+    border: 1px solid #e9ecef;
 }

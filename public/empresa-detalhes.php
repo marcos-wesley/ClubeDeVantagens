@@ -180,84 +180,96 @@ try {
     <!-- Main Content -->
     <div class="container mt-4">
         <div class="row">
+            <!-- Main Content Column -->
             <div class="col-lg-8">
-                <div class="tab-content">
-                    <!-- Tab Detalhes -->
-                    <div class="tab-pane fade show active" id="detalhes">
-                        <!-- Main Image -->
-                        <div class="benefit-main-image mb-4">
-                            <?php if ($company['imagem_detalhes']): ?>
-                                <img src="../uploads/<?php echo htmlspecialchars($company['imagem_detalhes']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid rounded" style="width: 100%; height: 400px; object-fit: cover;">
-                            <?php elseif ($company['logo']): ?>
-                                <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid rounded" style="width: 100%; height: 400px; object-fit: cover;">
-                            <?php else: ?>
-                                <div class="benefit-placeholder-image d-flex align-items-center justify-content-center rounded" style="height: 400px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
-                                    <div class="text-center text-muted">
-                                        <i class="fas fa-image fa-3x mb-3"></i>
-                                        <p class="mb-0">Imagem do <?php echo htmlspecialchars($company['nome']); ?></p>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-
-                        <!-- Como Funciona -->
-                        <div class="benefit-section mb-4">
-                            <h4 class="benefit-section-title text-primary mb-3">Como funciona:</h4>
-                            <div class="how-it-works">
-                                <div class="step mb-2">
-                                    <span class="step-number me-2">1)</span>
-                                    <span class="step-text">Clique no botão usar;</span>
-                                </div>
-                                <div class="step mb-2">
-                                    <span class="step-number me-2">2)</span>
-                                    <span class="step-text">Na página do parceiro, faça seu cadastro;</span>
-                                </div>
-                                <div class="step mb-2">  
-                                    <span class="step-number me-2">3)</span>
-                                    <span class="step-text">Escolha seu ingresso na opção individual ou opção 2 ingresso web multi 4 pessoas;</span>
-                                </div>
-                                <div class="step mb-2">
-                                    <span class="step-number me-2">4)</span>
-                                    <span class="step-text">Fazer contratação com desconto já aplicado;</span>
-                                </div>
-                                <div class="step mb-2">
-                                    <span class="step-number me-2">5)</span>
-                                    <span class="step-text">Na dia escolhido para diversão, não esquecer de levar documento pessoal, será necessário para entrar no Parque.</span>
+                <!-- Main Image -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body p-0">
+                        <?php if ($company['imagem_detalhes']): ?>
+                            <img src="../uploads/<?php echo htmlspecialchars($company['imagem_detalhes']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid w-100" style="height: 300px; object-fit: cover; border-radius: 8px;">
+                        <?php elseif ($company['logo']): ?>
+                            <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid w-100" style="height: 300px; object-fit: cover; border-radius: 8px;">
+                        <?php else: ?>
+                            <div class="d-flex align-items-center justify-content-center" style="height: 300px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 8px;">
+                                <div class="text-center text-muted">
+                                    <i class="fas fa-image fa-3x mb-3"></i>
+                                    <p class="mb-0">Imagem do <?php echo htmlspecialchars($company['nome']); ?></p>
                                 </div>
                             </div>
-                        </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
 
-                        <!-- Regulamento -->  
-                        <div class="benefit-section mb-4">
-                            <h4 class="benefit-section-title text-primary mb-3">Regulamento</h4>
-                            <div class="regulation-content">
-                                <?php if ($company['regras']): ?>
-                                    <p><?php echo nl2br(htmlspecialchars($company['regras'])); ?></p>
-                                <?php else: ?>
-                                    <div class="regulation-item mb-2">
-                                        <span class="regulation-number me-2">1)</span>
-                                        <span class="regulation-text">Desconto válido conforme período determinado.</span>
-                                    </div>
-                                    <div class="regulation-item mb-2">
-                                        <span class="regulation-number me-2">2)</span>
-                                        <span class="regulation-text">Os descontos podem variar a cada mês.</span>
-                                    </div>
-                                <?php endif; ?>
+                <!-- Como Funciona -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0 text-primary">
+                            <i class="fas fa-play-circle me-2"></i>Como funciona:
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="how-it-works-list">
+                            <div class="step-item d-flex mb-3">
+                                <span class="step-number badge bg-primary me-3">1</span>
+                                <span class="step-text">Clique no botão usar;</span>
                             </div>
-                        </div>
-
-                        <!-- Localização -->
-                        <div class="benefit-section mb-4">
-                            <h4 class="benefit-section-title text-primary mb-3">
-                                <i class="fas fa-map-marker-alt me-2"></i>Localização
-                            </h4>
-                            <div class="location-section">
-                                <div class="location-map mb-3">
-                                    <div id="map" style="height: 350px; width: 100%; border-radius: 8px; background: #f8f9fa;"></div>
-                                </div>
+                            <div class="step-item d-flex mb-3">
+                                <span class="step-number badge bg-primary me-3">2</span>
+                                <span class="step-text">Na página do parceiro, faça seu cadastro;</span>
+                            </div>
+                            <div class="step-item d-flex mb-3">
+                                <span class="step-number badge bg-primary me-3">3</span>
+                                <span class="step-text">Escolha seu ingresso na opção individual ou opção 2 ingresso web multi 4 pessoas;</span>
+                            </div>
+                            <div class="step-item d-flex mb-3">
+                                <span class="step-number badge bg-primary me-3">4</span>
+                                <span class="step-text">Fazer contratação com desconto já aplicado;</span>
+                            </div>
+                            <div class="step-item d-flex mb-0">
+                                <span class="step-number badge bg-primary me-3">5</span>
+                                <span class="step-text">No dia escolhido para diversão, não esquecer de levar documento pessoal, será necessário para entrar no Parque.</span>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Regulamento -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0 text-primary">
+                            <i class="fas fa-file-contract me-2"></i>Regulamento
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <?php if ($company['regras']): ?>
+                            <p class="mb-0"><?php echo nl2br(htmlspecialchars($company['regras'])); ?></p>
+                        <?php else: ?>
+                            <div class="regulation-list">
+                                <div class="regulation-item d-flex mb-2">
+                                    <span class="regulation-number badge bg-secondary me-3">1</span>
+                                    <span class="regulation-text">Desconto válido conforme período determinado.</span>
+                                </div>
+                                <div class="regulation-item d-flex mb-0">
+                                    <span class="regulation-number badge bg-secondary me-3">2</span>
+                                    <span class="regulation-text">Os descontos podem variar a cada mês.</span>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <!-- Localização -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0 text-primary">
+                            <i class="fas fa-map-marker-alt me-2"></i>Localização
+                        </h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="map" style="height: 300px; width: 100%; border-radius: 0 0 8px 8px;"></div>
+                    </div>
+                </div>
+            </div>
 
                     <!-- Tab Avaliações -->
                     <div class="tab-pane fade" id="avaliacoes">
@@ -445,38 +457,55 @@ try {
 
             <!-- Sidebar -->
             <div class="col-lg-4">
-                <div class="benefit-sidebar sticky-top" style="top: 160px;">
-                    <!-- Main Action Button -->
-                    <div class="use-button-container mb-4">
+                <div class="sidebar-content">
+                    <!-- Action Button (Bottom of sidebar like in model) -->
+                    <div class="action-button-section mb-4">
                         <?php if (isLoggedIn()): ?>
-                            <a href="gerar-cupom.php?empresa=<?php echo $company['id']; ?>" class="btn-use-main">
+                            <a href="gerar-cupom.php?empresa=<?php echo $company['id']; ?>" class="btn btn-usar-destaque w-100">
                                 USAR
                             </a>
                         <?php else: ?>
-                            <a href="login.php" class="btn-use-main">
+                            <a href="login.php" class="btn btn-login-destaque w-100">
                                 FAZER LOGIN
                             </a>
                         <?php endif; ?>
                     </div>
                     
-                    <!-- Company Logo -->
-                    <div class="company-mini-logo text-center mb-4">
-                        <?php if ($company['logo']): ?>
-                            <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid #e9ecef;">
-                        <?php else: ?>
-                            <div class="logo-placeholder-mini bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 100px; height: 100px; font-size: 2.5rem; font-weight: bold;">
-                                <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
-                            </div>
-                        <?php endif; ?>
+                    <!-- Company Logo Card -->
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body text-center">
+                            <?php if ($company['logo']): ?>
+                                <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="company-logo-sidebar rounded-circle mb-3">
+                            <?php else: ?>
+                                <div class="company-logo-placeholder rounded-circle mx-auto mb-3">
+                                    <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
+                                </div>
+                            <?php endif; ?>
+                            
+                            <h6 class="company-name-sidebar mb-2"><?php echo htmlspecialchars($company['nome']); ?></h6>
+                            <small class="text-muted"><?php echo htmlspecialchars($company['categoria']); ?></small>
+                            
+                            <?php if ($company['desconto']): ?>
+                                <div class="discount-info mt-2">
+                                    <span class="badge bg-success">
+                                        <?php echo $company['desconto']; ?>% de desconto
+                                    </span>
+                                </div>
+                            <?php endif; ?>
+                        </div>
                     </div>
                     
-                    <!-- Company Description -->
-                    <div class="company-description bg-light p-3 rounded">
-                        <?php if ($company['descricao']): ?>
-                            <p class="mb-0 text-justify"><?php echo nl2br(htmlspecialchars($company['descricao'])); ?></p>
-                        <?php else: ?>
-                            <p class="mb-0 text-justify">Inaugurado em 2015, o novo Parque da Mônica voltou com atrações para a alegria das famílias brasileiras e do mundo! Localizado no Shopping SP Market, Zona Sul de São Paulo, o novo Parque coberto da América Latina com 1 mil m² e superatrações que divertem pais e filhos, de forma lúdica educativa e interativa, dentro do universo mais encantador das histórias em quadrinhas criadas pelo Cartunist Maurício de Sousa. Com infraestrutura completa, o novo Parque da Mônica proporciona conveniência, conforto, alegria e segurança a todos os visitantes, tudo isso e muito mais do lado da Turma da Mônica!</p>
-                        <?php endif; ?>
+                    <!-- Company Description Card -->
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <div class="company-description-text">
+                                <?php if ($company['descricao']): ?>
+                                    <p class="mb-0 small text-justify"><?php echo nl2br(htmlspecialchars($company['descricao'])); ?></p>
+                                <?php else: ?>
+                                    <p class="mb-0 small text-justify">Inaugurado em 2015, o novo Parque da Mônica voltou com atrações para a alegria das famílias brasileiras e do mundo! Localizado no Shopping SP Market, Zona Sul de São Paulo, o novo Parque coberto da América Latina com 1 mil m² e superatrações que divertem pais e filhos, de forma lúdica educativa e interativa, dentro do universo mais encantador das histórias em quadrinhas criadas pelo Cartunist Maurício de Sousa. Com infraestrutura completa, o novo Parque da Mônica proporciona conveniência, conforto, alegria e segurança a todos os visitantes, tudo isso e muito mais do lado da Turma da Mônica!</p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
