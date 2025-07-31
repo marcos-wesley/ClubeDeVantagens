@@ -251,10 +251,11 @@ function formatDate($date) {
 }
 
 /**
- * Check if user is logged in
+ * Check if user is logged in (updated for WordPress API integration)
  */
 function isLoggedIn() {
-    return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
+    return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && 
+           isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
 }
 
 /**

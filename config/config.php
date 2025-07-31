@@ -5,11 +5,13 @@ define('SITE_URL', 'http://localhost:5000');
 define('UPLOAD_PATH', 'uploads/');
 define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5MB
 
-// User plans
+// User plans (updated for WordPress API integration)
 define('USER_PLANS', [
     'junior' => 'Júnior',
-    'pleno' => 'Pleno',
-    'senior' => 'Sênior'
+    'pleno' => 'Pleno', 
+    'senior' => 'Sênior',
+    'honra' => 'Honra',
+    'diretivo' => 'Diretivo'
 ]);
 
 // Session timeout (30 minutes)

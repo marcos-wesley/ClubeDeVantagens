@@ -6,17 +6,22 @@ This is a comprehensive web system for ANETI's Benefits Club (Clube de Vantagens
 
 ## Recent Changes (July 31, 2025)
 
-### Authentication System Complete Implementation - RESOLVED
-- **Email + Password Login**: Sistema de login com email e senha implementado (MD5 hash)
-- **Database Schema**: Campo 'password' adicionado à tabela usuarios no MySQL (corrigida incompatibilidade PostgreSQL/MySQL)
-- **User Dropdown**: Menu dropdown funcional com nome do usuário, seta visual e opções Dashboard/Logout
-- **Session Management**: Sistema de sessão corrigido para persistir login entre páginas
-- **Logout Functionality**: Arquivo logout.php criado para destruir sessão adequadamente
-- **Security Enhancement**: Validação de email e senha obrigatórios para autenticação
-- **Demo Users**: Todos os usuários demo configurados com senha padrão '123456'
-- **Dashboard Layout**: Padding-top corrigido para compensar header fixo (160px)
-- **Gerar Cupom Layout**: Página de gerar cupom corrigida com estilos ANETI adequados
-- **Bootstrap Integration**: JavaScript Bootstrap carregado corretamente para dropdown functionality
+### WordPress API Login Integration - NEW
+- **API Integration**: Sistema de login migrado para usar API do WordPress da ANETI
+- **Endpoint**: POST https://app.aneti.org.br/wp-json/aneti/v1/login
+- **Authentication Flow**: Login via email/senha através da API externa com validação de planos
+- **Plan Access Control**: Apenas planos Júnior, Pleno, Sênior, Honra e Diretivo têm acesso
+- **Session Management**: Dados do usuário (user_id, nome, email, plano) salvos na sessão via API
+- **Error Handling**: Mensagens de erro específicas da API ("Credenciais inválidas", "Plano não dá acesso ao clube")
+- **Plan Mapping**: Mapeamento de planos da API para formato interno da aplicação
+- **Backward Compatibility**: Funções de sessão atualizadas para manter compatibilidade com páginas existentes
+
+### Coupon System Print Optimization - RESOLVED
+- **Print System Fixed**: Sistema de impressão de cupons totalmente corrigido com CSS otimizado
+- **Color Contrast**: Cores ajustadas para máximo contraste e legibilidade em impressão
+- **JavaScript Print**: Funções printCoupon() e printModalCoupon() implementadas com popup windows
+- **A4 Layout**: Formatação A4 profissional com margens de 2cm e tipografia otimizada
+- **White Background**: Fundo branco forçado com !important para garantir impressão limpa
 
 ### Company Details Page Redesign & Review System 
 - **Complete Redesign**: Página empresa-detalhes.php totalmente redesenhada com layout moderno

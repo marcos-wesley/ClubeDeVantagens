@@ -3,6 +3,7 @@ session_start();
 require_once '../config/database.php';
 require_once '../includes/functions.php';
 require_once '../includes/auth.php';
+require_once '../includes/wordpress_api.php';
 
 // If user is already logged in, redirect to dashboard
 if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
@@ -23,10 +24,13 @@ if ($_POST) {
     } elseif (!validateEmail($email)) {
         $error = 'E-mail inválido.';
     } else {
-        if (loginUser($conn, $email, $password)) {
+        // Use WordPress API for authentication
+        $loginResult = loginUserViaAPI($email, $password);
+        
+        if ($loginResult['success']) {
             redirect('dashboard.php');
         } else {
-            $error = 'E-mail ou senha incorretos.';
+            $error = $loginResult['message'];
         }
     }
 }
