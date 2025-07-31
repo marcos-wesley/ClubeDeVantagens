@@ -4,17 +4,15 @@
  */
 
 /**
- * Login user (simplified for MVP)
+ * Login user with email and password
  */
-function loginUser($conn, $email, $password = null) {
-    // For MVP, we'll use a simple email-based login
-    // In production, implement proper password authentication
-    
+function loginUser($conn, $email, $password) {
+    // Authenticate user with email and password
     $stmt = $conn->prepare("SELECT * FROM usuarios WHERE email = ? AND ativo = true");
     $stmt->execute([$email]);
     $user = $stmt->fetch();
     
-    if ($user) {
+    if ($user && md5($password) === $user['password']) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_nome'] = $user['nome'];
         $_SESSION['user_email'] = $user['email'];

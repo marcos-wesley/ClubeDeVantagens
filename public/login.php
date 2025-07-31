@@ -14,16 +14,19 @@ $success = '';
 
 if ($_POST) {
     $email = sanitizeInput($_POST['email']);
+    $password = sanitizeInput($_POST['password']);
     
     if (empty($email)) {
         $error = 'Por favor, informe seu e-mail.';
+    } elseif (empty($password)) {
+        $error = 'Por favor, informe sua senha.';
     } elseif (!validateEmail($email)) {
         $error = 'E-mail inválido.';
     } else {
-        if (loginUser($conn, $email)) {
+        if (loginUser($conn, $email, $password)) {
             redirect('dashboard.php');
         } else {
-            $error = 'E-mail não encontrado ou usuário inativo.';
+            $error = 'E-mail ou senha incorretos.';
         }
     }
 }
@@ -124,6 +127,12 @@ if ($_POST) {
                                 <div class="form-text">Use seu e-mail cadastrado na ANETI</div>
                             </div>
                             
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Senha</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                                <div class="form-text">Digite sua senha de acesso</div>
+                            </div>
+                            
                             <div class="d-grid">
                                 <button type="submit" class="btn aneti-btn">
                                     <i class="fas fa-sign-in-alt"></i> Entrar
@@ -147,9 +156,10 @@ if ($_POST) {
                         <div class="card-body">
                             <small class="text-muted">
                                 Para testar o sistema, use um dos e-mails abaixo:<br>
-                                • joao.silva@email.com (Plano Júnior)<br>
-                                • maria.santos@email.com (Plano Pleno)<br>
-                                • carlos.oliveira@email.com (Plano Sênior)
+                                <strong>E-mail:</strong> joao.silva@email.com | <strong>Senha:</strong> 123456<br>
+                                <strong>E-mail:</strong> maria.santos@email.com | <strong>Senha:</strong> 123456<br>
+                                <strong>E-mail:</strong> carlos.oliveira@email.com | <strong>Senha:</strong> 123456<br>
+                                <em>Todos os usuários demo usam a senha: 123456</em>
                             </small>
                         </div>
                     </div>

@@ -6,11 +6,14 @@ This is a comprehensive web system for ANETI's Benefits Club (Clube de Vantagens
 
 ## Recent Changes (July 31, 2025)
 
-### Authentication System Fixes & UI Improvements
-- **Login/Logout Fixed**: Header agora verifica sessão e mostra botão correto (Entrar/Sair)
+### Authentication System Complete Implementation
+- **Email + Password Login**: Sistema de login com email e senha implementado (MD5 hash)
+- **Database Schema**: Campo 'password' adicionado à tabela usuarios 
 - **User Dropdown**: Menu dropdown com nome do usuário, link para dashboard e logout
 - **Session Management**: Sistema de sessão corrigido para persistir login entre páginas
 - **Logout Functionality**: Arquivo logout.php criado para destruir sessão adequadamente
+- **Security Enhancement**: Validação de email e senha obrigatórios para autenticação
+- **Demo Users**: Todos os usuários demo configurados com senha padrão '123456'
 - **Dashboard Layout**: Padding-top corrigido para compensar header fixo (160px)
 - **Gerar Cupom Layout**: Página de gerar cupom corrigida com estilos ANETI adequados
 
