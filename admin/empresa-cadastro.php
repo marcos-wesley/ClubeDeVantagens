@@ -41,14 +41,46 @@ if ($_POST) {
     $status = sanitizeInput($_POST['status']);
     $destaque = isset($_POST['destaque']) ? true : false;
     
-    // Handle logo upload
+    // Handle file uploads
     $logo_filename = $empresa['logo'] ?? null;
+    $imagem_detalhes_filename = $empresa['imagem_detalhes'] ?? null;
+    
+    $upload_dir = '../uploads/';
+    if (!is_dir($upload_dir)) {
+        mkdir($upload_dir, 0755, true);
+    }
+    
+    // Handle logo upload
     if (isset($_FILES['logo']) && $_FILES['logo']['size'] > 0) {
-        $upload_result = uploadFile($_FILES['logo']);
-        if ($upload_result['success']) {
-            $logo_filename = $upload_result['filename'];
+        $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+        if (in_array($_FILES['logo']['type'], $allowed_types) && $_FILES['logo']['size'] <= 5 * 1024 * 1024) {
+            $extension = pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION);
+            $logo_filename = uniqid() . '.' . $extension;
+            $upload_path = $upload_dir . $logo_filename;
+            
+            if (!move_uploaded_file($_FILES['logo']['tmp_name'], $upload_path)) {
+                $error = 'Erro ao fazer upload da logo.';
+                $logo_filename = $empresa['logo'] ?? null;
+            }
         } else {
-            $error = $upload_result['message'];
+            $error = 'Arquivo de logo inválido. Use JPG, PNG ou GIF até 5MB.';
+        }
+    }
+    
+    // Handle detail image upload
+    if (isset($_FILES['imagem_detalhes']) && $_FILES['imagem_detalhes']['size'] > 0) {
+        $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+        if (in_array($_FILES['imagem_detalhes']['type'], $allowed_types) && $_FILES['imagem_detalhes']['size'] <= 5 * 1024 * 1024) {
+            $extension = pathinfo($_FILES['imagem_detalhes']['name'], PATHINFO_EXTENSION);
+            $imagem_detalhes_filename = uniqid() . '.' . $extension;
+            $upload_path = $upload_dir . $imagem_detalhes_filename;
+            
+            if (!move_uploaded_file($_FILES['imagem_detalhes']['tmp_name'], $upload_path)) {
+                $error = 'Erro ao fazer upload da imagem de detalhes.';
+                $imagem_detalhes_filename = $empresa['imagem_detalhes'] ?? null;
+            }
+        } else {
+            $error = 'Arquivo de imagem de detalhes inválido. Use JPG, PNG ou GIF até 5MB.';
         }
     }
     
@@ -58,17 +90,17 @@ if ($_POST) {
         try {
             if ($edit_mode) {
                 // Update empresa
+                $estado = sanitizeInput($_POST['estado'] ?? '');
                 $stmt = $conn->prepare("
                     UPDATE empresas SET 
                     nome = ?, categoria = ?, descricao = ?, endereco = ?, 
-                    cidade = ?, estado = ?, telefone = ?, email = ?, website = ?, logo = ?,
+                    cidade = ?, estado = ?, telefone = ?, email = ?, website = ?, logo = ?, imagem_detalhes = ?,
                     regras = ?, desconto = ?, avaliacao_media = ?, status = ?, destaque = ?, updated_at = NOW()
                     WHERE id = ?
                 ");
-                $estado = sanitizeInput($_POST['estado']);
                 $stmt->execute([
                     $nome, $categoria, $descricao, $endereco, 
-                    $cidade, $estado, $telefone, $email, $website, $logo_filename,
+                    $cidade, $estado, $telefone, $email, $website, $logo_filename, $imagem_detalhes_filename,
                     $regras_beneficio, $desconto, $avaliacao, $status, $destaque, $empresa_id
                 ]);
                 $message = 'Empresa atualizada com sucesso!';
@@ -80,17 +112,17 @@ if ($_POST) {
                 
             } else {
                 // Insert new empresa
+                $estado = sanitizeInput($_POST['estado'] ?? '');
                 $stmt = $conn->prepare("
                     INSERT INTO empresas (
                         nome, categoria, descricao, endereco, cidade, estado,
-                        telefone, email, website, logo, regras, desconto, avaliacao_media,
+                        telefone, email, website, logo, imagem_detalhes, regras, desconto, avaliacao_media,
                         status, destaque, created_at, updated_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
                 ");
-                $estado = sanitizeInput($_POST['estado']);
                 $stmt->execute([
                     $nome, $categoria, $descricao, $endereco, $cidade, $estado,
-                    $telefone, $email, $website, $logo_filename, $regras_beneficio, 
+                    $telefone, $email, $website, $logo_filename, $imagem_detalhes_filename, $regras_beneficio, 
                     $desconto, $avaliacao, $status, $destaque
                 ]);
                 $message = 'Empresa cadastrada com sucesso!';
@@ -265,10 +297,23 @@ $categories = getCategories($conn);
                                 <input type="file" class="form-control" name="logo" accept="image/*">
                                 <?php if (!empty($empresa['logo'])): ?>
                                     <div class="mt-2">
-                                        <small class="text-muted">Logo atual: <?php echo htmlspecialchars($empresa['logo']); ?></small>
+                                        <img src="../uploads/<?php echo htmlspecialchars($empresa['logo']); ?>" alt="Logo atual" style="max-width: 100px; max-height: 100px;" class="img-thumbnail">
+                                        <br><small class="text-muted">Logo atual: <?php echo htmlspecialchars($empresa['logo']); ?></small>
                                     </div>
                                 <?php endif; ?>
                                 <div class="form-text">Formatos aceitos: JPG, PNG, GIF. Tamanho máximo: 5MB</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Imagem de Detalhes</label>
+                                <input type="file" class="form-control" name="imagem_detalhes" accept="image/*">
+                                <?php if (!empty($empresa['imagem_detalhes'])): ?>
+                                    <div class="mt-2">
+                                        <img src="../uploads/<?php echo htmlspecialchars($empresa['imagem_detalhes']); ?>" alt="Imagem de detalhes" style="max-width: 200px; max-height: 150px;" class="img-thumbnail">
+                                        <br><small class="text-muted">Imagem atual: <?php echo htmlspecialchars($empresa['imagem_detalhes']); ?></small>
+                                    </div>
+                                <?php endif; ?>
+                                <div class="form-text">Imagem que aparece na página de detalhes. Formatos aceitos: JPG, PNG, GIF. Tamanho máximo: 5MB</div>
                             </div>
 
                             <div class="mb-3">

@@ -114,7 +114,7 @@ try {
                             <span class="rating-text"><?php echo $avg_rating; ?></span>
                         </div>
                         <p class="benefit-category"><?php echo htmlspecialchars($company['categoria']); ?></p>
-                        <p class="benefit-discount">20% de desconto em todos os serviços</p>
+                        <p class="benefit-discount"><?php echo $company['desconto'] ? $company['desconto'] . '% de desconto' : 'Desconto especial para membros ANETI'; ?></p>
                     </div>
                 </div>
             </div>
@@ -178,7 +178,9 @@ try {
                     <div class="tab-pane fade show active" id="detalhes">
                         <!-- Main Image -->
                         <div class="benefit-main-image mb-4">
-                            <?php if ($company['logo']): ?>
+                            <?php if ($company['imagem_detalhes']): ?>
+                                <img src="../uploads/<?php echo htmlspecialchars($company['imagem_detalhes']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid">
+                            <?php elseif ($company['logo']): ?>
                                 <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid">
                             <?php else: ?>
                                 <div class="benefit-placeholder-image">
