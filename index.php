@@ -23,53 +23,58 @@ $categories = getCategories($conn);
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Modern Header -->
-    <header class="modern-header">
-        <div class="container">
-            <!-- Top Header -->
-            <div class="header-top">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <div class="brand-section">
-                            <div class="brand-logo">
-                                <i class="fas fa-percent"></i>
-                            </div>
-                            <div class="brand-text">
-                                <h1>Clube ANETI</h1>
-                                <p>Encontrar um benefício</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="user-menu">
-                            <a href="public/login.php"><i class="fas fa-user"></i> Entrar</a>
-                            <a href="empresa/cadastro.php"><i class="fas fa-store"></i> Cadastre sua Empresa</a>
+    <!-- ANETI Header - Fixed Top -->
+    <header class="aneti-header fixed-top">
+        <div class="container-fluid">
+            <div class="row align-items-center py-3">
+                <!-- Logo e Nome do Projeto (À esquerda) -->
+                <div class="col-md-4">
+                    <div class="aneti-brand d-flex align-items-center">
+                        <img src="assets/images/logo-aneti.png" alt="ANETI" class="aneti-logo me-3">
+                        <div class="brand-text">
+                            <h2 class="aneti-title mb-0">Clube ANETI</h2>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Categories Navigation -->
-            <div class="categories-nav-horizontal">
-                <?php foreach (array_slice($categories, 0, 8) as $category): ?>
-                <a href="public/buscar.php?categoria=<?php echo urlencode($category['nome']); ?>" class="category-item">
-                    <div class="category-icon">
-                        <i class="fas fa-<?php echo getCategoryIcon($category['nome']); ?>"></i>
+                
+                <!-- Menu Principal (Ao centro) -->
+                <div class="col-md-4">
+                    <nav class="aneti-nav">
+                        <ul class="nav justify-content-center">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="index.php">Início</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="public/buscar.php">Buscar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="public/categorias.php">Categorias</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                
+                <!-- Botões de Ação (À direita) -->
+                <div class="col-md-4">
+                    <div class="aneti-actions d-flex justify-content-end align-items-center">
+                        <a href="public/login.php" class="aneti-login-btn me-3">Entrar</a>
+                        <a href="empresa/cadastro.php" class="aneti-cta-btn">Cadastre sua Empresa</a>
                     </div>
-                    <div class="category-name"><?php echo htmlspecialchars($category['nome']); ?></div>
-                </a>
-                <?php endforeach; ?>
+                </div>
             </div>
         </div>
     </header>
 
+    <!-- Spacer para Header Fixed -->
+    <div style="height: 120px;"></div>
+    
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
                 <div class="row align-items-center">
                     <div class="col-lg-8">
-                        <h1 class="hero-title">Seja bem-vindo ao<br><strong>Clube Sua Marca</strong></h1>
+                        <h1 class="hero-title">Seja bem-vindo ao<br><strong>Clube ANETI</strong></h1>
                         <p class="hero-subtitle">Descubra benefícios exclusivos para membros da ANETI</p>
                         
                         <!-- Search Form -->
@@ -88,20 +93,20 @@ $categories = getCategories($conn);
                         <div class="hero-illustration">
                             <svg class="hero-people" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
                                 <!-- Background discount circle -->
-                                <circle cx="200" cy="150" r="120" fill="rgba(255,255,255,0.1)" opacity="0.5"/>
-                                <text x="200" y="165" text-anchor="middle" font-size="60" fill="rgba(255,255,255,0.3)" font-weight="bold">%</text>
+                                <circle cx="200" cy="150" r="120" fill="rgba(1,45,106,0.1)" opacity="0.5"/>
+                                <text x="200" y="165" text-anchor="middle" font-size="60" fill="rgba(1,45,106,0.3)" font-weight="bold">%</text>
                                 
                                 <!-- Person 1 -->
-                                <circle cx="140" cy="120" r="25" fill="#A78BFA"/>
-                                <rect x="115" y="145" width="50" height="70" rx="25" fill="#8B5CF6"/>
+                                <circle cx="140" cy="120" r="25" fill="rgba(1,45,106,0.8)"/>
+                                <rect x="115" y="145" width="50" height="70" rx="25" fill="rgba(1,45,106,0.6)"/>
                                 
                                 <!-- Person 2 -->
-                                <circle cx="200" cy="100" r="22" fill="#C4B5FD"/>
-                                <rect x="178" y="122" width="44" height="65" rx="22" fill="#A855F7"/>
+                                <circle cx="200" cy="100" r="22" fill="rgba(1,45,106,0.7)"/>
+                                <rect x="178" y="122" width="44" height="65" rx="22" fill="rgba(1,45,106,0.5)"/>
                                 
                                 <!-- Person 3 -->
-                                <circle cx="260" cy="130" r="20" fill="#DDD6FE"/>
-                                <rect x="240" y="150" width="40" height="60" rx="20" fill="#9333EA"/>
+                                <circle cx="260" cy="130" r="20" fill="rgba(1,45,106,0.6)"/>
+                                <rect x="240" y="150" width="40" height="60" rx="20" fill="rgba(1,45,106,0.4)"/>
                             </svg>
                         </div>
                     </div>
