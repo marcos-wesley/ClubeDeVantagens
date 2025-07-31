@@ -36,6 +36,8 @@ if ($_POST) {
     $email = sanitizeInput($_POST['email']);
     $website = sanitizeInput($_POST['website']);
     $regras_beneficio = sanitizeInput($_POST['regras_beneficio']);
+    $desconto = sanitizeInput($_POST['desconto']);
+    $avaliacao = sanitizeInput($_POST['avaliacao']);
     $status = sanitizeInput($_POST['status']);
     $destaque = isset($_POST['destaque']) ? true : false;
     
@@ -49,13 +51,13 @@ if ($_POST) {
                     UPDATE empresas SET 
                     nome = ?, categoria = ?, descricao = ?, endereco = ?, 
                     cidade = ?, telefone = ?, email = ?, website = ?, 
-                    regras = ?, status = ?, destaque = ?, updated_at = NOW()
+                    regras = ?, desconto = ?, avaliacao = ?, status = ?, destaque = ?, updated_at = NOW()
                     WHERE id = ?
                 ");
                 $stmt->execute([
                     $nome, $categoria, $descricao, $endereco, 
                     $cidade, $telefone, $email, $website, 
-                    $regras_beneficio, $status, $destaque, $empresa_id
+                    $regras_beneficio, $desconto, $avaliacao, $status, $destaque, $empresa_id
                 ]);
                 $message = 'Empresa atualizada com sucesso!';
                 
@@ -69,14 +71,14 @@ if ($_POST) {
                 $stmt = $conn->prepare("
                     INSERT INTO empresas (
                         nome, categoria, descricao, endereco, cidade, 
-                        telefone, email, website, regras, 
+                        telefone, email, website, regras, desconto, avaliacao,
                         status, destaque, created_at, updated_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
                 ");
                 $stmt->execute([
                     $nome, $categoria, $descricao, $endereco, $cidade, 
                     $telefone, $email, $website, $regras_beneficio, 
-                    $status, $destaque
+                    $desconto, $avaliacao, $status, $destaque
                 ]);
                 $message = 'Empresa cadastrada com sucesso!';
             }
@@ -210,6 +212,30 @@ $categories = getCategories($conn);
                                         <label class="form-label">Website</label>
                                         <input type="url" class="form-control" name="website" 
                                                value="<?php echo htmlspecialchars($empresa['website'] ?? ''); ?>">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Desconto Oferecido (%)</label>
+                                        <input type="number" class="form-control" name="desconto" min="1" max="100"
+                                               value="<?php echo htmlspecialchars($empresa['desconto'] ?? ''); ?>" 
+                                               placeholder="Ex: 20">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Avaliação Média</label>
+                                        <select class="form-select" name="avaliacao">
+                                            <option value="">Sem avaliação</option>
+                                            <option value="1" <?php echo ($empresa['avaliacao'] ?? '') == '1' ? 'selected' : ''; ?>>⭐ (1.0)</option>
+                                            <option value="2" <?php echo ($empresa['avaliacao'] ?? '') == '2' ? 'selected' : ''; ?>>⭐⭐ (2.0)</option>
+                                            <option value="3" <?php echo ($empresa['avaliacao'] ?? '') == '3' ? 'selected' : ''; ?>>⭐⭐⭐ (3.0)</option>
+                                            <option value="4" <?php echo ($empresa['avaliacao'] ?? '') == '4' ? 'selected' : ''; ?>>⭐⭐⭐⭐ (4.0)</option>
+                                            <option value="5" <?php echo ($empresa['avaliacao'] ?? '') == '5' ? 'selected' : ''; ?>>⭐⭐⭐⭐⭐ (5.0)</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

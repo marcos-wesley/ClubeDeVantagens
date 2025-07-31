@@ -61,10 +61,10 @@ if (!$company) {
         <div class="container">
             <ul class="nav nav-tabs benefit-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#detalhes">Detalhes</a>
+                    <a class="nav-link active" data-bs-toggle="tab" href="#detalhes">Detalhes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#avaliacoes">Avaliações 
+                    <a class="nav-link" data-bs-toggle="tab" href="#avaliacoes">Avaliações 
                         <span class="badge bg-secondary">7</span>
                     </a>
                 </li>
@@ -108,82 +108,202 @@ if (!$company) {
     <div class="container mt-4">
         <div class="row">
             <div class="col-lg-8">
-                <!-- Main Image -->
-                <div class="benefit-main-image mb-4">
-                    <?php if ($company['logo']): ?>
-                        <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid">
-                    <?php else: ?>
-                        <div class="benefit-placeholder-image">
-                            <i class="fas fa-image fa-3x mb-3"></i>
-                            <p>Imagem do <?php echo htmlspecialchars($company['nome']); ?></p>
+                <div class="tab-content">
+                    <!-- Tab Detalhes -->
+                    <div class="tab-pane fade show active" id="detalhes">
+                        <!-- Main Image -->
+                        <div class="benefit-main-image mb-4">
+                            <?php if ($company['logo']): ?>
+                                <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid">
+                            <?php else: ?>
+                                <div class="benefit-placeholder-image">
+                                    <i class="fas fa-image fa-3x mb-3"></i>
+                                    <p>Imagem do <?php echo htmlspecialchars($company['nome']); ?></p>
+                                </div>
+                            <?php endif; ?>
                         </div>
-                    <?php endif; ?>
-                </div>
 
-                <!-- Como Funciona -->
-                <div class="benefit-section mb-4">
-                    <h3 class="benefit-section-title">Como funciona:</h3>
-                    <div class="how-it-works">
-                        <div class="step">
-                            <span class="step-number">1)</span>
-                            <span class="step-text">Clique no botão USAR</span>
-                        </div>
-                        <div class="step">
-                            <span class="step-number">2)</span>
-                            <span class="step-text">Faça seu login e gere seu cupom</span>
-                        </div>
-                        <div class="step">
-                            <span class="step-number">3)</span>
-                            <span class="step-text">Apresente o cupom à empresa parceira</span>
-                        </div>
-                        <div class="step">
-                            <span class="step-number">4)</span>
-                            <span class="step-text">Aproveite seu desconto exclusivo</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Regulamento -->
-                <div class="benefit-section mb-4">
-                    <h3 class="benefit-section-title">
-                        <i class="fas fa-file-contract"></i> Regulamento
-                    </h3>
-                    <div class="regulation-content">
-                        <?php if ($company['regras']): ?>
-                            <p><?php echo nl2br(htmlspecialchars($company['regras'])); ?></p>
-                        <?php else: ?>
-                            <div class="regulation-item">
-                                <span class="regulation-number">1)</span>
-                                <span class="regulation-text">Desconto válido conforme período determinado.</span>
-                            </div>
-                            <div class="regulation-item">
-                                <span class="regulation-number">2)</span>
-                                <span class="regulation-text">Os descontos podem variar a cada mês.</span>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-
-                <!-- Localização -->
-                <div class="benefit-section mb-4">
-                    <h3 class="benefit-section-title">
-                        <i class="fas fa-map-marker-alt"></i> Localização
-                    </h3>
-                    <div class="location-section">
-                        <div class="location-map">
-                            <div class="map-placeholder">
-                                <i class="fas fa-map fa-2x mb-2"></i>
-                                <p>Mapa interativo</p>
-                                <div class="map-controls">
-                                    <button class="map-control">+</button>
-                                    <button class="map-control">-</button>
+                        <!-- Como Funciona -->
+                        <div class="benefit-section mb-4">
+                            <h3 class="benefit-section-title">Como funciona:</h3>
+                            <div class="how-it-works">
+                                <div class="step">
+                                    <span class="step-number">1)</span>
+                                    <span class="step-text">Clique no botão USAR</span>
+                                </div>
+                                <div class="step">
+                                    <span class="step-number">2)</span>
+                                    <span class="step-text">Faça seu login e gere seu cupom</span>
+                                </div>
+                                <div class="step">
+                                    <span class="step-number">3)</span>
+                                    <span class="step-text">Apresente o cupom à empresa parceira</span>
+                                </div>
+                                <div class="step">
+                                    <span class="step-number">4)</span>
+                                    <span class="step-text">Aproveite seu desconto exclusivo</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="location-info mt-3">
-                            <p><strong>Endereço:</strong></p>
-                            <p><?php echo htmlspecialchars($company['endereco'] ?? 'Endereço não informado'); ?></p>
-                            <p><?php echo htmlspecialchars($company['cidade']); ?>, <?php echo htmlspecialchars($company['estado']); ?></p>
+
+                        <!-- Regulamento -->
+                        <div class="benefit-section mb-4">
+                            <h3 class="benefit-section-title">
+                                <i class="fas fa-file-contract"></i> Regulamento
+                            </h3>
+                            <div class="regulation-content">
+                                <?php if ($company['regras']): ?>
+                                    <p><?php echo nl2br(htmlspecialchars($company['regras'])); ?></p>
+                                <?php else: ?>
+                                    <div class="regulation-item">
+                                        <span class="regulation-number">1)</span>
+                                        <span class="regulation-text">Desconto válido conforme período determinado.</span>
+                                    </div>
+                                    <div class="regulation-item">
+                                        <span class="regulation-number">2)</span>
+                                        <span class="regulation-text">Os descontos podem variar a cada mês.</span>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <!-- Localização -->
+                        <div class="benefit-section mb-4">
+                            <h3 class="benefit-section-title">
+                                <i class="fas fa-map-marker-alt"></i> Localização
+                            </h3>
+                            <div class="location-section">
+                                <div class="location-map">
+                                    <div class="map-placeholder">
+                                        <i class="fas fa-map fa-2x mb-2"></i>
+                                        <p>Mapa interativo</p>
+                                        <div class="map-controls">
+                                            <button class="map-control">+</button>
+                                            <button class="map-control">-</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="location-info mt-3">
+                                    <p><strong>Endereço:</strong></p>
+                                    <p><?php echo htmlspecialchars($company['endereco'] ?? 'Endereço não informado'); ?></p>
+                                    <p><?php echo htmlspecialchars($company['cidade']); ?>, <?php echo htmlspecialchars($company['estado']); ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Avaliações -->
+                    <div class="tab-pane fade" id="avaliacoes">
+                        <div class="benefit-section">
+                            <h3 class="benefit-section-title">
+                                <i class="fas fa-star"></i> Avaliações dos Usuários
+                            </h3>
+                            
+                            <!-- Resumo das Avaliações -->
+                            <div class="rating-summary mb-4">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 text-center">
+                                        <div class="overall-rating">
+                                            <span class="rating-number">4.8</span>
+                                            <div class="rating-stars">
+                                                <span class="stars">★★★★★</span>
+                                            </div>
+                                            <p class="rating-text">7 avaliações</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="rating-breakdown">
+                                            <div class="rating-bar">
+                                                <span class="bar-label">5 estrelas</span>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-warning" style="width: 85%"></div>
+                                                </div>
+                                                <span class="bar-count">6</span>
+                                            </div>
+                                            <div class="rating-bar">
+                                                <span class="bar-label">4 estrelas</span>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-warning" style="width: 15%"></div>
+                                                </div>
+                                                <span class="bar-count">1</span>
+                                            </div>
+                                            <div class="rating-bar">
+                                                <span class="bar-label">3 estrelas</span>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-warning" style="width: 0%"></div>
+                                                </div>
+                                                <span class="bar-count">0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Lista de Avaliações -->
+                            <div class="reviews-list">
+                                <?php
+                                $sample_reviews = [
+                                    ['nome' => 'Maria Santos', 'rating' => 5, 'data' => '2025-01-28', 'comentario' => 'Excelente atendimento e desconto muito bom! Recomendo para todos os associados.'],
+                                    ['nome' => 'João Silva', 'rating' => 5, 'data' => '2025-01-25', 'comentario' => 'Utilizei o cupom e foi muito fácil. O pessoal já conhece o sistema da ANETI.'],
+                                    ['nome' => 'Pedro Costa', 'rating' => 4, 'data' => '2025-01-20', 'comentario' => 'Bom benefício, mas poderia ter mais opções de horário para usar.'],
+                                    ['nome' => 'Ana Paula', 'rating' => 5, 'data' => '2025-01-15', 'comentario' => 'Ótima experiência! Voltarei outras vezes com certeza.']
+                                ];
+                                
+                                foreach ($sample_reviews as $review): ?>
+                                    <div class="review-item">
+                                        <div class="review-header">
+                                            <div class="reviewer-info">
+                                                <div class="reviewer-avatar">
+                                                    <?php echo strtoupper(substr($review['nome'], 0, 1)); ?>
+                                                </div>
+                                                <div class="reviewer-details">
+                                                    <h6 class="reviewer-name"><?php echo htmlspecialchars($review['nome']); ?></h6>
+                                                    <div class="review-rating">
+                                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                            <span class="star <?php echo $i <= $review['rating'] ? 'filled' : ''; ?>">★</span>
+                                                        <?php endfor; ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="review-date"><?php echo date('d/m/Y', strtotime($review['data'])); ?></span>
+                                        </div>
+                                        <p class="review-comment"><?php echo htmlspecialchars($review['comentario']); ?></p>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <!-- Formulário para Nova Avaliação -->
+                            <?php if (isLoggedIn()): ?>
+                                <div class="add-review-form mt-4">
+                                    <h5>Deixe sua avaliação</h5>
+                                    <form class="review-form">
+                                        <div class="mb-3">
+                                            <label class="form-label">Sua avaliação:</label>
+                                            <div class="rating-input">
+                                                <input type="radio" name="rating" value="5" id="star5">
+                                                <label for="star5">★</label>
+                                                <input type="radio" name="rating" value="4" id="star4">
+                                                <label for="star4">★</label>
+                                                <input type="radio" name="rating" value="3" id="star3">
+                                                <label for="star3">★</label>
+                                                <input type="radio" name="rating" value="2" id="star2">
+                                                <label for="star2">★</label>
+                                                <input type="radio" name="rating" value="1" id="star1">
+                                                <label for="star1">★</label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="comentario" class="form-label">Comentário:</label>
+                                            <textarea class="form-control" id="comentario" rows="3" placeholder="Conte como foi sua experiência..."></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Enviar Avaliação</button>
+                                    </form>
+                                </div>
+                            <?php else: ?>
+                                <div class="login-prompt">
+                                    <p><a href="login.php">Faça login</a> para deixar sua avaliação</p>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

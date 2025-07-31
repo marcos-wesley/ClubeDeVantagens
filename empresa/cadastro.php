@@ -9,10 +9,12 @@ $success = '';
 if ($_POST) {
     $nome = sanitizeInput($_POST['nome']);
     $cnpj = sanitizeInput($_POST['cnpj']);
+    $endereco = sanitizeInput($_POST['endereco']);
     $cidade = sanitizeInput($_POST['cidade']);
     $estado = sanitizeInput($_POST['estado']);
     $email = sanitizeInput($_POST['email']);
     $telefone = sanitizeInput($_POST['telefone']);
+    $website = sanitizeInput($_POST['website']);
     $categoria = sanitizeInput($_POST['categoria']);
     $descricao = sanitizeInput($_POST['descricao']);
     $regras = sanitizeInput($_POST['regras']);
@@ -36,8 +38,8 @@ if ($_POST) {
         
         if (!$error) {
             try {
-                $stmt = $conn->prepare("INSERT INTO empresas (nome, cnpj, logo, cidade, estado, email, telefone, categoria, descricao, regras, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pendente', NOW())");
-                $stmt->execute([$nome, $cnpj, $logo_filename, $cidade, $estado, $email, $telefone, $categoria, $descricao, $regras]);
+                $stmt = $conn->prepare("INSERT INTO empresas (nome, cnpj, logo, endereco, cidade, estado, email, telefone, website, categoria, descricao, regras, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pendente', NOW())");
+                $stmt->execute([$nome, $cnpj, $logo_filename, $endereco, $cidade, $estado, $email, $telefone, $website, $categoria, $descricao, $regras]);
                 
                 redirect('sucesso.php');
             } catch (PDOException $e) {
@@ -102,6 +104,11 @@ $categories = getCategories($conn);
                                 <div class="form-text">Formatos aceitos: JPG, PNG, GIF. Tamanho máximo: 5MB</div>
                             </div>
 
+                            <div class="mb-3">
+                                <label for="endereco" class="form-label">Endereço Completo</label>
+                                <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Rua, número, bairro" value="<?php echo isset($_POST['endereco']) ? htmlspecialchars($_POST['endereco']) : ''; ?>">
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-8 mb-3">
                                     <label for="cidade" class="form-label">Cidade *</label>
@@ -151,6 +158,11 @@ $categories = getCategories($conn);
                                     <label for="telefone" class="form-label">Telefone *</label>
                                     <input type="text" class="form-control" id="telefone" name="telefone" required placeholder="(11) 99999-9999" value="<?php echo isset($_POST['telefone']) ? htmlspecialchars($_POST['telefone']) : ''; ?>">
                                 </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="website" class="form-label">Website</label>
+                                <input type="url" class="form-control" id="website" name="website" placeholder="https://www.suaempresa.com.br" value="<?php echo isset($_POST['website']) ? htmlspecialchars($_POST['website']) : ''; ?>">
                             </div>
 
                             <div class="mb-3">
