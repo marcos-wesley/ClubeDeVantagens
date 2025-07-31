@@ -24,48 +24,27 @@ function generateUUID() {
 /**
  * Get featured companies
  */
-function getFeaturedCompanies($pdo, $limit = 10) {
-    if (!$pdo) {
-        return [];
-    }
-    try {
-        $stmt = $pdo->prepare("SELECT * FROM empresas WHERE status = 'aprovada' AND destaque = true ORDER BY created_at DESC LIMIT ?");
-        $stmt->execute([$limit]);
-        return $stmt->fetchAll();
-    } catch (Exception $e) {
-        return [];
-    }
+function getFeaturedCompanies($conn, $limit = 10) {
+    $stmt = $conn->prepare("SELECT * FROM empresas WHERE status = 'aprovada' AND destaque = true ORDER BY created_at DESC LIMIT ?");
+    $stmt->execute([$limit]);
+    return $stmt->fetchAll();
 }
 
 /**
  * Get recent companies
  */
-function getRecentCompanies($pdo, $limit = 8) {
-    if (!$pdo) {
-        return [];
-    }
-    try {
-        $stmt = $pdo->prepare("SELECT * FROM empresas WHERE status = 'aprovada' ORDER BY created_at DESC LIMIT ?");
-        $stmt->execute([$limit]);
-        return $stmt->fetchAll();
-    } catch (Exception $e) {
-        return [];
-    }
+function getRecentCompanies($conn, $limit = 8) {
+    $stmt = $conn->prepare("SELECT * FROM empresas WHERE status = 'aprovada' ORDER BY created_at DESC LIMIT ?");
+    $stmt->execute([$limit]);
+    return $stmt->fetchAll();
 }
 
 /**
  * Get all categories
  */
-function getCategories($pdo) {
-    if (!$pdo) {
-        return [];
-    }
-    try {
-        $stmt = $pdo->query("SELECT * FROM categorias ORDER BY nome ASC");
-        return $stmt->fetchAll();
-    } catch (Exception $e) {
-        return [];
-    }
+function getCategories($conn) {
+    $stmt = $conn->query("SELECT * FROM categorias ORDER BY nome ASC");
+    return $stmt->fetchAll();
 }
 
 /**
@@ -91,12 +70,9 @@ function getCategoryIcon($category) {
 /**
  * Get active banner slides
  */
-function getBannerSlides($pdo) {
-    if (!$pdo) {
-        return []; // Return empty array if no database connection
-    }
+function getBannerSlides($conn) {
     try {
-        $stmt = $pdo->prepare("SELECT * FROM slides_banner WHERE status = 'ativo' ORDER BY ordem ASC");
+        $stmt = $conn->prepare("SELECT * FROM slides_banner WHERE status = 'ativo' ORDER BY ordem ASC");
         $stmt->execute();
         return $stmt->fetchAll();
     } catch (Exception $e) {
