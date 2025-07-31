@@ -5,139 +5,90 @@ $is_subdirectory = strpos($_SERVER['PHP_SELF'], '/public/') !== false ||
                   strpos($_SERVER['PHP_SELF'], '/empresa/') !== false;
 $base_path = $is_subdirectory ? '../' : '';
 ?>
-<!-- Header ANETI Padrão -->
-<header class="main-header" style="background: linear-gradient(to right, #012d6a, #25a244);">
-    <!-- Primeira Linha - Info Principal -->
-    <div class="header-top" style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+<!-- Header ANETI - Idêntico à Homepage -->
+<header class="main-header fixed-top" style="background: linear-gradient(to right, #012d6a, #25a244); box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+    <!-- Linha 1: Info Principal -->
+    <div style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
         <div class="container">
             <div class="row align-items-center">
+                <!-- Nome do Clube (À esquerda) -->
                 <div class="col-md-4">
-                    <h1 class="brand-title" style="color: white; font-size: 24px; font-weight: 700; margin: 0;">
-                        Clube de Benefícios ANETI
+                    <h1 style="color: white; font-size: 22px; font-weight: 700; margin: 0; text-decoration: none;">
+                        <a href="<?= $base_path ?>index.php" style="color: white; text-decoration: none;">
+                            Clube de Benefícios ANETI
+                        </a>
                     </h1>
                 </div>
+                
+                <!-- Campo de Busca (Ao centro) -->
                 <div class="col-md-4">
-                    <form class="search-form" method="GET" action="<?= $base_path ?>public/categorias.php">
+                    <form method="GET" action="<?= $base_path ?>public/categorias.php">
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Buscar empresas..." 
-                                   style="border-radius: 20px 0 0 20px; border: none;">
-                            <button class="btn btn-light" type="submit" style="border-radius: 0 20px 20px 0; border: none;">
+                                   style="border-radius: 20px 0 0 20px; border: none; padding: 10px 15px;">
+                            <button class="btn btn-light" type="submit" style="border-radius: 0 20px 20px 0; border: none; padding: 10px 15px;">
                                 <i class="fas fa-search" style="color: #012d6a;"></i>
                             </button>
                         </div>
                     </form>
                 </div>
-                <div class="col-md-4 text-end">
-                    <div class="user-menu">
-                        <?php if (function_exists('isLoggedIn') && isLoggedIn()): ?>
-                            <div class="dropdown d-inline">
-                                <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style="border-radius: 20px;">
-                                    <i class="fas fa-user"></i> <?php echo getMemberName(); ?>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="<?= $base_path ?>public/dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                                    <li><a class="dropdown-item" href="<?= $base_path ?>public/logout.php"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
-                                </ul>
-                            </div>
-                        <?php else: ?>
-                            <a class="btn btn-outline-light me-2" href="<?= $base_path ?>public/login.php" style="border-radius: 20px;">
-                                <i class="fas fa-sign-in-alt"></i> Entrar
-                            </a>
-                            <a class="btn btn-light" href="<?= $base_path ?>empresa/cadastro.php" style="border-radius: 20px; color: #012d6a; font-weight: 600;">
-                                <i class="fas fa-handshake"></i> Seja um Parceiro
-                            </a>
-                        <?php endif; ?>
+                
+                <!-- Botões (À direita) -->
+                <div class="col-md-4">
+                    <div class="header-actions text-end">
+                        <a href="<?= $base_path ?>public/login.php" class="login-button me-2">Entrar</a>
+                        <a href="<?= $base_path ?>empresa/cadastro.php" class="partner-button">Seja um Parceiro</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Segunda Linha - Menu de Categorias -->
-    <nav class="categories-nav-horizontal" style="padding: 8px 0;">
-        <div class="container">
-            <div class="d-flex justify-content-center align-items-center flex-wrap" style="gap: 2rem;">
-                <a href="<?= $base_path ?>index.php" class="category-item text-decoration-none">
-                    <div class="text-center">
-                        <div class="category-icon" style="width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px;">
-                            <i class="fas fa-home" style="color: white; font-size: 1.4rem;"></i>
-                        </div>
-                        <span class="category-name" style="color: white; font-size: 0.8rem; font-weight: 500;">Início</span>
-                    </div>
+    <!-- Linha 2: Menu de Categorias -->
+    <div class="categories-bar">
+        <div class="container-fluid">
+            <div class="categories-menu">
+                <a href="<?= $base_path ?>public/categorias.php?cat=destaque" class="category-item">
+                    <i class="fas fa-star"></i>
+                    <span>Destaque</span>
                 </a>
-                <a href="<?= $base_path ?>public/categorias.php?categoria=Alimentação" class="category-item text-decoration-none">
-                    <div class="text-center">
-                        <div class="category-icon" style="width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px;">
-                            <i class="fas fa-utensils" style="color: white; font-size: 1.4rem;"></i>
-                        </div>
-                        <span class="category-name" style="color: white; font-size: 0.8rem; font-weight: 500;">Alimentação</span>
-                    </div>
+                <a href="<?= $base_path ?>public/categorias.php?cat=comer-beber" class="category-item">
+                    <i class="fas fa-utensils"></i>
+                    <span>Comer e Beber</span>
                 </a>
-                <a href="<?= $base_path ?>public/categorias.php?categoria=Saúde" class="category-item text-decoration-none">
-                    <div class="text-center">
-                        <div class="category-icon" style="width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px;">
-                            <i class="fas fa-heartbeat" style="color: white; font-size: 1.4rem;"></i>
-                        </div>
-                        <span class="category-name" style="color: white; font-size: 0.8rem; font-weight: 500;">Saúde</span>
-                    </div>
+                <a href="<?= $base_path ?>public/categorias.php?cat=compras" class="category-item">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Compras</span>
                 </a>
-                <a href="<?= $base_path ?>public/categorias.php?categoria=Educação" class="category-item text-decoration-none">
-                    <div class="text-center">
-                        <div class="category-icon" style="width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px;">
-                            <i class="fas fa-graduation-cap" style="color: white; font-size: 1.4rem;"></i>
-                        </div>
-                        <span class="category-name" style="color: white; font-size: 0.8rem; font-weight: 500;">Educação</span>
-                    </div>
+                <a href="<?= $base_path ?>public/categorias.php?cat=conveniencia" class="category-item">
+                    <i class="fas fa-store"></i>
+                    <span>Conveniência</span>
                 </a>
-                <a href="<?= $base_path ?>public/categorias.php?categoria=Lazer" class="category-item text-decoration-none">
-                    <div class="text-center">
-                        <div class="category-icon" style="width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px;">
-                            <i class="fas fa-gamepad" style="color: white; font-size: 1.4rem;"></i>
-                        </div>
-                        <span class="category-name" style="color: white; font-size: 0.8rem; font-weight: 500;">Lazer</span>
-                    </div>
+                <a href="<?= $base_path ?>public/categorias.php?cat=cultura-educacao" class="category-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Cultura e Educação</span>
                 </a>
-                <a href="<?= $base_path ?>public/categorias.php?categoria=Moda" class="category-item text-decoration-none">
-                    <div class="text-center">
-                        <div class="category-icon" style="width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px;">
-                            <i class="fas fa-tshirt" style="color: white; font-size: 1.4rem;"></i>
-                        </div>
-                        <span class="category-name" style="color: white; font-size: 0.8rem; font-weight: 500;">Moda</span>
-                    </div>
+                <a href="<?= $base_path ?>public/categorias.php?cat=lazer-diversao" class="category-item">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Lazer e Diversão</span>
                 </a>
-                <a href="<?= $base_path ?>public/categorias.php?categoria=Tecnologia" class="category-item text-decoration-none">
-                    <div class="text-center">
-                        <div class="category-icon" style="width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px;">
-                            <i class="fas fa-laptop" style="color: white; font-size: 1.4rem;"></i>
-                        </div>
-                        <span class="category-name" style="color: white; font-size: 0.8rem; font-weight: 500;">Tecnologia</span>
-                    </div>
+                <a href="<?= $base_path ?>public/categorias.php?cat=mundo-pet" class="category-item">
+                    <i class="fas fa-paw"></i>
+                    <span>Mundo Pet</span>
                 </a>
-                <a href="<?= $base_path ?>public/categorias.php?categoria=Serviços" class="category-item text-decoration-none">
-                    <div class="text-center">
-                        <div class="category-icon" style="width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px;">
-                            <i class="fas fa-cogs" style="color: white; font-size: 1.4rem;"></i>
-                        </div>
-                        <span class="category-name" style="color: white; font-size: 0.8rem; font-weight: 500;">Serviços</span>
-                    </div>
+                <a href="<?= $base_path ?>public/categorias.php?cat=saude-bem-estar" class="category-item">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>Saúde e Bem-estar</span>
                 </a>
-                <a href="<?= $base_path ?>public/categorias.php?categoria=Turismo" class="category-item text-decoration-none">
-                    <div class="text-center">
-                        <div class="category-icon" style="width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px;">
-                            <i class="fas fa-plane" style="color: white; font-size: 1.4rem;"></i>
-                        </div>
-                        <span class="category-name" style="color: white; font-size: 0.8rem; font-weight: 500;">Turismo</span>
-                    </div>
+                <a href="<?= $base_path ?>public/categorias.php?cat=servicos" class="category-item">
+                    <i class="fas fa-tools"></i>
+                    <span>Serviços</span>
                 </a>
-                <a href="<?= $base_path ?>public/categorias.php?categoria=Beleza" class="category-item text-decoration-none">
-                    <div class="text-center">
-                        <div class="category-icon" style="width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px;">
-                            <i class="fas fa-spa" style="color: white; font-size: 1.4rem;"></i>
-                        </div>
-                        <span class="category-name" style="color: white; font-size: 0.8rem; font-weight: 500;">Beleza</span>
-                    </div>
+                <a href="<?= $base_path ?>public/categorias.php?cat=viagem-turismo" class="category-item">
+                    <i class="fas fa-plane"></i>
+                    <span>Viagem e Turismo</span>
                 </a>
             </div>
         </div>
-    </nav>
+    </div>
 </header>
