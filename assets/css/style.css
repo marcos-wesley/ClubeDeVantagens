@@ -2908,6 +2908,33 @@
     top: 100px;
 }
 
+/* Fix for two-column layout */
+@media (min-width: 992px) {
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+    
+    .col-lg-8, .col-lg-4 {
+        position: relative;
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    
+    .col-lg-8 {
+        flex: 0 0 66.666667%;
+        max-width: 66.666667%;
+    }
+    
+    .col-lg-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+}
+
 .company-logo-sidebar {
     width: 80px;
     height: 80px;
@@ -2985,4 +3012,53 @@
 /* Map styling */
 #map {
     border: 1px solid #e9ecef;
+}
+
+/* Container and Row fixes for proper sidebar positioning */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+/* Ensure proper flexbox behavior */
+.row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: flex-start !important;
+}
+
+/* Prevent sidebar from going to bottom */
+@media (min-width: 992px) {
+    .col-lg-8 {
+        order: 1;
+    }
+    
+    .col-lg-4 {
+        order: 2;
+        align-self: flex-start;
+    }
+    
+    .sidebar-content {
+        position: sticky;
+        top: 120px;
+        z-index: 10;
+    }
+}
+
+/* Remove any margin bottom that might cause spacing */
+.sidebar-content .card:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* Ensure proper spacing between main content and sidebar */
+@media (min-width: 992px) {
+    .col-lg-8 {
+        padding-right: 30px;
+    }
+    
+    .col-lg-4 {
+        padding-left: 15px;
+    }
 }
