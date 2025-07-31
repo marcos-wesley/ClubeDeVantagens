@@ -1673,7 +1673,7 @@
 
 /* Coupon styles */
 .coupon-display {
-    background: white;
+    background: white !important;
     border: 2px dashed var(--aneti-primary);
     border-radius: 12px;
     padding: 2rem;
@@ -1709,13 +1709,13 @@
 }
 
 .coupon-company-name {
-    color: var(--aneti-primary);
+    color: var(--aneti-primary) !important;
     font-weight: 700;
     margin-bottom: 0.5rem;
 }
 
 .coupon-description {
-    color: var(--aneti-secondary);
+    color: #666 !important;
     margin: 0;
 }
 
@@ -1728,15 +1728,20 @@
     margin-bottom: 1rem;
 }
 
+.coupon-info strong {
+    color: #333 !important;
+    font-weight: 700;
+}
+
 .coupon-code {
     font-family: 'Courier New', monospace;
     font-size: 1.5rem;
     font-weight: bold;
-    color: var(--aneti-primary);
-    background-color: var(--aneti-light);
+    color: var(--aneti-primary) !important;
+    background-color: #f8f9fa !important;
     padding: 0.75rem;
     border-radius: 8px;
-    border: 1px solid var(--aneti-primary);
+    border: 2px dashed var(--aneti-primary);
     margin-top: 0.5rem;
 }
 
@@ -1752,6 +1757,18 @@
 .coupon-footer {
     border-top: 1px solid #eee;
     padding-top: 1rem;
+}
+
+.coupon-footer small {
+    color: #666 !important;
+}
+
+.coupon-info div {
+    color: #333 !important;
+}
+
+.coupon-info .text-muted {
+    color: #666 !important;
 }
 
 .coupon-display-modal {
