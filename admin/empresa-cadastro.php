@@ -52,7 +52,7 @@ if ($_POST) {
     
     // Handle logo upload
     if (isset($_FILES['logo']) && $_FILES['logo']['size'] > 0) {
-        $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+        $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
         if (in_array($_FILES['logo']['type'], $allowed_types) && $_FILES['logo']['size'] <= 5 * 1024 * 1024) {
             $extension = pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION);
             $logo_filename = uniqid() . '.' . $extension;
@@ -63,13 +63,13 @@ if ($_POST) {
                 $logo_filename = $empresa['logo'] ?? null;
             }
         } else {
-            $error = 'Arquivo de logo inválido. Use JPG, PNG ou GIF até 5MB.';
+            $error = 'Arquivo de logo inválido. Use JPG, PNG, WebP ou GIF até 5MB.';
         }
     }
     
     // Handle detail image upload
     if (isset($_FILES['imagem_detalhes']) && $_FILES['imagem_detalhes']['size'] > 0) {
-        $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+        $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
         if (in_array($_FILES['imagem_detalhes']['type'], $allowed_types) && $_FILES['imagem_detalhes']['size'] <= 5 * 1024 * 1024) {
             $extension = pathinfo($_FILES['imagem_detalhes']['name'], PATHINFO_EXTENSION);
             $imagem_detalhes_filename = uniqid() . '.' . $extension;
@@ -80,7 +80,7 @@ if ($_POST) {
                 $imagem_detalhes_filename = $empresa['imagem_detalhes'] ?? null;
             }
         } else {
-            $error = 'Arquivo de imagem de detalhes inválido. Use JPG, PNG ou GIF até 5MB.';
+            $error = 'Arquivo de imagem de detalhes inválido. Use JPG, PNG, WebP ou GIF até 5MB.';
         }
     }
     
@@ -290,26 +290,26 @@ $categories = getCategories($conn);
 
                             <div class="mb-3">
                                 <label class="form-label">Logo da Empresa</label>
-                                <input type="file" class="form-control" name="logo" accept="image/*">
+                                <input type="file" class="form-control" name="logo" accept="image/jpeg,image/png,image/gif,image/webp">
                                 <?php if (!empty($empresa['logo'])): ?>
                                     <div class="mt-2">
                                         <img src="../uploads/<?php echo htmlspecialchars($empresa['logo']); ?>" alt="Logo atual" style="max-width: 100px; max-height: 100px;" class="img-thumbnail">
                                         <br><small class="text-muted">Logo atual: <?php echo htmlspecialchars($empresa['logo']); ?></small>
                                     </div>
                                 <?php endif; ?>
-                                <div class="form-text">Formatos aceitos: JPG, PNG, GIF. Tamanho máximo: 5MB</div>
+                                <div class="form-text">Formatos aceitos: JPG, PNG, WebP, GIF. Tamanho máximo: 5MB</div>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Imagem de Detalhes</label>
-                                <input type="file" class="form-control" name="imagem_detalhes" accept="image/*">
+                                <input type="file" class="form-control" name="imagem_detalhes" accept="image/jpeg,image/png,image/gif,image/webp">
                                 <?php if (!empty($empresa['imagem_detalhes'])): ?>
                                     <div class="mt-2">
                                         <img src="../uploads/<?php echo htmlspecialchars($empresa['imagem_detalhes']); ?>" alt="Imagem de detalhes" style="max-width: 200px; max-height: 150px;" class="img-thumbnail">
                                         <br><small class="text-muted">Imagem atual: <?php echo htmlspecialchars($empresa['imagem_detalhes']); ?></small>
                                     </div>
                                 <?php endif; ?>
-                                <div class="form-text">Imagem que aparece na página de detalhes. Formatos aceitos: JPG, PNG, GIF. Tamanho máximo: 5MB</div>
+                                <div class="form-text">Imagem que aparece na página de detalhes. Formatos aceitos: JPG, PNG, WebP, GIF. Tamanho máximo: 5MB</div>
                             </div>
 
                             <div class="mb-3">

@@ -14,17 +14,25 @@ if ($_POST) {
     $action = $_POST['action'] ?? '';
     
     if ($action === 'add' && isset($_FILES['imagem'])) {
-        $upload_dir = '../uploads/slides/';
-        $file_name = time() . '_' . $_FILES['imagem']['name'];
-        $file_path = $upload_dir . $file_name;
-        
-        if (move_uploaded_file($_FILES['imagem']['tmp_name'], $file_path)) {
-            $ordem = (int)$_POST['ordem'];
-            $status = $_POST['status'];
-            addBannerSlide($conn, $file_name, $ordem, $status);
-            $success = "Slide adicionado com sucesso!";
+        $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        if (in_array($_FILES['imagem']['type'], $allowed_types) && $_FILES['imagem']['size'] <= 10 * 1024 * 1024) {
+            $upload_dir = '../uploads/slides/';
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0755, true);
+            }
+            $file_name = time() . '_' . $_FILES['imagem']['name'];
+            $file_path = $upload_dir . $file_name;
+            
+            if (move_uploaded_file($_FILES['imagem']['tmp_name'], $file_path)) {
+                $ordem = (int)$_POST['ordem'];
+                $status = $_POST['status'];
+                addBannerSlide($conn, $file_name, $ordem, $status);
+                $success = "Slide adicionado com sucesso!";
+            } else {
+                $error = "Erro ao fazer upload da imagem.";
+            }
         } else {
-            $error = "Erro ao fazer upload da imagem.";
+            $error = "Arquivo inválido. Use JPG, PNG, WebP ou GIF até 10MB.";
         }
     }
     
@@ -145,8 +153,8 @@ $slides = getAllBannerSlides($conn);
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="imagem" class="form-label">Imagem do Slide *</label>
-                                <input type="file" class="form-control" id="imagem" name="imagem" accept="image/*" required>
-                                <div class="form-text">Tamanho recomendado: 1920x500px (JPG/PNG)</div>
+                                <input type="file" class="form-control" id="imagem" name="imagem" accept="image/jpeg,image/png,image/gif,image/webp" required>
+                                <div class="form-text">Tamanho recomendado: 1920x500px. Formatos aceitos: JPG, PNG, WebP, GIF. Tamanho máximo: 10MB</div>
                             </div>
                         </div>
                         <div class="col-md-3">

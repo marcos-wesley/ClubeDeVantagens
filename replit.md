@@ -15,6 +15,13 @@ This is a comprehensive web system for ANETI's Benefits Club (Clube de Vantagens
 - **Enhanced Fields**: Empresas agora têm campos desconto, website, endereco, imagem_detalhes
 - **SQL Fixes**: Corrigidas funções PHP para compatibilidade com MySQL (LIMIT com prepared statements)
 
+### WebP Image Support Added
+- **Image Upload Support**: Todos os campos de upload de imagem agora aceitam WebP
+- **Validation Updated**: Validação PHP e HTML atualizada para incluir image/webp
+- **File Types**: Suporte para JPG, PNG, GIF e WebP em logos, imagens de detalhes e slides do banner
+- **Error Messages**: Mensagens de erro atualizadas para incluir WebP
+- **File Size Limits**: Mantidos limites de 5MB para logos/detalhes e 10MB para slides
+
 ## Previous Changes (January 31, 2025)
 
 ### Header Final Implementation - ANETI Colors
