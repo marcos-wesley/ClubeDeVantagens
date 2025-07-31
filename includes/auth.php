@@ -12,7 +12,7 @@ function loginUser($conn, $email, $password) {
     $stmt->execute([$email]);
     $user = $stmt->fetch();
     
-    if ($user && md5($password) === $user['password']) {
+    if ($user && isset($user['password']) && md5($password) === $user['password']) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_nome'] = $user['nome'];
         $_SESSION['user_email'] = $user['email'];
