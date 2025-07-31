@@ -41,6 +41,17 @@ if ($_POST) {
     $status = sanitizeInput($_POST['status']);
     $destaque = isset($_POST['destaque']) ? true : false;
     
+    // Handle logo upload
+    $logo_filename = $empresa['logo'] ?? null;
+    if (isset($_FILES['logo']) && $_FILES['logo']['size'] > 0) {
+        $upload_result = uploadFile($_FILES['logo']);
+        if ($upload_result['success']) {
+            $logo_filename = $upload_result['filename'];
+        } else {
+            $error = $upload_result['message'];
+        }
+    }
+    
     if (empty($nome) || empty($categoria) || empty($descricao)) {
         $error = 'Por favor, preencha todos os campos obrigatórios.';
     } else {
@@ -50,13 +61,13 @@ if ($_POST) {
                 $stmt = $conn->prepare("
                     UPDATE empresas SET 
                     nome = ?, categoria = ?, descricao = ?, endereco = ?, 
-                    cidade = ?, telefone = ?, email = ?, website = ?, 
-                    regras = ?, desconto = ?, avaliacao = ?, status = ?, destaque = ?, updated_at = NOW()
+                    cidade = ?, telefone = ?, email = ?, website = ?, logo = ?,
+                    regras = ?, desconto = ?, avaliacao_media = ?, status = ?, destaque = ?, updated_at = NOW()
                     WHERE id = ?
                 ");
                 $stmt->execute([
                     $nome, $categoria, $descricao, $endereco, 
-                    $cidade, $telefone, $email, $website, 
+                    $cidade, $telefone, $email, $website, $logo_filename,
                     $regras_beneficio, $desconto, $avaliacao, $status, $destaque, $empresa_id
                 ]);
                 $message = 'Empresa atualizada com sucesso!';
@@ -71,13 +82,13 @@ if ($_POST) {
                 $stmt = $conn->prepare("
                     INSERT INTO empresas (
                         nome, categoria, descricao, endereco, cidade, 
-                        telefone, email, website, regras, desconto, avaliacao,
+                        telefone, email, website, logo, regras, desconto, avaliacao_media,
                         status, destaque, created_at, updated_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
                 ");
                 $stmt->execute([
                     $nome, $categoria, $descricao, $endereco, $cidade, 
-                    $telefone, $email, $website, $regras_beneficio, 
+                    $telefone, $email, $website, $logo_filename, $regras_beneficio, 
                     $desconto, $avaliacao, $status, $destaque
                 ]);
                 $message = 'Empresa cadastrada com sucesso!';
@@ -145,7 +156,7 @@ $categories = getCategories($conn);
 
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST">
+                        <form method="POST" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
@@ -238,6 +249,17 @@ $categories = getCategories($conn);
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Logo da Empresa</label>
+                                <input type="file" class="form-control" name="logo" accept="image/*">
+                                <?php if (!empty($empresa['logo'])): ?>
+                                    <div class="mt-2">
+                                        <small class="text-muted">Logo atual: <?php echo htmlspecialchars($empresa['logo']); ?></small>
+                                    </div>
+                                <?php endif; ?>
+                                <div class="form-text">Formatos aceitos: JPG, PNG, GIF. Tamanho máximo: 5MB</div>
                             </div>
 
                             <div class="mb-3">

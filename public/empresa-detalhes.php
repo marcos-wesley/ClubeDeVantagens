@@ -9,10 +9,66 @@ if (!$id) {
     redirect('../index.php');
 }
 
+// Handle review submission
+if ($_POST && isset($_POST['rating'])) {
+    $usuario_nome = sanitizeInput($_POST['usuario_nome']);
+    $usuario_email = sanitizeInput($_POST['usuario_email']);
+    $rating = intval($_POST['rating']);
+    $comentario = sanitizeInput($_POST['comentario']);
+    
+    if ($usuario_nome && $rating >= 1 && $rating <= 5) {
+        try {
+            $stmt = $conn->prepare("INSERT INTO avaliacoes (empresa_id, usuario_nome, usuario_email, rating, comentario, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
+            $stmt->execute([$id, $usuario_nome, $usuario_email, $rating, $comentario]);
+            
+            // Update company average rating
+            $stmt = $conn->prepare("
+                UPDATE empresas SET 
+                    avaliacao_media = (SELECT AVG(rating) FROM avaliacoes WHERE empresa_id = ?),
+                    total_avaliacoes = (SELECT COUNT(*) FROM avaliacoes WHERE empresa_id = ?)
+                WHERE id = ?
+            ");
+            $stmt->execute([$id, $id, $id]);
+            
+            // Redirect to show the new review
+            header("Location: empresa-detalhes.php?id=" . $id . "&tab=avaliacoes&success=1");
+            exit;
+        } catch (Exception $e) {
+            $error_message = "Erro ao salvar avaliação.";
+        }
+    }
+}
+
 $company = getCompanyById($conn, $id);
 
 if (!$company) {
     redirect('../index.php');
+}
+
+// Buscar avaliações reais da empresa
+$reviews = [];
+$rating_summary = ['media' => 0, 'total' => 0, 'star5' => 0, 'star4' => 0, 'star3' => 0, 'star2' => 0, 'star1' => 0];
+
+try {
+    $stmt = $conn->prepare("SELECT * FROM avaliacoes WHERE empresa_id = ? ORDER BY created_at DESC LIMIT 10");
+    $stmt->execute([$id]);
+    $reviews = $stmt->fetchAll();
+    
+    $stmt = $conn->prepare("
+        SELECT 
+            AVG(rating) as media,
+            COUNT(*) as total,
+            SUM(CASE WHEN rating = 5 THEN 1 ELSE 0 END) as star5,
+            SUM(CASE WHEN rating = 4 THEN 1 ELSE 0 END) as star4,
+            SUM(CASE WHEN rating = 3 THEN 1 ELSE 0 END) as star3,
+            SUM(CASE WHEN rating = 2 THEN 1 ELSE 0 END) as star2,
+            SUM(CASE WHEN rating = 1 THEN 1 ELSE 0 END) as star1
+        FROM avaliacoes WHERE empresa_id = ?
+    ");
+    $stmt->execute([$id]);
+    $rating_summary = $stmt->fetch() ?: ['media' => 0, 'total' => 0, 'star5' => 0, 'star4' => 0, 'star3' => 0, 'star2' => 0, 'star1' => 0];
+} catch (Exception $e) {
+    // Em caso de erro, manter arrays vazios
 }
 ?>
 <!DOCTYPE html>
@@ -45,8 +101,17 @@ if (!$company) {
                     <div class="benefit-header-content">
                         <h1 class="benefit-title"><?php echo htmlspecialchars($company['nome']); ?></h1>
                         <div class="benefit-rating mb-2">
-                            <span class="stars">★★★★★</span>
-                            <span class="rating-text">4.8</span>
+                            <?php
+                            $avg_rating = $rating_summary['media'] ? round($rating_summary['media'], 1) : 0;
+                            for ($i = 1; $i <= 5; $i++) {
+                                if ($i <= $avg_rating) {
+                                    echo '<span class="star filled">★</span>';
+                                } else {
+                                    echo '<span class="star">★</span>';
+                                }
+                            }
+                            ?>
+                            <span class="rating-text"><?php echo $avg_rating; ?></span>
                         </div>
                         <p class="benefit-category"><?php echo htmlspecialchars($company['categoria']); ?></p>
                         <p class="benefit-discount">20% de desconto em todos os serviços</p>
@@ -65,7 +130,7 @@ if (!$company) {
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="tab" href="#avaliacoes">Avaliações 
-                        <span class="badge bg-secondary">7</span>
+                        <span class="badge bg-secondary"><?php echo $rating_summary['total']; ?></span>
                     </a>
                 </li>
             </ul>
@@ -204,36 +269,39 @@ if (!$company) {
                                 <div class="row align-items-center">
                                     <div class="col-md-4 text-center">
                                         <div class="overall-rating">
-                                            <span class="rating-number">4.8</span>
+                                            <span class="rating-number"><?php echo $avg_rating; ?></span>
                                             <div class="rating-stars">
-                                                <span class="stars">★★★★★</span>
+                                                <span class="stars">
+                                                    <?php
+                                                    for ($i = 1; $i <= 5; $i++) {
+                                                        if ($i <= $avg_rating) {
+                                                            echo '★';
+                                                        } else {
+                                                            echo '☆';
+                                                        }
+                                                    }
+                                                    ?>
+                                                </span>
                                             </div>
-                                            <p class="rating-text">7 avaliações</p>
+                                            <p class="rating-text"><?php echo $rating_summary['total']; ?> avaliações</p>
                                         </div>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="rating-breakdown">
+                                            <?php
+                                            $total = $rating_summary['total'];
+                                            for ($star = 5; $star >= 1; $star--) {
+                                                $count = $rating_summary["star$star"];
+                                                $percentage = $total > 0 ? ($count / $total) * 100 : 0;
+                                            ?>
                                             <div class="rating-bar">
-                                                <span class="bar-label">5 estrelas</span>
+                                                <span class="bar-label"><?php echo $star; ?> estrelas</span>
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-warning" style="width: 85%"></div>
+                                                    <div class="progress-bar bg-warning" style="width: <?php echo $percentage; ?>%"></div>
                                                 </div>
-                                                <span class="bar-count">6</span>
+                                                <span class="bar-count"><?php echo $count; ?></span>
                                             </div>
-                                            <div class="rating-bar">
-                                                <span class="bar-label">4 estrelas</span>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-warning" style="width: 15%"></div>
-                                                </div>
-                                                <span class="bar-count">1</span>
-                                            </div>
-                                            <div class="rating-bar">
-                                                <span class="bar-label">3 estrelas</span>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-warning" style="width: 0%"></div>
-                                                </div>
-                                                <span class="bar-count">0</span>
-                                            </div>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
@@ -241,69 +309,79 @@ if (!$company) {
 
                             <!-- Lista de Avaliações -->
                             <div class="reviews-list">
-                                <?php
-                                $sample_reviews = [
-                                    ['nome' => 'Maria Santos', 'rating' => 5, 'data' => '2025-01-28', 'comentario' => 'Excelente atendimento e desconto muito bom! Recomendo para todos os associados.'],
-                                    ['nome' => 'João Silva', 'rating' => 5, 'data' => '2025-01-25', 'comentario' => 'Utilizei o cupom e foi muito fácil. O pessoal já conhece o sistema da ANETI.'],
-                                    ['nome' => 'Pedro Costa', 'rating' => 4, 'data' => '2025-01-20', 'comentario' => 'Bom benefício, mas poderia ter mais opções de horário para usar.'],
-                                    ['nome' => 'Ana Paula', 'rating' => 5, 'data' => '2025-01-15', 'comentario' => 'Ótima experiência! Voltarei outras vezes com certeza.']
-                                ];
-                                
-                                foreach ($sample_reviews as $review): ?>
-                                    <div class="review-item">
-                                        <div class="review-header">
-                                            <div class="reviewer-info">
-                                                <div class="reviewer-avatar">
-                                                    <?php echo strtoupper(substr($review['nome'], 0, 1)); ?>
-                                                </div>
-                                                <div class="reviewer-details">
-                                                    <h6 class="reviewer-name"><?php echo htmlspecialchars($review['nome']); ?></h6>
-                                                    <div class="review-rating">
-                                                        <?php for ($i = 1; $i <= 5; $i++): ?>
-                                                            <span class="star <?php echo $i <= $review['rating'] ? 'filled' : ''; ?>">★</span>
-                                                        <?php endfor; ?>
+                                <?php if (count($reviews) > 0): ?>
+                                    <?php foreach ($reviews as $review): ?>
+                                        <div class="review-item">
+                                            <div class="review-header">
+                                                <div class="reviewer-info">
+                                                    <div class="reviewer-avatar">
+                                                        <?php echo strtoupper(substr($review['usuario_nome'], 0, 1)); ?>
+                                                    </div>
+                                                    <div class="reviewer-details">
+                                                        <h6 class="reviewer-name"><?php echo htmlspecialchars($review['usuario_nome']); ?></h6>
+                                                        <div class="review-rating">
+                                                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                                <span class="star <?php echo $i <= $review['rating'] ? 'filled' : ''; ?>">★</span>
+                                                            <?php endfor; ?>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <span class="review-date"><?php echo date('d/m/Y', strtotime($review['created_at'])); ?></span>
                                             </div>
-                                            <span class="review-date"><?php echo date('d/m/Y', strtotime($review['data'])); ?></span>
+                                            <?php if ($review['comentario']): ?>
+                                                <p class="review-comment"><?php echo htmlspecialchars($review['comentario']); ?></p>
+                                            <?php endif; ?>
                                         </div>
-                                        <p class="review-comment"><?php echo htmlspecialchars($review['comentario']); ?></p>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <div class="no-reviews">
+                                        <p class="text-muted">Ainda não há avaliações para esta empresa. Seja o primeiro a avaliar!</p>
                                     </div>
-                                <?php endforeach; ?>
+                                <?php endif; ?>
                             </div>
 
                             <!-- Formulário para Nova Avaliação -->
-                            <?php if (isLoggedIn()): ?>
-                                <div class="add-review-form mt-4">
-                                    <h5>Deixe sua avaliação</h5>
-                                    <form class="review-form">
-                                        <div class="mb-3">
-                                            <label class="form-label">Sua avaliação:</label>
-                                            <div class="rating-input">
-                                                <input type="radio" name="rating" value="5" id="star5">
-                                                <label for="star5">★</label>
-                                                <input type="radio" name="rating" value="4" id="star4">
-                                                <label for="star4">★</label>
-                                                <input type="radio" name="rating" value="3" id="star3">
-                                                <label for="star3">★</label>
-                                                <input type="radio" name="rating" value="2" id="star2">
-                                                <label for="star2">★</label>
-                                                <input type="radio" name="rating" value="1" id="star1">
-                                                <label for="star1">★</label>
-                                            </div>
+                            <div class="add-review-form mt-4">
+                                <h5>Deixe sua avaliação</h5>
+                                <?php if (isset($_GET['success'])): ?>
+                                    <div class="alert alert-success">Avaliação adicionada com sucesso!</div>
+                                <?php endif; ?>
+                                <?php if (isset($error_message)): ?>
+                                    <div class="alert alert-danger"><?php echo $error_message; ?></div>
+                                <?php endif; ?>
+                                <form method="POST" class="review-form">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="usuario_nome" class="form-label">Seu nome:</label>
+                                            <input type="text" class="form-control" id="usuario_nome" name="usuario_nome" required>
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="comentario" class="form-label">Comentário:</label>
-                                            <textarea class="form-control" id="comentario" rows="3" placeholder="Conte como foi sua experiência..."></textarea>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="usuario_email" class="form-label">Seu email (opcional):</label>
+                                            <input type="email" class="form-control" id="usuario_email" name="usuario_email">
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Enviar Avaliação</button>
-                                    </form>
-                                </div>
-                            <?php else: ?>
-                                <div class="login-prompt">
-                                    <p><a href="login.php">Faça login</a> para deixar sua avaliação</p>
-                                </div>
-                            <?php endif; ?>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Sua avaliação:</label>
+                                        <div class="rating-input">
+                                            <input type="radio" name="rating" value="5" id="star5" required>
+                                            <label for="star5">★</label>
+                                            <input type="radio" name="rating" value="4" id="star4" required>
+                                            <label for="star4">★</label>
+                                            <input type="radio" name="rating" value="3" id="star3" required>
+                                            <label for="star3">★</label>
+                                            <input type="radio" name="rating" value="2" id="star2" required>
+                                            <label for="star2">★</label>
+                                            <input type="radio" name="rating" value="1" id="star1" required>
+                                            <label for="star1">★</label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="comentario" class="form-label">Comentário:</label>
+                                        <textarea class="form-control" name="comentario" rows="3" placeholder="Conte como foi sua experiência..."></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Enviar Avaliação</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
