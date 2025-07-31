@@ -42,10 +42,10 @@ $user_name = $is_logged_in ? $_SESSION['user_nome'] : '';
                     <div class="header-actions text-end">
                         <?php if ($is_logged_in): ?>
                             <div class="dropdown me-2">
-                                <a href="#" class="login-button dropdown-toggle" data-bs-toggle="dropdown" style="text-decoration: none;">
-                                    <i class="fas fa-user me-1"></i><?= htmlspecialchars($user_name) ?>
+                                <a href="#" class="login-button dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">
+                                    <i class="fas fa-user me-1"></i><?= htmlspecialchars($user_name) ?> <i class="fas fa-chevron-down ms-1"></i>
                                 </a>
-                                <ul class="dropdown-menu">
+                                <ul class="dropdown-menu dropdown-menu-end">
                                     <li><a class="dropdown-item" href="<?= $base_path ?>public/dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="<?= $base_path ?>public/logout.php"><i class="fas fa-sign-out-alt me-2"></i>Sair</a></li>
