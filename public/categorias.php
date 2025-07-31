@@ -116,85 +116,84 @@ $total_empresas = count($empresas);
         </div>
     </section>
 
-    <!-- Companies Grid -->
-    <section class="companies-grid" style="padding: 60px 0;">
+    <!-- Companies Grid - Same as Homepage Layout -->
+    <section class="companies-grid" style="padding: 40px 0; background: #f8f9fa;">
         <div class="container">
             <?php if (!empty($empresas)): ?>
-                <div class="row">
+                <div class="row g-4">
                     <?php foreach ($empresas as $empresa): ?>
-                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                            <div class="benefit-card modern-card" style="height: 100%; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: all 0.3s ease; background: white; border: none;">
-                                <!-- Card Image -->
-                                <div class="card-image-container" style="position: relative; height: 200px; overflow: hidden;">
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="recently-added-card" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; height: 100%;">
+                                <!-- Card Image with Cover -->
+                                <div class="card-image-cover" style="position: relative; height: 180px; overflow: hidden;">
                                     <?php if ($empresa['imagem_detalhes']): ?>
                                         <img src="../uploads/<?php echo htmlspecialchars($empresa['imagem_detalhes']); ?>" 
                                              alt="<?php echo htmlspecialchars($empresa['nome']); ?>" 
                                              style="width: 100%; height: 100%; object-fit: cover;">
                                     <?php else: ?>
                                         <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #012d6a 0%, #25a244 100%); display: flex; align-items: center; justify-content: center;">
-                                            <i class="fas fa-store" style="font-size: 3rem; color: white; opacity: 0.7;"></i>
+                                            <i class="fas fa-store" style="font-size: 2.5rem; color: white; opacity: 0.7;"></i>
                                         </div>
                                     <?php endif; ?>
                                     
-                                    <!-- Logo Overlay -->
+                                    <!-- Circular Logo Overlay -->
                                     <?php if ($empresa['logo']): ?>
-                                        <div style="position: absolute; top: 15px; left: 15px; width: 60px; height: 60px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+                                        <div class="logo-overlay" style="position: absolute; bottom: -30px; left: 20px; width: 60px; height: 60px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: 3px solid white;">
                                             <img src="../uploads/<?php echo htmlspecialchars($empresa['logo']); ?>" 
                                                  alt="Logo <?php echo htmlspecialchars($empresa['nome']); ?>" 
-                                                 style="width: 50px; height: 50px; object-fit: contain; border-radius: 50%;">
+                                                 style="width: 45px; height: 45px; object-fit: contain; border-radius: 50%;">
                                         </div>
                                     <?php endif; ?>
                                     
-                                    <!-- Favorite Button -->
-                                    <button class="favorite-btn" onclick="toggleFavorite(<?php echo $empresa['id']; ?>)" 
-                                            style="position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;">
-                                        <i class="far fa-heart" style="color: #012d6a; font-size: 1.1rem;"></i>
+                                    <!-- Favorite Heart -->
+                                    <button class="favorite-heart" onclick="toggleFavorite(<?php echo $empresa['id']; ?>)" 
+                                            style="position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;">
+                                        <i class="far fa-heart" style="color: #012d6a; font-size: 1rem;"></i>
                                     </button>
                                 </div>
                                 
                                 <!-- Card Content -->
-                                <div class="card-body" style="padding: 20px;">
+                                <div class="card-content" style="padding: 25px 20px 20px;">
                                     <!-- Company Name -->
-                                    <h5 style="color: #012d6a; font-weight: 700; margin-bottom: 8px; font-size: 1.2rem;">
+                                    <h5 class="company-name" style="color: #012d6a; font-weight: 700; margin-bottom: 8px; font-size: 1.1rem; line-height: 1.3;">
                                         <?php echo htmlspecialchars($empresa['nome']); ?>
                                     </h5>
                                     
-                                    <!-- Category Badge -->
-                                    <span class="category-badge" style="background: #012d6a; color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: 500; margin-bottom: 10px; display: inline-block;">
-                                        <?php echo htmlspecialchars($empresa['categoria']); ?>
-                                    </span>
-                                    
                                     <!-- Description -->
-                                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px; line-height: 1.4;">
-                                        <?php echo htmlspecialchars(substr($empresa['descricao'], 0, 80)) . (strlen($empresa['descricao']) > 80 ? '...' : ''); ?>
+                                    <p class="company-description" style="color: #666; font-size: 0.85rem; margin-bottom: 12px; line-height: 1.4; height: 40px; overflow: hidden;">
+                                        <?php echo htmlspecialchars(substr($empresa['descricao'], 0, 70)) . (strlen($empresa['descricao']) > 70 ? '...' : ''); ?>
                                     </p>
                                     
-                                    <!-- Location -->
-                                    <div style="display: flex; align-items: center; margin-bottom: 15px; color: #888; font-size: 0.85rem;">
-                                        <i class="fas fa-map-marker-alt" style="margin-right: 8px; color: #012d6a;"></i>
-                                        <?php echo htmlspecialchars($empresa['cidade'] . ', ' . $empresa['estado']); ?>
+                                    <!-- Rating Stars -->
+                                    <div class="rating-section" style="margin-bottom: 12px;">
+                                        <?php
+                                        $rating = $empresa['avaliacao_media'] ?? 4.5;
+                                        for ($i = 1; $i <= 5; $i++) {
+                                            echo '<span style="color: ' . ($i <= $rating ? '#FFD700' : '#E0E0E0') . '; font-size: 0.9rem; margin-right: 2px;">★</span>';
+                                        }
+                                        ?>
+                                        <span style="color: #666; font-size: 0.8rem; margin-left: 5px;">
+                                            <?php echo number_format($rating, 1); ?>
+                                        </span>
                                     </div>
                                     
-                                    <!-- Rating -->
-                                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-                                        <div class="rating-stars">
-                                            <?php
-                                            $rating = $empresa['avaliacao_media'] ?? 4.5;
-                                            for ($i = 1; $i <= 5; $i++) {
-                                                echo '<span style="color: ' . ($i <= $rating ? '#FFD700' : '#E0E0E0') . '; font-size: 0.9rem;">★</span>';
-                                            }
-                                            ?>
-                                            <span style="color: #666; font-size: 0.85rem; margin-left: 8px;">
-                                                <?php echo number_format($rating, 1); ?>
-                                            </span>
-                                        </div>
+                                    <!-- Category Badge -->
+                                    <div class="category-section" style="margin-bottom: 15px;">
+                                        <span class="category-badge" style="background: rgba(1, 45, 106, 0.1); color: #012d6a; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">
+                                            <?php echo htmlspecialchars($empresa['categoria']); ?>
+                                        </span>
+                                    </div>
+                                    
+                                    <!-- Location -->
+                                    <div class="location-section" style="display: flex; align-items: center; margin-bottom: 15px; color: #888; font-size: 0.8rem;">
+                                        <i class="fas fa-map-marker-alt" style="margin-right: 6px; color: #012d6a;"></i>
+                                        <?php echo htmlspecialchars($empresa['cidade'] . ', ' . $empresa['estado']); ?>
                                     </div>
                                     
                                     <!-- Action Button -->
                                     <a href="empresa-detalhes.php?id=<?php echo $empresa['id']; ?>" 
-                                       class="btn w-100" 
-                                       style="background: linear-gradient(135deg, #012d6a 0%, #25a244 100%); color: white; border: none; border-radius: 25px; padding: 10px; font-weight: 600; transition: all 0.3s ease;">
-                                        <i class="fas fa-eye" style="margin-right: 8px;"></i>
+                                       class="btn-view-details" 
+                                       style="display: block; background: #012d6a; color: white; text-decoration: none; text-align: center; padding: 10px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; transition: all 0.3s ease;">
                                         Ver Detalhes
                                     </a>
                                 </div>
