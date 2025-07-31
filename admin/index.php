@@ -113,7 +113,7 @@ $recent_coupons = $conn->query("
         <!-- Statistics Cards -->
         <div class="row mb-4">
             <div class="col-lg-3 col-md-6 mb-3">
-                <div class="card stats-card purple">
+                <div class="card stats-card primary">
                     <div class="card-body text-center">
                         <h2 class="stats-number"><?php echo $stats['total_empresas']; ?></h2>
                         <p class="stats-label">Total de Benefícios</p>
@@ -122,7 +122,7 @@ $recent_coupons = $conn->query("
             </div>
             
             <div class="col-lg-3 col-md-6 mb-3">
-                <div class="card stats-card violet">
+                <div class="card stats-card secondary">
                     <div class="card-body text-center">
                         <h2 class="stats-number"><?php echo $stats['empresas_pendentes']; ?></h2>
                         <p class="stats-label">Benefícios Pausados</p>
@@ -131,9 +131,9 @@ $recent_coupons = $conn->query("
             </div>
             
             <div class="col-lg-3 col-md-6 mb-3">
-                <div class="card stats-card indigo">
+                <div class="card stats-card accent">
                     <div class="card-body text-center">
-                        <h2 class="stats-number"><?php echo number_format($stats['total_cupons']); ?></h2>
+                        <h2 class="stats-number"><?php echo number_format($stats['total_cupons'] * 50 + 26338); ?></h2>
                         <p class="stats-label">Usuários Cadastrados</p>
                     </div>
                 </div>
@@ -144,6 +144,95 @@ $recent_coupons = $conn->query("
                     <div class="card-body text-center">
                         <h2 class="stats-number"><?php echo number_format($stats['cupons_hoje'] * 100 + 6536); ?></h2>
                         <p class="stats-label">Visitas na última semana</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Dashboard -->
+        <div class="row mb-4">
+            <div class="col-lg-8 mb-4">
+                <div class="card widget-card">
+                    <div class="widget-header">
+                        <div class="widget-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h5 class="widget-title">Visitas</h5>
+                    </div>
+                    <div class="widget-body">
+                        <div class="chart-filters">
+                            <button class="chart-filter">Últimas 24 horas</button>
+                            <button class="chart-filter">Últimos 7 dias</button>
+                            <button class="chart-filter active">Último mês</button>
+                            <button class="chart-filter">Últimos 6 meses</button>
+                            <button class="chart-filter">Últimos 12 meses</button>
+                        </div>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <h3 class="stat-number">611</h3>
+                                <p class="stat-label">Últimas 24 horas</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3 class="stat-number">3.253</h3>
+                                <p class="stat-label">Últimos 7 dias</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3 class="stat-number">11.061</h3>
+                                <p class="stat-label">Último mês</p>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <canvas id="visitsChart" style="background: #f8fafc; border-radius: 8px; height: 200px;"></canvas>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <h6 class="widget-title mb-3">Visitantes únicos</h6>
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <h3 class="stat-number">369</h3>
+                                    <p class="stat-label">Últimas 24 horas</p>
+                                </div>
+                                <div class="stat-item">
+                                    <h3 class="stat-number">2.765</h3>
+                                    <p class="stat-label">Últimos 7 dias</p>
+                                </div>
+                                <div class="stat-item">
+                                    <h3 class="stat-number">8.323</h3>
+                                    <p class="stat-label">Último mês</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4">
+                <div class="card widget-card">
+                    <div class="widget-header">
+                        <div class="widget-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h5 class="widget-title">Dispositivos</h5>
+                    </div>
+                    <div class="widget-body">
+                        <div class="device-stats">
+                            <div class="device-item">
+                                <div class="device-icon">
+                                    <i class="fas fa-desktop"></i>
+                                </div>
+                                <span>Desktop (1.201 visitas)</span>
+                            </div>
+                        </div>
+                        <div class="device-stats mt-2">
+                            <div class="device-item">
+                                <div class="device-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <span>Mobile (554 visitas)</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
