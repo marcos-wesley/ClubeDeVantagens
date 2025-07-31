@@ -80,192 +80,526 @@ try {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding-top: 150px;
+        }
+        .company-hero {
+            background: linear-gradient(135deg, #012d6a 0%, #25a244 100%);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .company-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="white" opacity="0.05"><polygon points="0,100 1000,0 1000,100"/></svg>');
+            background-size: cover;
+        }
+        .company-logo-container {
+            position: relative;
+            z-index: 2;
+        }
+        .company-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            background: white;
+        }
+        .company-logo-placeholder {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            background: white;
+            color: #012d6a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            border: 4px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .company-info {
+            position: relative;
+            z-index: 2;
+        }
+        .company-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .company-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .rating-stars {
+            color: #ffd700;
+            font-size: 1.5rem;
+        }
+        .rating-value {
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            font-weight: 600;
+        }
+        .company-category {
+            background: rgba(255,255,255,0.15);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+        .company-discount {
+            font-size: 1.3rem;
+            font-weight: 600;
+            background: rgba(37, 162, 68, 0.2);
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            display: inline-block;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        .company-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: block;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        .company-actions {
+            background: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .action-button {
+            background: white;
+            border: 2px solid #012d6a;
+            color: #012d6a;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            margin: 0.25rem;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .action-button:hover {
+            background: #012d6a;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(1, 45, 106, 0.3);
+        }
+        .action-button.primary {
+            background: linear-gradient(135deg, #012d6a 0%, #25a244 100%);
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            padding: 1rem 2rem;
+        }
+        .action-button.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(1, 45, 106, 0.4);
+            color: white;
+        }
+        .company-content {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+        .content-tabs {
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .nav-tabs .nav-link {
+            border: none;
+            color: #6c757d;
+            font-weight: 600;
+            padding: 1.5rem 2rem;
+            border-radius: 0;
+        }
+        .nav-tabs .nav-link.active {
+            background: white;
+            color: #012d6a;
+            border-bottom: 3px solid #25a244;
+        }
+        .content-section {
+            padding: 2rem;
+        }
+        .section-title {
+            color: #012d6a;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .section-title i {
+            color: #25a244;
+        }
+        .company-image {
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .company-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        .how-it-works {
+            background: linear-gradient(135deg, rgba(1, 45, 106, 0.05) 0%, rgba(37, 162, 68, 0.05) 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+        .step-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(1, 45, 106, 0.1);
+        }
+        .step-item:last-child {
+            border-bottom: none;
+        }
+        .step-number {
+            background: linear-gradient(135deg, #012d6a 0%, #25a244 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        .regulation-content {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #25a244;
+        }
+        .location-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #012d6a;
+        }
+        .sidebar-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .use-button {
+            background: linear-gradient(135deg, #012d6a 0%, #25a244 100%);
+            color: white;
+            padding: 1.5rem 3rem;
+            border-radius: 30px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+        .use-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(1, 45, 106, 0.4);
+            color: white;
+        }
+        .company-mini-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .company-mini-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .mini-logo-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #012d6a 0%, #25a244 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            body {
+                padding-top: 130px;
+            }
+            .company-hero {
+                padding: 2rem 0;
+            }
+            .company-title {
+                font-size: 2rem;
+            }
+            .company-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .action-button {
+                margin: 0.5rem 0;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
 
-    <!-- Spacer para Header Fixed -->
-    <div style="height: 140px;"></div>
-
-    <!-- Benefit Header -->
-    <div class="benefit-header">
+    <!-- Company Hero Section -->
+    <div class="company-hero">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-md-2 text-center">
+                <div class="col-lg-2 col-md-3 text-center company-logo-container">
                     <?php if ($company['logo']): ?>
-                        <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="benefit-logo">
+                        <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="company-logo">
                     <?php else: ?>
-                        <div class="benefit-logo-placeholder">
+                        <div class="company-logo-placeholder">
                             <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
                         </div>
                     <?php endif; ?>
                 </div>
-                <div class="col-md-10">
-                    <div class="benefit-header-content">
-                        <h1 class="benefit-title"><?php echo htmlspecialchars($company['nome']); ?></h1>
-                        <div class="benefit-rating mb-2">
+                <div class="col-lg-10 col-md-9 company-info">
+                    <h1 class="company-title"><?php echo htmlspecialchars($company['nome']); ?></h1>
+                    <div class="company-rating">
+                        <div class="rating-stars">
                             <?php
                             $avg_rating = $rating_summary['media'] ? round($rating_summary['media'], 1) : 0;
                             for ($i = 1; $i <= 5; $i++) {
-                                if ($i <= $avg_rating) {
-                                    echo '<span class="star filled">★</span>';
-                                } else {
-                                    echo '<span class="star">★</span>';
-                                }
+                                echo $i <= $avg_rating ? '★' : '☆';
                             }
                             ?>
-                            <span class="rating-text"><?php echo $avg_rating; ?></span>
                         </div>
-                        <p class="benefit-category"><?php echo htmlspecialchars($company['categoria']); ?></p>
-                        <p class="benefit-discount"><?php echo $company['desconto'] ? $company['desconto'] . '% de desconto' : 'Desconto especial para membros ANETI'; ?></p>
+                        <span class="rating-value"><?php echo $avg_rating; ?> de 5</span>
+                        <span class="text-light">•</span>
+                        <span class="text-light"><?php echo $rating_summary['total']; ?> avaliações</span>
+                    </div>
+                    <div class="company-category">
+                        <i class="fas fa-tag me-2"></i><?php echo htmlspecialchars($company['categoria']); ?>
+                    </div>
+                    <div class="company-discount">
+                        <i class="fas fa-percentage me-2"></i>
+                        <?php echo $company['desconto'] ? $company['desconto'] . '% de desconto' : 'Desconto especial para membros ANETI'; ?>
+                    </div>
+                    <div class="company-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">1000+</span>
+                            <span class="stat-label">Membros ativos</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number"><?php echo $rating_summary['total']; ?></span>
+                            <span class="stat-label">Avaliações</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number"><?php echo htmlspecialchars($company['cidade']); ?></span>
+                            <span class="stat-label">Localização</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Benefit Tabs -->
-    <div class="benefit-tabs">
+    <!-- Company Actions -->
+    <div class="company-actions">
         <div class="container">
-            <ul class="nav nav-tabs benefit-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#detalhes">Detalhes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#avaliacoes">Avaliações 
-                        <span class="badge bg-secondary"><?php echo $rating_summary['total']; ?></span>
+            <div class="text-center">
+                <?php if (isLoggedIn()): ?>
+                    <a href="gerar-cupom.php?empresa=<?php echo $company['id']; ?>" class="action-button primary">
+                        <i class="fas fa-ticket-alt"></i>GERAR CUPOM
                     </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Benefit Actions -->
-    <div class="benefit-actions">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="action-buttons">
-                        <button class="btn-action-icon" onclick="openRoute()">
-                            <i class="fas fa-route"></i>
-                            <span>Traçar Rota</span>
-                        </button>
-                        <button class="btn-action-icon" onclick="toggleSaveBenefit()" id="saveBenefitBtn">
-                            <i class="fas fa-heart" id="saveIcon"></i>
-                            <span id="saveText">Salvar este benefício</span>
-                        </button>
-                        <button class="btn-action-icon" onclick="shareCompany()">
-                            <i class="fas fa-share"></i>
-                            <span>Compartilhar</span>
-                        </button>
-                        <button class="btn-action-icon" onclick="scrollToReviews()">
-                            <i class="fas fa-star"></i>
-                            <span>Avaliar este parceiro</span>
-                        </button>
-                        <button class="btn-action-icon" onclick="reportProblem()">
-                            <i class="fas fa-flag"></i>
-                            <span>Reportar um problema</span>
-                        </button>
-                    </div>
-                </div>
+                <?php else: ?>
+                    <a href="login.php" class="action-button primary">
+                        <i class="fas fa-sign-in-alt"></i>FAZER LOGIN PARA USAR
+                    </a>
+                <?php endif; ?>
+                
+                <a href="#" class="action-button" onclick="toggleSaveBenefit()" id="saveBenefitBtn">
+                    <i class="fas fa-heart" id="saveIcon"></i><span id="saveText">Salvar</span>
+                </a>
+                <a href="#" class="action-button" onclick="shareCompany()">
+                    <i class="fas fa-share"></i>Compartilhar
+                </a>
+                <a href="#" class="action-button" onclick="openRoute()">
+                    <i class="fas fa-route"></i>Como Chegar
+                </a>
+                <a href="#avaliacoes" class="action-button">
+                    <i class="fas fa-star"></i>Avaliar
+                </a>
             </div>
         </div>
     </div>
 
     <!-- Main Content -->
-    <div class="container mt-4">
+    <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <div class="tab-content">
-                    <!-- Tab Detalhes -->
-                    <div class="tab-pane fade show active" id="detalhes">
-                        <!-- Main Image -->
-                        <div class="benefit-main-image mb-4">
-                            <?php if ($company['imagem_detalhes']): ?>
-                                <img src="../uploads/<?php echo htmlspecialchars($company['imagem_detalhes']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid">
-                            <?php elseif ($company['logo']): ?>
-                                <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid">
-                            <?php else: ?>
-                                <div class="benefit-placeholder-image">
-                                    <i class="fas fa-image fa-3x mb-3"></i>
-                                    <p>Imagem do <?php echo htmlspecialchars($company['nome']); ?></p>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-
-                        <!-- Como Funciona -->
-                        <div class="benefit-section mb-4">
-                            <h3 class="benefit-section-title">Como funciona:</h3>
-                            <div class="how-it-works">
-                                <div class="step">
-                                    <span class="step-number">1)</span>
-                                    <span class="step-text">Clique no botão USAR</span>
-                                </div>
-                                <div class="step">
-                                    <span class="step-number">2)</span>
-                                    <span class="step-text">Faça seu login e gere seu cupom</span>
-                                </div>
-                                <div class="step">
-                                    <span class="step-number">3)</span>
-                                    <span class="step-text">Apresente o cupom à empresa parceira</span>
-                                </div>
-                                <div class="step">
-                                    <span class="step-number">4)</span>
-                                    <span class="step-text">Aproveite seu desconto exclusivo</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Regulamento -->
-                        <div class="benefit-section mb-4">
-                            <h3 class="benefit-section-title">
-                                <i class="fas fa-file-contract"></i> Regulamento
-                            </h3>
-                            <div class="regulation-content">
-                                <?php if ($company['regras']): ?>
-                                    <p><?php echo nl2br(htmlspecialchars($company['regras'])); ?></p>
-                                <?php else: ?>
-                                    <div class="regulation-item">
-                                        <span class="regulation-number">1)</span>
-                                        <span class="regulation-text">Desconto válido conforme período determinado.</span>
-                                    </div>
-                                    <div class="regulation-item">
-                                        <span class="regulation-number">2)</span>
-                                        <span class="regulation-text">Os descontos podem variar a cada mês.</span>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-
-                        <!-- Localização -->
-                        <div class="benefit-section mb-4">
-                            <h3 class="benefit-section-title">
-                                <i class="fas fa-map-marker-alt"></i> Localização
-                            </h3>
-                            <div class="location-section">
-                                <div class="location-map">
-                                    <div id="map" style="height: 350px; width: 100%; border-radius: 8px; background: #f8f9fa; margin-bottom: 15px;"></div>
-                                </div>
-                                <div class="location-info">
-                                    <p><strong>Endereço:</strong></p>
-                                    <?php if ($company['endereco'] && trim($company['endereco'])): ?>
-                                        <p><?php echo htmlspecialchars($company['endereco']); ?></p>
-                                    <?php endif; ?>
-                                    <p><?php echo htmlspecialchars($company['cidade']); ?>, <?php echo htmlspecialchars($company['estado']); ?></p>
-                                    <?php if ($company['telefone']): ?>
-                                        <p><i class="fas fa-phone"></i> <?php echo htmlspecialchars($company['telefone']); ?></p>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
+                <div class="company-content">
+                    <!-- Tabs Navigation -->
+                    <div class="content-tabs">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#detalhes">
+                                    <i class="fas fa-info-circle me-2"></i>Informações
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#avaliacoes">
+                                    <i class="fas fa-star me-2"></i>Avaliações 
+                                    <span class="badge bg-primary ms-1"><?php echo $rating_summary['total']; ?></span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
 
-                    <!-- Tab Avaliações -->
-                    <div class="tab-pane fade" id="avaliacoes">
-                        <div class="benefit-section">
-                            <h3 class="benefit-section-title">
-                                <i class="fas fa-star"></i> Avaliações dos Usuários
-                            </h3>
+                    <div class="tab-content">
+                        <!-- Tab Informações -->
+                        <div class="tab-pane fade show active" id="detalhes">
+                            <div class="content-section">
+                                <!-- Company Image -->
+                                <?php if ($company['imagem_detalhes'] || $company['logo']): ?>
+                                    <div class="company-image">
+                                        <img src="../uploads/<?php echo htmlspecialchars($company['imagem_detalhes'] ?: $company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>">
+                                    </div>
+                                <?php endif; ?>
+
+                                <!-- Como Funciona -->
+                                <h3 class="section-title">
+                                    <i class="fas fa-play-circle"></i>Como usar este benefício
+                                </h3>
+                                <div class="how-it-works">
+                                    <div class="step-item">
+                                        <div class="step-number">1</div>
+                                        <div>
+                                            <strong>Faça login</strong><br>
+                                            <span class="text-muted">Entre na sua conta ANETI para acessar os benefícios</span>
+                                        </div>
+                                    </div>
+                                    <div class="step-item">
+                                        <div class="step-number">2</div>
+                                        <div>
+                                            <strong>Gere seu cupom</strong><br>
+                                            <span class="text-muted">Clique em "Gerar Cupom" para criar seu código de desconto</span>
+                                        </div>
+                                    </div>
+                                    <div class="step-item">
+                                        <div class="step-number">3</div>
+                                        <div>
+                                            <strong>Apresente na empresa</strong><br>
+                                            <span class="text-muted">Mostre o cupom na empresa parceira ou use online</span>
+                                        </div>
+                                    </div>
+                                    <div class="step-item">
+                                        <div class="step-number">4</div>
+                                        <div>
+                                            <strong>Aproveite o desconto</strong><br>
+                                            <span class="text-muted">Ganhe seu desconto exclusivo de membro ANETI</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Regulamento -->
+                                <h3 class="section-title">
+                                    <i class="fas fa-file-contract"></i>Termos e Condições
+                                </h3>
+                                <div class="regulation-content">
+                                    <?php if ($company['regras']): ?>
+                                        <?php echo nl2br(htmlspecialchars($company['regras'])); ?>
+                                    <?php else: ?>
+                                        <p><strong>Desconto especial para membros ANETI</strong></p>
+                                        <ul>
+                                            <li>Válido mediante apresentação do cupom gerado na plataforma</li>
+                                            <li>Não cumulativo com outras promoções</li>
+                                            <li>Consulte condições específicas na empresa</li>
+                                        </ul>
+                                    <?php endif; ?>
+                                </div>
+
+                                <!-- Localização -->
+                                <h3 class="section-title">
+                                    <i class="fas fa-map-marker-alt"></i>Localização e Contato
+                                </h3>
+                                <div class="location-card">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <h6><i class="fas fa-map-marker-alt text-primary me-2"></i>Endereço</h6>
+                                                <?php if ($company['endereco'] && trim($company['endereco'])): ?>
+                                                    <p class="mb-1"><?php echo htmlspecialchars($company['endereco']); ?></p>
+                                                <?php endif; ?>
+                                                <p><?php echo htmlspecialchars($company['cidade']); ?>, <?php echo htmlspecialchars($company['estado']); ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <?php if ($company['telefone']): ?>
+                                                <div class="mb-3">
+                                                    <h6><i class="fas fa-phone text-success me-2"></i>Telefone</h6>
+                                                    <p><?php echo htmlspecialchars($company['telefone']); ?></p>
+                                                </div>
+                                            <?php endif; ?>
+                                            <?php if ($company['website']): ?>
+                                                <div class="mb-3">
+                                                    <h6><i class="fas fa-globe text-info me-2"></i>Website</h6>
+                                                    <p><a href="<?php echo htmlspecialchars($company['website']); ?>" target="_blank" class="text-decoration-none">Visitar site</a></p>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab Avaliações -->
+                        <div class="tab-pane fade" id="avaliacoes">
+                            <div class="content-section">
+                                <h3 class="section-title">
+                                    <i class="fas fa-star"></i>Avaliações dos Usuários
+                                </h3>
                             
                             <!-- Resumo das Avaliações -->
                             <div class="rating-summary mb-4">
@@ -392,49 +726,83 @@ try {
 
             <!-- Sidebar -->
             <div class="col-lg-4">
-                <div class="benefit-sidebar">
-                    <div class="use-button-container">
-                        <?php if (isLoggedIn()): ?>
-                            <a href="gerar-cupom.php?empresa=<?php echo $company['id']; ?>" class="btn-use">
-                                USAR
-                            </a>
+                <!-- Action Card -->
+                <div class="sidebar-card">
+                    <div class="company-mini-logo">
+                        <?php if ($company['logo']): ?>
+                            <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>">
                         <?php else: ?>
-                            <a href="login.php" class="btn-use">
-                                FAZER LOGIN
-                            </a>
-                        <?php endif; ?>
-                        
-                        <div class="company-mini-logo">
-                            <?php if ($company['logo']): ?>
-                                <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>">
-                            <?php else: ?>
-                                <div class="logo-placeholder-mini">
-                                    <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                    
-                    <div class="company-description">
-                        <?php if ($company['descricao']): ?>
-                            <p><?php echo nl2br(htmlspecialchars($company['descricao'])); ?></p>
-                        <?php else: ?>
-                            <p>Aproveite os benefícios exclusivos do <?php echo htmlspecialchars($company['nome']); ?>! Uma experiência única que oferece descontos especiais para membros do Clube de Vantagens da ANETI.</p>
-                        <?php endif; ?>
-                        
-                        <?php if ($company['website'] || $company['telefone'] || $company['email']): ?>
-                            <div class="contact-info mt-3">
-                                <?php if ($company['website']): ?>
-                                    <p><i class="fas fa-globe"></i> <a href="<?php echo htmlspecialchars($company['website']); ?>" target="_blank"><?php echo htmlspecialchars($company['website']); ?></a></p>
-                                <?php endif; ?>
-                                <?php if ($company['telefone']): ?>
-                                    <p><i class="fas fa-phone"></i> <?php echo htmlspecialchars($company['telefone']); ?></p>
-                                <?php endif; ?>
-                                <?php if ($company['email']): ?>
-                                    <p><i class="fas fa-envelope"></i> <a href="mailto:<?php echo htmlspecialchars($company['email']); ?>"><?php echo htmlspecialchars($company['email']); ?></a></p>
-                                <?php endif; ?>
+                            <div class="mini-logo-placeholder">
+                                <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
                             </div>
                         <?php endif; ?>
+                    </div>
+                    
+                    <?php if (isLoggedIn()): ?>
+                        <a href="gerar-cupom.php?empresa=<?php echo $company['id']; ?>" class="use-button">
+                            <i class="fas fa-ticket-alt me-2"></i>GERAR CUPOM
+                        </a>
+                    <?php else: ?>
+                        <a href="login.php" class="use-button">
+                            <i class="fas fa-sign-in-alt me-2"></i>FAZER LOGIN
+                        </a>
+                    <?php endif; ?>
+                    
+                    <div class="text-start">
+                        <?php if ($company['descricao']): ?>
+                            <p class="text-muted"><?php echo nl2br(htmlspecialchars($company['descricao'])); ?></p>
+                        <?php else: ?>
+                            <p class="text-muted">Aproveite os benefícios exclusivos do <?php echo htmlspecialchars($company['nome']); ?>! Uma experiência única que oferece descontos especiais para membros do Clube de Vantagens da ANETI.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <!-- Company Info Card -->
+                <div class="sidebar-card">
+                    <h5 class="text-start mb-3"><i class="fas fa-info-circle text-primary me-2"></i>Informações</h5>
+                    <div class="text-start">
+                        <?php if ($company['website']): ?>
+                            <div class="mb-3">
+                                <i class="fas fa-globe text-info me-2"></i>
+                                <a href="<?php echo htmlspecialchars($company['website']); ?>" target="_blank" class="text-decoration-none">
+                                    Visitar Website
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                        
+                        <?php if ($company['telefone']): ?>
+                            <div class="mb-3">
+                                <i class="fas fa-phone text-success me-2"></i>
+                                <span><?php echo htmlspecialchars($company['telefone']); ?></span>
+                            </div>
+                        <?php endif; ?>
+                        
+                        <div class="mb-3">
+                            <i class="fas fa-map-marker-alt text-danger me-2"></i>
+                            <span><?php echo htmlspecialchars($company['cidade']); ?>, <?php echo htmlspecialchars($company['estado']); ?></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <i class="fas fa-tag text-warning me-2"></i>
+                            <span><?php echo htmlspecialchars($company['categoria']); ?></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Card -->
+                <div class="sidebar-card">
+                    <h5 class="text-start mb-3"><i class="fas fa-chart-bar text-success me-2"></i>Estatísticas</h5>
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <div class="border-end">
+                                <h4 class="text-primary mb-0"><?php echo $avg_rating; ?></h4>
+                                <small class="text-muted">Avaliação</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <h4 class="text-success mb-0"><?php echo $rating_summary['total']; ?></h4>
+                            <small class="text-muted">Reviews</small>
+                        </div>
                     </div>
                 </div>
             </div>
