@@ -37,9 +37,9 @@ if ($_POST && isset($_POST['action'])) {
 $sql = "
     SELECT m.*, 
            COUNT(c.id) as total_cupons,
-           COUNT(CASE WHEN DATE(c.created_at) >= CURRENT_DATE - INTERVAL '30 days' THEN 1 END) as cupons_mes
+           COUNT(CASE WHEN c.created_at >= CURRENT_DATE - INTERVAL '30 days' THEN 1 END) as cupons_mes
     FROM membros m
-    LEFT JOIN cupons c ON m.id = c.membro_id
+    LEFT JOIN cupons c ON m.id = c.usuario_id
     GROUP BY m.id
     ORDER BY m.created_at DESC
 ";
