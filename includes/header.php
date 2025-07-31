@@ -17,7 +17,6 @@ $base_path = $is_subdirectory ? '../' : '';
                     </h1>
                 </div>
                 <div class="col-md-4">
-                    <?php if (strpos($_SERVER['PHP_SELF'], '/empresa/') === false): ?>
                     <form class="search-form" method="GET" action="<?= $base_path ?>public/categorias.php">
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Buscar empresas..." 
@@ -27,7 +26,6 @@ $base_path = $is_subdirectory ? '../' : '';
                             </button>
                         </div>
                     </form>
-                    <?php endif; ?>
                 </div>
                 <div class="col-md-4 text-end">
                     <div class="user-menu">
@@ -56,7 +54,6 @@ $base_path = $is_subdirectory ? '../' : '';
     </div>
     
     <!-- Segunda Linha - Menu de Categorias -->
-    <?php if (strpos($_SERVER['PHP_SELF'], '/empresa/') === false): ?>
     <nav class="categories-nav-horizontal" style="padding: 8px 0;">
         <div class="container">
             <div class="d-flex justify-content-center align-items-center flex-wrap" style="gap: 2rem;">
@@ -143,5 +140,4 @@ $base_path = $is_subdirectory ? '../' : '';
             </div>
         </div>
     </nav>
-    <?php endif; ?>
 </header>
