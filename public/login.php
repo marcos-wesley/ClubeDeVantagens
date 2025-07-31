@@ -73,10 +73,7 @@ if ($_POST) {
             background: linear-gradient(135deg, #012d6a 0%, #25a244 100%);
             padding: 1.5rem;
         }
-        .demo-info {
-            background: #f8f9fa;
-            border-left: 4px solid #012d6a;
-        }
+
         .form-control:focus {
             border-color: #012d6a;
             box-shadow: 0 0 0 0.2rem rgba(1, 45, 106, 0.25);
@@ -147,23 +144,7 @@ if ($_POST) {
                         </div>
                     </div>
                 </div>
-                
-                    <!-- Demo Users -->
-                    <div class="card mt-3 demo-info">
-                        <div class="card-header" style="background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
-                            <h6 class="mb-0" style="color: #012d6a;"><i class="fas fa-info-circle me-2"></i>Usuários de Demo</h6>
-                        </div>
-                        <div class="card-body">
-                            <small class="text-muted">
-                                Para testar o sistema, use um dos e-mails abaixo:<br>
-                                <strong>E-mail:</strong> joao.silva@email.com | <strong>Senha:</strong> 123456<br>
-                                <strong>E-mail:</strong> maria.santos@email.com | <strong>Senha:</strong> 123456<br>
-                                <strong>E-mail:</strong> carlos.oliveira@email.com | <strong>Senha:</strong> 123456<br>
-                                <em>Todos os usuários demo usam a senha: 123456</em>
-                            </small>
-                        </div>
-                    </div>
-                </div>
+            </div>
             </div>
         </div>
     </section>

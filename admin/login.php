@@ -62,10 +62,7 @@ if ($_POST) {
         .aneti-header {
             background: linear-gradient(135deg, #012d6a 0%, #25a244 100%);
         }
-        .demo-card {
-            background: #f8f9fa;
-            border-left: 4px solid #012d6a;
-        }
+
     </style>
 </head>
 <body>
@@ -106,20 +103,6 @@ if ($_POST) {
                                 <i class="fas fa-arrow-left"></i> Voltar ao site
                             </a>
                         </div>
-                    </div>
-                </div>
-                
-                <!-- Demo Admin -->
-                <div class="card mt-3 demo-card">
-                    <div class="card-header" style="background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
-                        <h6 class="mb-0" style="color: #012d6a;"><i class="fas fa-info-circle"></i> Admin de Demo</h6>
-                    </div>
-                    <div class="card-body">
-                        <small class="text-muted">
-                            Para testar o sistema administrativo:<br>
-                            <strong>E-mail:</strong> admin@aneti.net.br<br>
-                            <strong>Senha:</strong> admin123
-                        </small>
                     </div>
                 </div>
             </div>

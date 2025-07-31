@@ -109,6 +109,7 @@ $categories = getCategories($conn);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             overflow: hidden;
             background: white;
+            margin-bottom: 30px;
         }
         .partner-card-header {
             background: linear-gradient(135deg, #012d6a 0%, #25a244 100%);
