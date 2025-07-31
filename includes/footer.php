@@ -1,43 +1,209 @@
-<footer class="main-footer bg-dark text-white py-5">
+<?php
+// Determine the correct path based on current directory
+$is_subdirectory = strpos($_SERVER['PHP_SELF'], '/public/') !== false || 
+                  strpos($_SERVER['PHP_SELF'], '/admin/') !== false || 
+                  strpos($_SERVER['PHP_SELF'], '/empresa/') !== false;
+$base_path = $is_subdirectory ? '../' : '';
+?>
+
+<footer class="main-footer text-white py-5" style="background: linear-gradient(135deg, #012d6a 0%, #25a244 100%); margin-top: auto;">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-4 mb-4">
-                <h5>Clube de Vantagens ANETI</h5>
-                <p>Benefícios exclusivos para membros da Associação Nacional de Engenheiros de Tecnologia da Informação.</p>
+        <!-- Seção Principal do Footer -->
+        <div class="row g-4">
+            <!-- Coluna 1: Informações do Clube -->
+            <div class="col-lg-4 col-md-6">
+                <div class="footer-section">
+                    <h5 class="mb-3" style="color: white; font-weight: 600;">
+                        <i class="fas fa-star me-2"></i>Clube de Vantagens ANETI
+                    </h5>
+                    <p class="mb-3" style="color: rgba(255,255,255,0.9); line-height: 1.6;">
+                        Benefícios exclusivos para membros da Associação Nacional de Engenheiros de Tecnologia da Informação.
+                    </p>
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-users me-2" style="color: #25a244;"></i>
+                        <span style="color: rgba(255,255,255,0.9);">Mais de 1.000 membros ativos</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-store me-2" style="color: #25a244;"></i>
+                        <span style="color: rgba(255,255,255,0.9);">50+ empresas parceiras</span>
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-2 mb-4">
-                <h6>Links</h6>
-                <ul class="list-unstyled">
-                    <li><a href="<?php echo strpos($_SERVER['PHP_SELF'], '/public/') !== false || strpos($_SERVER['PHP_SELF'], '/admin/') !== false || strpos($_SERVER['PHP_SELF'], '/empresa/') !== false ? '../index.php' : 'index.php'; ?>" class="text-light">Início</a></li>
-                    <li><a href="<?php echo strpos($_SERVER['PHP_SELF'], '/public/') !== false ? 'buscar.php' : 'public/buscar.php'; ?>" class="text-light">Buscar</a></li>
-                    <li><a href="<?php echo strpos($_SERVER['PHP_SELF'], '/empresa/') !== false ? 'cadastro.php' : 'empresa/cadastro.php'; ?>" class="text-light">Seja Parceiro</a></li>
-                </ul>
+
+            <!-- Coluna 2: Links Úteis -->
+            <div class="col-lg-2 col-md-6 col-6">
+                <div class="footer-section">
+                    <h6 class="mb-3" style="color: white; font-weight: 600;">Navegação</h6>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2">
+                            <a href="<?= $base_path ?>index.php" class="footer-link">
+                                <i class="fas fa-home me-2"></i>Início
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="<?= $base_path ?>public/categorias.php" class="footer-link">
+                                <i class="fas fa-search me-2"></i>Buscar
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="<?= $base_path ?>public/login.php" class="footer-link">
+                                <i class="fas fa-sign-in-alt me-2"></i>Entrar
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="<?= $base_path ?>empresa/cadastro.php" class="footer-link">
+                                <i class="fas fa-handshake me-2"></i>Seja Parceiro
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="col-lg-3 mb-4">
-                <h6>Categorias</h6>
-                <ul class="list-unstyled">
-                    <li><a href="<?php echo strpos($_SERVER['PHP_SELF'], '/public/') !== false ? 'buscar.php?categoria=Alimentação' : 'public/buscar.php?categoria=Alimentação'; ?>" class="text-light">Alimentação</a></li>
-                    <li><a href="<?php echo strpos($_SERVER['PHP_SELF'], '/public/') !== false ? 'buscar.php?categoria=Tecnologia' : 'public/buscar.php?categoria=Tecnologia'; ?>" class="text-light">Tecnologia</a></li>
-                    <li><a href="<?php echo strpos($_SERVER['PHP_SELF'], '/public/') !== false ? 'buscar.php?categoria=Educação' : 'public/buscar.php?categoria=Educação'; ?>" class="text-light">Educação</a></li>
-                    <li><a href="<?php echo strpos($_SERVER['PHP_SELF'], '/public/') !== false ? 'buscar.php?categoria=Saúde' : 'public/buscar.php?categoria=Saúde'; ?>" class="text-light">Saúde</a></li>
-                </ul>
+
+            <!-- Coluna 3: Categorias Populares -->
+            <div class="col-lg-3 col-md-6 col-6">
+                <div class="footer-section">
+                    <h6 class="mb-3" style="color: white; font-weight: 600;">Categorias</h6>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2">
+                            <a href="<?= $base_path ?>public/categorias.php?cat=comer-beber" class="footer-link">
+                                <i class="fas fa-utensils me-2"></i>Comer e Beber
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="<?= $base_path ?>public/categorias.php?cat=compras" class="footer-link">
+                                <i class="fas fa-shopping-bag me-2"></i>Compras
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="<?= $base_path ?>public/categorias.php?cat=saude-bem-estar" class="footer-link">
+                                <i class="fas fa-heart me-2"></i>Saúde e Bem-estar
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="<?= $base_path ?>public/categorias.php?cat=viagem-turismo" class="footer-link">
+                                <i class="fas fa-plane me-2"></i>Viagem e Turismo
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="col-lg-3 mb-4">
-                <h6>Contato</h6>
-                <p><i class="fas fa-envelope"></i> contato@aneti.net.br</p>
-                <p><i class="fas fa-phone"></i> (11) 1234-5678</p>
-                <div class="social-links">
-                    <a href="#" class="text-light me-2"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="text-light me-2"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-light me-2"><i class="fab fa-linkedin"></i></a>
+
+            <!-- Coluna 4: Contato e Redes Sociais -->
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-section">
+                    <h6 class="mb-3" style="color: white; font-weight: 600;">Contato</h6>
+                    <div class="mb-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-envelope me-2" style="color: #25a244;"></i>
+                            <a href="mailto:contato@aneti.net.br" class="footer-link">contato@aneti.net.br</a>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-phone me-2" style="color: #25a244;"></i>
+                            <span style="color: rgba(255,255,255,0.9);">(11) 1234-5678</span>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <h6 class="mb-2" style="color: white; font-size: 14px;">Siga-nos:</h6>
+                        <a href="#" class="social-link me-3" title="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link me-3" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link me-3" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-        <hr class="my-4">
-        <div class="row">
-            <div class="col-12 text-center">
-                <p>&copy; <?php echo date('Y'); ?> ANETI - Associação Nacional de Engenheiros de Tecnologia da Informação. Todos os direitos reservados.</p>
+
+        <!-- Divisor -->
+        <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
+
+        <!-- Seção Bottom: Logo ANETI e Copyright -->
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="d-flex align-items-center">
+                    <img src="<?= $base_path ?>assets/images/logo-aneti-branca.png" alt="ANETI" 
+                         style="height: 50px; width: auto; margin-right: 15px;">
+                    <div>
+                        <div style="color: white; font-weight: 600; font-size: 16px;">um produto ANETI</div>
+                        <div style="color: rgba(255,255,255,0.8); font-size: 12px;">
+                            Associação Nacional de Engenheiros de TI
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-md-end text-center mt-3 mt-md-0">
+                    <p class="mb-0" style="color: rgba(255,255,255,0.8); font-size: 14px;">
+                        &copy; <?php echo date('Y'); ?> ANETI. Todos os direitos reservados.
+                    </p>
+                    <p class="mb-0" style="color: rgba(255,255,255,0.7); font-size: 12px;">
+                        Desenvolvido com <i class="fas fa-heart" style="color: #25a244;"></i> para membros ANETI
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 </footer>
+
+<style>
+.footer-link {
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.footer-link:hover {
+    color: #25a244;
+    text-decoration: none;
+    transform: translateX(5px);
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.social-link:hover {
+    background: #25a244;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(37, 162, 68, 0.4);
+}
+
+.footer-section {
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+    .main-footer {
+        padding: 3rem 0 !important;
+    }
+    
+    .footer-section h5,
+    .footer-section h6 {
+        font-size: 16px;
+    }
+    
+    .social-link {
+        width: 35px;
+        height: 35px;
+    }
+}
+</style>
