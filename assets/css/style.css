@@ -43,6 +43,154 @@
     height: 140px;
 }
 
+/* Company Details Page Styles */
+.step-number-badge {
+    background: var(--aneti-primary);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.rating-star {
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    user-select: none;
+}
+
+.rating-star:hover,
+.rating-star.active {
+    color: #ffc107;
+}
+
+.rating-input {
+    direction: rtl;
+    display: inline-flex;
+}
+
+.rating-input input[type="radio"] {
+    display: none;
+}
+
+.rating-input label {
+    font-size: 2rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    padding: 0 2px;
+}
+
+.rating-input label:hover,
+.rating-input label:hover ~ label,
+.rating-input input[type="radio"]:checked ~ label {
+    color: #ffc107;
+}
+
+.contact-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.contact-item:last-child {
+    border-bottom: none;
+}
+
+.review-item:last-child {
+    border-bottom: none !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Card hover effects */
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+}
+
+/* Sticky sidebar adjustments */
+@media (min-width: 992px) {
+    .sticky-top {
+        position: sticky !important;
+        top: 160px !important;
+    }
+}
+
+/* Rating circle animation */
+.rating-circle {
+    transition: transform 0.3s ease;
+}
+
+.rating-circle:hover {
+    transform: scale(1.05);
+}
+
+/* Progress bar improvements */
+.progress {
+    background-color: #f1f3f4;
+    border-radius: 10px;
+}
+
+.progress-bar {
+    border-radius: 10px;
+    transition: width 0.6s ease;
+}
+
+/* Button improvements */
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Alert improvements */
+.alert {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Form improvements */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--aneti-primary);
+    box-shadow: 0 0 0 0.2rem rgba(139, 92, 246, 0.25);
+}
+
+/* Badge improvements */
+.badge {
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+/* Card header improvements */
+.card-header {
+    border-bottom: 1px solid #f0f0f0;
+    border-radius: 0.375rem 0.375rem 0 0 !important;
+}
+
+.card-body {
+    border-radius: 0 0 0.375rem 0.375rem;
+}
+
 /* Header Actions Buttons */
 .header-actions .login-button {
     background: rgba(255,255,255,0.2);
