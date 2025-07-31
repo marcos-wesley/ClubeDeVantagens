@@ -41,14 +41,15 @@ $user_name = $is_logged_in ? $_SESSION['user_nome'] : '';
                 <div class="col-md-4">
                     <div class="header-actions text-end">
                         <?php if ($is_logged_in): ?>
-                            <div class="dropdown me-2">
-                                <a href="#" class="login-button dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">
-                                    <i class="fas fa-user me-1"></i><?= htmlspecialchars($user_name) ?> <i class="fas fa-chevron-down ms-1"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
+                            <div class="dropdown me-2 d-inline-block">
+                                <button class="btn login-button dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 20px; padding: 8px 16px;">
+                                    <i class="fas fa-user me-2"></i>
+                                    <span><?= htmlspecialchars($user_name) ?></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-lg">
                                     <li><a class="dropdown-item" href="<?= $base_path ?>public/dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="<?= $base_path ?>public/logout.php"><i class="fas fa-sign-out-alt me-2"></i>Sair</a></li>
+                                    <li><a class="dropdown-item text-danger" href="<?= $base_path ?>public/logout.php"><i class="fas fa-sign-out-alt me-2"></i>Sair</a></li>
                                 </ul>
                             </div>
                         <?php else: ?>
