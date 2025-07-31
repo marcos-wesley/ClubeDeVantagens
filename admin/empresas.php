@@ -55,7 +55,7 @@ $companies = $stmt->fetchAll();
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">
 </head>
-<body>
+<body class="admin-body">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php">
@@ -73,14 +73,53 @@ $companies = $stmt->fetchAll();
         </div>
     </nav>
 
-    <div class="container-fluid mt-4">
+    <div class="admin-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="admin-greeting">Gerenciar Empresas</h1>
+                    <p class="admin-subtitle">Controle de empresas parceiras e benefícios</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2><i class="fas fa-store"></i> Gerenciar Empresas</h2>
-                    <a href="empresa-cadastro.php" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> Nova Empresa
-                    </a>
+                <div class="search-filters">
+                    <div class="row align-items-center">
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                <input type="text" class="form-control" placeholder="Pesquisar empresa">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-select">
+                                <option>Todas as categorias</option>
+                                <option>Automotivo</option>
+                                <option>Alimentação</option>
+                                <option>Saúde</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-select">
+                                <option>Todos os status</option>
+                                <option>Aprovada</option>
+                                <option>Pendente</option>
+                                <option>Rejeitada</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary">Aplicar</button>
+                        </div>
+                        <div class="col-md-3 text-end">
+                            <a href="empresa-cadastro.php" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Nova Empresa
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 <?php if ($message): ?>

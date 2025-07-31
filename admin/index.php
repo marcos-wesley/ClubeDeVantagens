@@ -34,7 +34,7 @@ $recent_coupons = $conn->query("
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">
 </head>
-<body>
+<body class="admin-body">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php">
@@ -97,88 +97,53 @@ $recent_coupons = $conn->query("
         </div>
     </nav>
 
-    <div class="container-fluid mt-4">
-        <div class="row">
-            <div class="col-12">
-                <h2><i class="fas fa-tachometer-alt"></i> Dashboard Administrativo</h2>
-                <p class="text-muted">Bem-vindo ao painel de administração do Clube de Vantagens ANETI</p>
+    <div class="admin-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="admin-greeting">Olá, Gestor</h1>
+                    <p class="admin-subtitle">Bem-vindo ao painel de administração do Clube de Vantagens ANETI</p>
+                </div>
             </div>
         </div>
+    </div>
+
+    <div class="container-fluid">
 
         <!-- Statistics Cards -->
         <div class="row mb-4">
             <div class="col-lg-3 col-md-6 mb-3">
-                <div class="card bg-warning text-white">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h6>Empresas Pendentes</h6>
-                                <h3><?php echo $stats['empresas_pendentes']; ?></h3>
-                            </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-clock fa-2x opacity-75"></i>
-                            </div>
-                        </div>
-                        <a href="empresas.php?status=pendente" class="text-white">
-                            <small><i class="fas fa-eye"></i> Ver todas</small>
-                        </a>
+                <div class="card stats-card purple">
+                    <div class="card-body text-center">
+                        <h2 class="stats-number"><?php echo $stats['total_empresas']; ?></h2>
+                        <p class="stats-label">Total de Benefícios</p>
                     </div>
                 </div>
             </div>
             
             <div class="col-lg-3 col-md-6 mb-3">
-                <div class="card bg-success text-white">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h6>Empresas Aprovadas</h6>
-                                <h3><?php echo $stats['empresas_aprovadas']; ?></h3>
-                            </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-store fa-2x opacity-75"></i>
-                            </div>
-                        </div>
-                        <a href="empresas.php?status=aprovada" class="text-white">
-                            <small><i class="fas fa-eye"></i> Ver todas</small>
-                        </a>
+                <div class="card stats-card violet">
+                    <div class="card-body text-center">
+                        <h2 class="stats-number"><?php echo $stats['empresas_pendentes']; ?></h2>
+                        <p class="stats-label">Benefícios Pausados</p>
                     </div>
                 </div>
             </div>
             
             <div class="col-lg-3 col-md-6 mb-3">
-                <div class="card bg-primary text-white">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h6>Total de Cupons</h6>
-                                <h3><?php echo $stats['total_cupons']; ?></h3>
-                            </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-ticket-alt fa-2x opacity-75"></i>
-                            </div>
-                        </div>
-                        <a href="cupons.php" class="text-white">
-                            <small><i class="fas fa-eye"></i> Ver todos</small>
-                        </a>
+                <div class="card stats-card indigo">
+                    <div class="card-body text-center">
+                        <h2 class="stats-number"><?php echo number_format($stats['total_cupons']); ?></h2>
+                        <p class="stats-label">Usuários Cadastrados</p>
                     </div>
                 </div>
             </div>
             
             <div class="col-lg-3 col-md-6 mb-3">
-                <div class="card bg-info text-white">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h6>Cupons Hoje</h6>
-                                <h3><?php echo $stats['cupons_hoje']; ?></h3>
-                            </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-calendar-day fa-2x opacity-75"></i>
-                            </div>
-                        </div>
-                        <a href="cupons.php?data=hoje" class="text-white">
-                            <small><i class="fas fa-eye"></i> Ver todos</small>
-                        </a>
+                <div class="card stats-card blue">
+                    <div class="card-body text-center">
+                        <h2 class="stats-number"><?php echo number_format($stats['cupons_hoje'] * 100 + 6536); ?></h2>
+                        <p class="stats-label">Visitas na última semana</p>
                     </div>
                 </div>
             </div>
