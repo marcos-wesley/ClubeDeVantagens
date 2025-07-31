@@ -49,7 +49,7 @@ if ($_POST) {
                     UPDATE empresas SET 
                     nome = ?, categoria = ?, descricao = ?, endereco = ?, 
                     cidade = ?, telefone = ?, email = ?, website = ?, 
-                    regras_beneficio = ?, status = ?, destaque = ?, updated_at = NOW()
+                    regras = ?, status = ?, destaque = ?, updated_at = NOW()
                     WHERE id = ?
                 ");
                 $stmt->execute([
@@ -69,7 +69,7 @@ if ($_POST) {
                 $stmt = $conn->prepare("
                     INSERT INTO empresas (
                         nome, categoria, descricao, endereco, cidade, 
-                        telefone, email, website, regras_beneficio, 
+                        telefone, email, website, regras, 
                         status, destaque, created_at, updated_at
                     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
                 ");
@@ -216,7 +216,7 @@ $categories = getCategories($conn);
 
                             <div class="mb-3">
                                 <label class="form-label">Regras do Benefício</label>
-                                <textarea class="form-control" name="regras_beneficio" rows="3"><?php echo htmlspecialchars($empresa['regras_beneficio'] ?? ''); ?></textarea>
+                                <textarea class="form-control" name="regras_beneficio" rows="3"><?php echo htmlspecialchars($empresa['regras'] ?? ''); ?></textarea>
                             </div>
 
                             <div class="row">
