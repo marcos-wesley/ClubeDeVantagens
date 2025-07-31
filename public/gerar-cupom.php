@@ -72,6 +72,93 @@ if ($_POST && isset($_POST['confirm'])) {
             font-size: 1.5rem;
             border: 2px solid #dee2e6;
         }
+        
+        /* Print Styles - Only show coupon */
+        @media print {
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+                font-size: 12pt;
+            }
+            
+            /* Hide everything except the coupon */
+            .main-header,
+            .main-footer,
+            .container,
+            .card,
+            .no-print,
+            .btn-group,
+            .btn,
+            .text-center.mt-4,
+            .text-center.mt-3,
+            .alert,
+            .row:not(.coupon-display .row),
+            .col-lg-8,
+            nav,
+            footer {
+                display: none !important;
+            }
+            
+            /* Force show only coupon */
+            body * {
+                visibility: hidden;
+            }
+            
+            .coupon-display,
+            .coupon-display * {
+                visibility: visible;
+            }
+            
+            /* Show only coupon display */
+            .coupon-display {
+                display: block !important;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 18cm !important;
+                height: auto !important;
+                border: 2px solid #000 !important;
+                padding: 1.5cm !important;
+                background: white !important;
+                page-break-inside: avoid;
+            }
+            
+            /* Optimize coupon for A4 */
+            .coupon-header h4 {
+                font-size: 18pt !important;
+                margin-bottom: 10pt !important;
+            }
+            
+            .coupon-logo {
+                max-width: 80px !important;
+                max-height: 80px !important;
+            }
+            
+            .coupon-code {
+                font-size: 16pt !important;
+                font-weight: bold !important;
+                border: 2px dashed #000 !important;
+                padding: 8pt !important;
+                margin: 8pt 0 !important;
+                text-align: center !important;
+            }
+            
+            .coupon-info strong {
+                font-size: 11pt !important;
+            }
+            
+            .coupon-footer small {
+                font-size: 10pt !important;
+            }
+            
+            /* Set page size */
+            @page {
+                size: A4;
+                margin: 2cm;
+            }
+        }
         .confirmation-alert {
             background: #d1ecf1;
             border: 1px solid #bee5eb;
@@ -164,12 +251,12 @@ if ($_POST && isset($_POST['confirm'])) {
                         </div>
                     </div>
                 <?php else: ?>
-                    <div class="card">
-                        <div class="card-header bg-success text-white text-center">
+                    <div class="card no-print-card">
+                        <div class="card-header bg-success text-white text-center no-print">
                             <h4><i class="fas fa-check-circle"></i> Cupom Gerado com Sucesso!</h4>
                         </div>
                         <div class="card-body">
-                            <div class="alert alert-success text-center">
+                            <div class="alert alert-success text-center no-print">
                                 <i class="fas fa-thumbs-up fa-2x mb-2"></i>
                                 <h5>Seu cupom está pronto!</h5>
                                 <p>Apresente este cupom na empresa parceira para aproveitar seu desconto.</p>
@@ -225,7 +312,7 @@ if ($_POST && isset($_POST['confirm'])) {
                                 </div>
                             </div>
 
-                            <div class="text-center mt-4">
+                            <div class="text-center mt-4 no-print">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-primary" onclick="window.print()">
                                         <i class="fas fa-print"></i> Imprimir Cupom
@@ -236,7 +323,7 @@ if ($_POST && isset($_POST['confirm'])) {
                                 </div>
                             </div>
 
-                            <div class="text-center mt-3">
+                            <div class="text-center mt-3 no-print">
                                 <a href="dashboard.php" class="btn btn-outline-secondary me-2">
                                     <i class="fas fa-tachometer-alt"></i> Meu Dashboard
                                 </a>

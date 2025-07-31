@@ -229,13 +229,13 @@ $categories = getCategories($conn);
                     </h1>
                     <p class="lead mb-4">
                         Faça parte da maior rede de benefícios para engenheiros de TI do Brasil. 
-                        Alcance mais de 1.000 profissionais qualificados e aumente suas vendas.
+                        Alcance mais de 1.800 profissionais qualificados e aumente suas vendas.
                     </p>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="benefit-item">
                                 <i class="fas fa-users"></i>
-                                <span>Mais de 1.000 membros ativos</span>
+                                <span>Mais de 1.800 membros ativos</span>
                             </div>
                         </div>
                         <div class="col-md-6">

@@ -177,6 +177,7 @@ $base_path = $is_subdirectory ? '../' : '';
     border-radius: 4px;
     background: rgba(255,255,255,0.1);
     backdrop-filter: blur(5px);
+    margin-left: -5px;
 }
 
 .admin-link:hover {
