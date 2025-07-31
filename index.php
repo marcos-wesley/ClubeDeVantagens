@@ -4,16 +4,16 @@ require_once 'config/database.php';
 require_once 'includes/functions.php';
 
 // Get banner slides
-$banner_slides = getBannerSlides($conn);
+$banner_slides = getBannerSlides($pdo);
 
 // Get featured companies
-$featured_companies = getFeaturedCompanies($conn);
+$featured_companies = getFeaturedCompanies($pdo);
 
 // Get recent companies
-$recent_companies = getRecentCompanies($conn, 8);
+$recent_companies = getRecentCompanies($pdo, 8);
 
 // Get categories for navigation
-$categories = getCategories($conn);
+$categories = getCategories($pdo);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">

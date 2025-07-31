@@ -7,10 +7,11 @@ $db_pass = $_ENV['PGPASSWORD'] ?? '';
 $db_port = $_ENV['PGPORT'] ?? '5432';
 
 try {
-    $conn = new PDO("pgsql:host=$db_host;port=$db_port;dbname=$db_name", $db_user, $db_pass);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $pdo = new PDO("pgsql:host=$db_host;port=$db_port;dbname=$db_name", $db_user, $db_pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 } catch(PDOException $e) {
-    die("Erro de conexão: " . $e->getMessage());
+    $pdo = null; // Set to null on error instead of dying
+    error_log("Database connection error: " . $e->getMessage());
 }
 ?>
