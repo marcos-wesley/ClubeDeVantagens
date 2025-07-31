@@ -143,23 +143,23 @@ try {
             <div class="row">
                 <div class="col-12">
                     <div class="action-buttons">
-                        <button class="btn-action-icon">
+                        <button class="btn-action-icon" onclick="openRoute()">
                             <i class="fas fa-route"></i>
                             <span>Traçar Rota</span>
                         </button>
-                        <button class="btn-action-icon">
-                            <i class="fas fa-heart"></i>
-                            <span>Salvar este benefício</span>
+                        <button class="btn-action-icon" onclick="toggleSaveBenefit()" id="saveBenefitBtn">
+                            <i class="fas fa-heart" id="saveIcon"></i>
+                            <span id="saveText">Salvar este benefício</span>
                         </button>
-                        <button class="btn-action-icon">
+                        <button class="btn-action-icon" onclick="shareCompany()">
                             <i class="fas fa-share"></i>
                             <span>Compartilhar</span>
                         </button>
-                        <button class="btn-action-icon">
+                        <button class="btn-action-icon" onclick="scrollToReviews()">
                             <i class="fas fa-star"></i>
                             <span>Avaliar este parceiro</span>
                         </button>
-                        <button class="btn-action-icon">
+                        <button class="btn-action-icon" onclick="reportProblem()">
                             <i class="fas fa-flag"></i>
                             <span>Reportar um problema</span>
                         </button>
@@ -589,7 +589,276 @@ try {
             
             // Iniciar geocoding
             geocodeAddress(fullAddress);
+            
+            // Inicializar funcionalidades dos botões de ação
+            checkIfSaved();
         });
+        
+        // FUNCIONALIDADES DOS BOTÕES DE AÇÃO
+        
+        // 1. Traçar Rota - Abrir no Google Maps/Waze
+        function openRoute() {
+            const companyName = <?php echo json_encode($company['nome']); ?>;
+            const companyCity = <?php echo json_encode($company['cidade']); ?>;
+            const companyState = <?php echo json_encode($company['estado']); ?>;
+            const companyAddress = <?php echo json_encode($company['endereco'] ?? ''); ?>;
+            
+            let destination = companyCity + ', ' + companyState + ', Brasil';
+            if (companyAddress && companyAddress.trim()) {
+                destination = companyAddress + ', ' + destination;
+            }
+            
+            // Detectar se é mobile
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                // Mobile - tentar Waze primeiro, depois Google Maps
+                const wazeUrl = `https://waze.com/ul?q=${encodeURIComponent(destination)}`;
+                const googleMapsUrl = `https://maps.google.com/maps?daddr=${encodeURIComponent(destination)}`;
+                
+                // Mostrar opções para o usuário
+                if (confirm('Escolha o aplicativo:\\n- OK para Google Maps\\n- Cancelar para Waze')) {
+                    window.open(googleMapsUrl, '_blank');
+                } else {
+                    window.open(wazeUrl, '_blank');
+                }
+            } else {
+                // Desktop - abrir Google Maps
+                const googleMapsUrl = `https://maps.google.com/maps?daddr=${encodeURIComponent(destination)}`;
+                window.open(googleMapsUrl, '_blank');
+            }
+            
+            showNotification('Abrindo rota no mapa...', 'info');
+        }
+        
+        // 2. Salvar Benefício - LocalStorage
+        function toggleSaveBenefit() {
+            const companyId = <?php echo $company['id']; ?>;
+            const companyName = <?php echo json_encode($company['nome']); ?>;
+            
+            let saved = JSON.parse(localStorage.getItem('savedBenefits') || '[]');
+            const isAlreadySaved = saved.some(item => item.id === companyId);
+            
+            const saveBtn = document.getElementById('saveBenefitBtn');
+            const saveIcon = document.getElementById('saveIcon');
+            const saveText = document.getElementById('saveText');
+            
+            if (isAlreadySaved) {
+                // Remover dos salvos
+                saved = saved.filter(item => item.id !== companyId);
+                localStorage.setItem('savedBenefits', JSON.stringify(saved));
+                
+                saveIcon.className = 'fas fa-heart';
+                saveText.textContent = 'Salvar este benefício';
+                saveBtn.style.color = '#666';
+                
+                showNotification('Benefício removido dos salvos', 'info');
+            } else {
+                // Adicionar aos salvos
+                saved.push({
+                    id: companyId,
+                    name: companyName,
+                    savedAt: new Date().toISOString()
+                });
+                localStorage.setItem('savedBenefits', JSON.stringify(saved));
+                
+                saveIcon.className = 'fas fa-heart';
+                saveText.textContent = 'Benefício salvo';
+                saveBtn.style.color = '#e74c3c';
+                
+                showNotification('Benefício salvo com sucesso!', 'success');
+            }
+        }
+        
+        // Verificar se já está salvo ao carregar a página
+        function checkIfSaved() {
+            const companyId = <?php echo $company['id']; ?>;
+            const saved = JSON.parse(localStorage.getItem('savedBenefits') || '[]');
+            const isAlreadySaved = saved.some(item => item.id === companyId);
+            
+            if (isAlreadySaved) {
+                const saveBtn = document.getElementById('saveBenefitBtn');
+                const saveIcon = document.getElementById('saveIcon');
+                const saveText = document.getElementById('saveText');
+                
+                saveIcon.className = 'fas fa-heart';
+                saveText.textContent = 'Benefício salvo';
+                saveBtn.style.color = '#e74c3c';
+            }
+        }
+        
+        // 3. Compartilhar
+        function shareCompany() {
+            const companyName = <?php echo json_encode($company['nome']); ?>;
+            const currentUrl = window.location.href;
+            const shareText = `Confira este benefício exclusivo: ${companyName} - Clube de Vantagens ANETI`;
+            
+            if (navigator.share) {
+                // Web Share API (mobile)
+                navigator.share({
+                    title: companyName,
+                    text: shareText,
+                    url: currentUrl
+                }).then(() => {
+                    showNotification('Compartilhado com sucesso!', 'success');
+                }).catch(err => {
+                    fallbackShare(shareText, currentUrl);
+                });
+            } else {
+                fallbackShare(shareText, currentUrl);
+            }
+        }
+        
+        function fallbackShare(text, url) {
+            // Copiar link para clipboard
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(() => {
+                    showNotification('Link copiado para área de transferência!', 'success');
+                });
+            } else {
+                // Fallback para navegadores mais antigos
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showNotification('Link copiado para área de transferência!', 'success');
+                } catch (err) {
+                    showNotification('Não foi possível copiar o link', 'error');
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+        
+        // 4. Avaliar - Scroll para seção de avaliações
+        function scrollToReviews() {
+            // Ativar a aba de avaliações
+            const reviewTab = document.querySelector('a[href="#avaliacoes"]');
+            const reviewTabPane = document.getElementById('avaliacoes');
+            
+            if (reviewTab) {
+                // Ativar a aba
+                const currentActiveTab = document.querySelector('.nav-link.active');
+                const currentActivePane = document.querySelector('.tab-pane.show.active');
+                
+                if (currentActiveTab) currentActiveTab.classList.remove('active');
+                if (currentActivePane) {
+                    currentActivePane.classList.remove('show', 'active');
+                }
+                
+                reviewTab.classList.add('active');
+                reviewTabPane.classList.add('show', 'active');
+                
+                // Scroll suave para a seção
+                setTimeout(() => {
+                    const reviewForm = document.querySelector('.add-review-form');
+                    if (reviewForm) {
+                        reviewForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 200);
+            }
+        }
+        
+        // 5. Reportar Problema
+        function reportProblem() {
+            const companyName = <?php echo json_encode($company['nome']); ?>;
+            const companyId = <?php echo $company['id']; ?>;
+            
+            const problems = [
+                'Informações incorretas',
+                'Empresa fechada/inexistente', 
+                'Desconto não é válido',
+                'Atendimento inadequado',
+                'Outros problemas'
+            ];
+            
+            let problemOptions = problems.map((problem, index) => 
+                `${index + 1}. ${problem}`
+            ).join('\\n');
+            
+            const selectedProblem = prompt(
+                `Reportar problema com ${companyName}:\\n\\n${problemOptions}\\n\\nDigite o número da opção (1-5) ou descreva o problema:`
+            );
+            
+            if (selectedProblem && selectedProblem.trim()) {
+                // Simular envio do report
+                showNotification('Problema reportado com sucesso! Obrigado pelo feedback.', 'success');
+                
+                // Salvar no localStorage para demonstração
+                const reports = JSON.parse(localStorage.getItem('companyReports') || '[]');
+                reports.push({
+                    companyId: companyId,
+                    companyName: companyName,
+                    problem: selectedProblem,
+                    reportedAt: new Date().toISOString()
+                });
+                localStorage.setItem('companyReports', JSON.stringify(reports));
+            }
+        }
+        
+        // Sistema de notificações
+        function showNotification(message, type = 'info') {
+            // Remover notificação existente
+            const existingNotification = document.querySelector('.notification-toast');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            // Criar nova notificação
+            const notification = document.createElement('div');
+            notification.className = `notification-toast ${type}`;
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            // Estilos da notificação
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007bff'};
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                z-index: 10000;
+                opacity: 0;
+                transform: translateX(100%);
+                transition: all 0.3s ease;
+                max-width: 300px;
+                font-size: 14px;
+            `;
+            
+            notification.querySelector('.notification-content').style.cssText = `
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animar entrada
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Remover após 3 segundos
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            }, 3000);
+        }
     </script>
 </body>
 </html>
