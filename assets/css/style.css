@@ -598,9 +598,9 @@
 }
 
 .benefit-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-3px);
     color: inherit;
-    box-shadow: 0 8px 25px rgba(1, 45, 106, 0.15);
+    box-shadow: 0 6px 20px rgba(1, 45, 106, 0.12);
 }
 
 .benefit-logo {
@@ -618,8 +618,8 @@
 }
 
 .benefit-card:hover .benefit-logo {
-    border-color: var(--aneti-primary);
-    transform: scale(1.05);
+    border-color: #012d6a;
+    transform: scale(1.02);
 }
 
 .benefit-logo img {
@@ -655,11 +655,11 @@
     justify-content: center;
 }
 
-/* Recent Companies Grid - New Design */
+/* Recent Companies Grid - 4 cards per row */
 .recent-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -774,7 +774,7 @@
 }
 
 .recent-card-title {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--aneti-dark);
     margin-bottom: 8px;
@@ -787,7 +787,7 @@
 
 .category-badge {
     background: rgba(1, 45, 106, 0.1);
-    color: var(--aneti-primary);
+    color: #012d6a;
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 12px;
@@ -833,7 +833,7 @@
 .rating-value {
     font-size: 14px;
     font-weight: 600;
-    color: var(--aneti-dark);
+    color: #012d6a;
 }
 
 /* Location */
@@ -848,13 +848,13 @@
 }
 
 .recent-card-location i {
-    color: var(--aneti-primary);
+    color: #012d6a;
 }
 
 /* Link Button */
 .recent-card-link {
     display: inline-block;
-    background: var(--aneti-primary);
+    background: #012d6a;
     color: white;
     padding: 10px 25px;
     border-radius: 25px;
@@ -894,6 +894,20 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+    .recent-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+}
+
+@media (max-width: 992px) {
+    .recent-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
+
 @media (max-width: 768px) {
     .hero-title {
         font-size: 2.2rem;
