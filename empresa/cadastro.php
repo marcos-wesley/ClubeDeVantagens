@@ -94,6 +94,9 @@ $categories = getCategories($conn);
 <body>
     <?php include '../includes/header.php'; ?>
 
+    <!-- Spacer para Header Fixed -->
+    <div style="height: 140px;"></div>
+
     <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-lg-8">

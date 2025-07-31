@@ -84,6 +84,9 @@ try {
 <body>
     <?php include '../includes/header.php'; ?>
 
+    <!-- Spacer para Header Fixed -->
+    <div style="height: 140px;"></div>
+
     <!-- Benefit Header -->
     <div class="benefit-header">
         <div class="container">
