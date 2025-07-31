@@ -112,3 +112,33 @@ $user_name = $is_logged_in ? $_SESSION['user_nome'] : '';
 
 <!-- Bootstrap JavaScript for dropdown functionality -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Initialize dropdown manually if needed
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Bootstrap version:', typeof bootstrap !== 'undefined' ? bootstrap.Tooltip.VERSION : 'Bootstrap not loaded');
+    
+    var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+    console.log('Found dropdown elements:', dropdownElementList.length);
+    
+    if (typeof bootstrap !== 'undefined') {
+        var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+            console.log('Initializing dropdown for:', dropdownToggleEl);
+            return new bootstrap.Dropdown(dropdownToggleEl);
+        });
+    } else {
+        console.error('Bootstrap is not loaded!');
+    }
+    
+    // Also add click handler as fallback
+    dropdownElementList.forEach(function(element) {
+        element.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Dropdown clicked');
+            var menu = this.nextElementSibling;
+            if (menu && menu.classList.contains('dropdown-menu')) {
+                menu.classList.toggle('show');
+            }
+        });
+    });
+});
+</script>
