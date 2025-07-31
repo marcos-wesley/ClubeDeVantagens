@@ -591,16 +591,15 @@
     transition: all 0.3s ease;
     padding: 15px 10px;
     border-radius: 15px;
-    background: white;
-    box-shadow: 0 3px 12px rgba(1, 45, 106, 0.06);
+    background: transparent;
     width: 130px;
     flex-shrink: 0;
 }
 
 .benefit-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     color: inherit;
-    box-shadow: 0 6px 20px rgba(1, 45, 106, 0.12);
+    text-decoration: none;
 }
 
 .benefit-logo {
@@ -618,8 +617,8 @@
 }
 
 .benefit-card:hover .benefit-logo {
-    border-color: #012d6a;
-    transform: scale(1.02);
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(1, 45, 106, 0.15);
 }
 
 .benefit-logo img {
