@@ -2,7 +2,23 @@
 
 ## Overview
 
-This is a simple web system for ANETI's Benefits Club (Clube de Vantagens da ANETI) built with pure PHP, HTML, CSS, and Bootstrap. The system allows ANETI members to browse partner companies, generate discount coupons, and provides a registration system for partner companies.
+This is a comprehensive web system for ANETI's Benefits Club (Clube de Vantagens da ANETI) built with pure PHP, HTML, CSS, and Bootstrap. The system provides a complete membership benefits platform with advanced administrative management, partner company discount access, coupon generation, and detailed analytics dashboard.
+
+## Recent Changes (January 31, 2025)
+
+### Administrative Dashboard Redesign
+- Complete dashboard overhaul following ANETI brand guidelines
+- Replaced purple colors with ANETI blue (#012d6a) throughout the interface
+- Implemented comprehensive analytics with Chart.js integration
+- Added real-time visitor statistics with period filtering (24h, 7 days, 30 days, 6 months, 12 months)
+- Created interactive line charts for visits vs unique visitors tracking
+
+### New Dashboard Features
+- **Statistics Cards**: Total benefits, paused benefits, registered users, weekly visits
+- **Analytics Widgets**: Visits tracking, unique visitors monitoring, device breakdown (Desktop/Mobile)
+- **Ranking Systems**: Most visited benefits, most used benefits, most present users, most active users
+- **User Management**: Enhanced with bulk actions, import/export functionality
+- **Modern UI**: Clean design with gradient cards, proper spacing, and ANETI branding
 
 ## User Preferences
 

@@ -1,0 +1,104 @@
+Olá, tudo certo?
+
+O dashboard entregue ainda não está alinhado com as funcionalidades e visual desejado. Seguem abaixo os ajustes obrigatórios com base no modelo de referência enviado anteriormente.
+
+🎯 Objetivo:
+Ajustar o dashboard do painel do gestor para que apresente dados relevantes, indicadores visuais claros e layout moderno, idêntico ao modelo aprovado anteriormente (prints enviados do painel roxo).
+
+🔧 Correções Necessárias:
+1. Indicadores do topo
+✔️ Devem ser os seguintes (com ícones e cores distintas para cada):
+
+Total de Benefícios Cadastrados
+
+Benefícios Pausados
+
+Usuários Cadastrados
+
+Visitas na Última Semana
+
+❌ O indicador atual “Warning” está incorreto e deve ser removido.
+❌ Está faltando o “Total de Benefícios” que é essencial para análise.
+
+2. Gráfico de Visitas
+✔️ Deve ser exibido como gráfico de linha com as seguintes opções de filtro:
+
+Últimas 24h, 7 dias, 30 dias, 6 meses e 12 meses
+
+Linhas distintas para:
+
+Visitas totais
+
+Visitantes únicos
+
+❌ Atualmente a área do gráfico está vazia (sem renderização).
+
+3. Dispositivos
+✔️ Mostrar o número de acessos separados por:
+
+Desktop
+
+Mobile
+
+(Opcional: incluir Tablet)
+
+Com ícones representativos e estilo simples, como no exemplo original.
+
+4. Empresas Recentes
+✔️ Lista com:
+
+Nome da empresa
+
+Categoria
+
+Data e hora de cadastro
+
+Status com cor:
+
+Verde: Aprovada
+
+Amarelo: Pendente
+
+Vermelho: Rejeitada
+
+❌ Atualmente, falta a categoria e o estilo visual ainda pode ser mais refinado.
+
+5. Cupons Recentes
+✔️ Mostrar:
+
+Empresa
+
+Nome do membro
+
+Código do cupom (com estilo de token)
+
+Data e hora
+
+❌ Está visualmente básico e sem destaque. Use estilo de badge para o código.
+
+6. Novos Dados que Devem Ser Adicionados
+✔️ Incluir mais seções com filtros por período:
+
+Benefícios mais visitados
+
+Benefícios mais utilizados (resgates)
+
+Usuários mais presentes (sessões)
+
+Usuários mais ativos (resgates)
+
+Todos esses já foram enviados nos modelos de referência anteriores.
+
+🎨 Ajustes Visuais
+Substituir cor roxa por azul institucional ANETI #012d6a
+
+Tipografia moderna e leve
+
+Remover excesso de bordas escuras
+
+Estilo claro, com cards e ícones para facilitar a leitura
+
+📌 Observações Finais
+A ideia é replicar exatamente a estrutura visual e funcional dos painéis de referência, que já demonstram uma experiência testada e aprovada.
+
+O dashboard precisa ser realmente útil para o gestor da plataforma visualizar métricas e acompanhar o desempenho da aplicação.

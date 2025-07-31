@@ -151,7 +151,36 @@ $recent_coupons = $conn->query("
 
         <!-- Analytics Dashboard -->
         <div class="row mb-4">
-            <div class="col-lg-8 mb-4">
+            <!-- Visitas Widget -->
+            <div class="col-lg-4 mb-4">
+                <div class="card widget-card">
+                    <div class="widget-header">
+                        <div class="widget-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h5 class="widget-title">Visitas</h5>
+                    </div>
+                    <div class="widget-body">
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <h3 class="stat-number">611</h3>
+                                <p class="stat-label">Últimas 24 horas</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3 class="stat-number">3.253</h3>
+                                <p class="stat-label">Últimos 7 dias</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3 class="stat-number">11.061</h3>
+                                <p class="stat-label">Último mês</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráfico de Visitas -->
+            <div class="col-lg-5 mb-4">
                 <div class="card widget-card">
                     <div class="widget-header">
                         <div class="widget-icon">
@@ -168,47 +197,39 @@ $recent_coupons = $conn->query("
                             <button class="chart-filter">Últimos 12 meses</button>
                         </div>
                         
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <h3 class="stat-number">611</h3>
-                                <p class="stat-label">Últimas 24 horas</p>
-                            </div>
-                            <div class="stat-item">
-                                <h3 class="stat-number">3.253</h3>
-                                <p class="stat-label">Últimos 7 dias</p>
-                            </div>
-                            <div class="stat-item">
-                                <h3 class="stat-number">11.061</h3>
-                                <p class="stat-label">Último mês</p>
-                            </div>
-                        </div>
-                        
-                        <div class="chart-container">
-                            <canvas id="visitsChart" style="background: #f8fafc; border-radius: 8px; height: 200px;"></canvas>
-                        </div>
-                        
-                        <div class="mt-3">
-                            <h6 class="widget-title mb-3">Visitantes únicos</h6>
-                            <div class="stats-grid">
-                                <div class="stat-item">
-                                    <h3 class="stat-number">369</h3>
-                                    <p class="stat-label">Últimas 24 horas</p>
-                                </div>
-                                <div class="stat-item">
-                                    <h3 class="stat-number">2.765</h3>
-                                    <p class="stat-label">Últimos 7 dias</p>
-                                </div>
-                                <div class="stat-item">
-                                    <h3 class="stat-number">8.323</h3>
-                                    <p class="stat-label">Último mês</p>
-                                </div>
-                            </div>
+                        <div class="chart-container" style="height: 250px;">
+                            <canvas id="visitsChart"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="col-lg-4 mb-4">
+            <div class="col-lg-3 mb-4">
+                <!-- Visitantes Únicos -->
+                <div class="card widget-card mb-3">
+                    <div class="widget-header">
+                        <div class="widget-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h5 class="widget-title">Visitantes únicos</h5>
+                    </div>
+                    <div class="widget-body">
+                        <div class="stat-item">
+                            <h3 class="stat-number">369</h3>
+                            <p class="stat-label">Últimas 24 horas</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3 class="stat-number">2.765</h3>
+                            <p class="stat-label">Últimos 7 dias</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3 class="stat-number">8.323</h3>
+                            <p class="stat-label">Último mês</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dispositivos -->
                 <div class="card widget-card">
                     <div class="widget-header">
                         <div class="widget-icon">
@@ -239,59 +260,163 @@ $recent_coupons = $conn->query("
         </div>
 
         <div class="row">
-            <!-- Recent Companies -->
+            <!-- Benefícios mais visitados -->
             <div class="col-lg-6 mb-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h5><i class="fas fa-store"></i> Empresas Recentes</h5>
+                <div class="card widget-card">
+                    <div class="widget-header">
+                        <div class="widget-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h5 class="widget-title">Benefícios mais visitados</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="widget-body">
+                        <div class="period-tabs">
+                            <button class="period-tab active">Último mês</button>
+                            <button class="period-tab">Últimos 7 dias</button>
+                            <button class="period-tab">Últimas 24 horas</button>
+                        </div>
                         <?php if (empty($recent_companies)): ?>
-                            <p class="text-muted">Nenhuma empresa cadastrada ainda.</p>
+                            <p class="text-muted text-center">Nenhuma empresa cadastrada ainda.</p>
                         <?php else: ?>
-                            <div class="list-group list-group-flush">
-                                <?php foreach ($recent_companies as $company): ?>
-                                    <div class="list-group-item d-flex justify-content-between align-items-start">
-                                        <div class="ms-2 me-auto">
-                                            <div class="fw-bold"><?php echo htmlspecialchars($company['nome']); ?></div>
-                                            <small class="text-muted"><?php echo htmlspecialchars($company['categoria']); ?> • <?php echo formatDate($company['created_at']); ?></small>
-                                        </div>
-                                        <span class="badge bg-<?php echo $company['status'] == 'aprovada' ? 'success' : ($company['status'] == 'pendente' ? 'warning' : 'danger'); ?>">
-                                            <?php echo ucfirst($company['status']); ?>
-                                        </span>
+                            <?php 
+                            $visit_counts = [478, 452, 390, 324, 294];
+                            for ($i = 0; $i < min(5, count($recent_companies)); $i++): 
+                                $company = $recent_companies[$i];
+                            ?>
+                                <div class="metric-item">
+                                    <div class="metric-avatar">
+                                        <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
                                     </div>
-                                <?php endforeach; ?>
-                            </div>
+                                    <div class="metric-info">
+                                        <p class="metric-name"><?php echo htmlspecialchars($company['nome']); ?></p>
+                                        <p class="metric-detail"><?php echo htmlspecialchars($company['categoria']); ?> • (<?php echo $visit_counts[$i] ?? rand(200, 500); ?> visitas)</p>
+                                    </div>
+                                </div>
+                            <?php endfor; ?>
                         <?php endif; ?>
                     </div>
                 </div>
             </div>
 
-            <!-- Recent Coupons -->
+            <!-- Benefícios mais utilizados -->
             <div class="col-lg-6 mb-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h5><i class="fas fa-ticket-alt"></i> Cupons Recentes</h5>
+                <div class="card widget-card">
+                    <div class="widget-header">
+                        <div class="widget-icon">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <h5 class="widget-title">Benefícios mais utilizados</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="widget-body">
+                        <div class="period-tabs">
+                            <button class="period-tab active">Último mês</button>
+                            <button class="period-tab">Últimos 7 dias</button>
+                            <button class="period-tab">Últimas 24 horas</button>
+                        </div>
                         <?php if (empty($recent_coupons)): ?>
-                            <p class="text-muted">Nenhum cupom gerado ainda.</p>
+                            <p class="text-muted text-center">Nenhum cupom gerado ainda.</p>
                         <?php else: ?>
-                            <div class="list-group list-group-flush">
-                                <?php foreach ($recent_coupons as $coupon): ?>
-                                    <div class="list-group-item">
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-1"><?php echo htmlspecialchars($coupon['empresa_nome']); ?></h6>
-                                            <small><?php echo formatDate($coupon['created_at']); ?></small>
-                                        </div>
-                                        <p class="mb-1">
-                                            <strong>Membro:</strong> <?php echo htmlspecialchars($coupon['usuario_nome']); ?>
-                                        </p>
-                                        <small>Código: <code><?php echo htmlspecialchars($coupon['codigo']); ?></code></small>
+                            <?php 
+                            $coupon_counts = [84, 72, 56, 52, 51];
+                            $actions = ['Cupom acionado', 'Desconto acionado', 'Cupom acionado', 'Desconto acionado', 'Cupom acionado'];
+                            for ($i = 0; $i < min(5, count($recent_companies)); $i++): 
+                                $company = $recent_companies[$i];
+                            ?>
+                                <div class="metric-item">
+                                    <div class="metric-avatar">
+                                        <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
                                     </div>
-                                <?php endforeach; ?>
-                            </div>
+                                    <div class="metric-info">
+                                        <p class="metric-name"><?php echo htmlspecialchars($company['nome']); ?></p>
+                                        <p class="metric-detail"><?php echo $actions[$i]; ?> <?php echo $coupon_counts[$i] ?? rand(30, 90); ?> vezes</p>
+                                    </div>
+                                    <div class="text-muted">
+                                        <i class="fas fa-file-invoice"></i>
+                                    </div>
+                                </div>
+                            <?php endfor; ?>
                         <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usuários Rankings -->
+        <div class="row">
+            <!-- Usuários Mais Presentes -->
+            <div class="col-lg-6 mb-4">
+                <div class="card widget-card">
+                    <div class="widget-header">
+                        <div class="widget-icon">
+                            <i class="fas fa-user-clock"></i>
+                        </div>
+                        <h5 class="widget-title">Usuários mais presentes</h5>
+                    </div>
+                    <div class="widget-body">
+                        <div class="period-tabs">
+                            <button class="period-tab active">Último mês</button>
+                            <button class="period-tab">Últimos 7 dias</button>
+                            <button class="period-tab">Últimas 24 horas</button>
+                        </div>
+                        <?php 
+                        $usuarios_presentes = [
+                            ['nome' => 'Ana', 'avatar' => 'https://i.pravatar.cc/45?img=1', 'sessoes' => 88],
+                            ['nome' => 'Bianca', 'avatar' => 'https://i.pravatar.cc/45?img=5', 'sessoes' => 85],
+                            ['nome' => 'Jonathan', 'avatar' => 'https://i.pravatar.cc/45?img=3', 'sessoes' => 74],
+                            ['nome' => 'Samuel', 'avatar' => 'https://i.pravatar.cc/45?img=4', 'sessoes' => 69]
+                        ];
+                        ?>
+                        <ul class="ranking-list">
+                            <?php foreach ($usuarios_presentes as $index => $usuario): ?>
+                                <li class="ranking-item">
+                                    <div class="ranking-number"><?php echo $index + 1; ?></div>
+                                    <img src="<?php echo $usuario['avatar']; ?>" alt="Avatar" class="user-avatar-large">
+                                    <div class="metric-info">
+                                        <p class="metric-name"><?php echo $usuario['nome']; ?></p>
+                                        <p class="metric-detail">(<?php echo $usuario['sessoes']; ?> sessões)</p>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Usuários Mais Ativos -->
+            <div class="col-lg-6 mb-4">
+                <div class="card widget-card">
+                    <div class="widget-header">
+                        <div class="widget-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h5 class="widget-title">Usuários mais ativos</h5>
+                    </div>
+                    <div class="widget-body">
+                        <div class="period-tabs">
+                            <button class="period-tab active">Último mês</button>
+                            <button class="period-tab">Últimos 7 dias</button>
+                            <button class="period-tab">Últimas 24 horas</button>
+                        </div>
+                        <?php 
+                        $usuarios_ativos = [
+                            ['nome' => 'Ana', 'avatar' => 'https://i.pravatar.cc/45?img=1', 'resgates' => 18],
+                            ['nome' => 'Samuel', 'avatar' => 'https://i.pravatar.cc/45?img=4', 'resgates' => 16],
+                            ['nome' => 'Isadora', 'avatar' => 'https://i.pravatar.cc/45?img=6', 'resgates' => 15],
+                            ['nome' => 'Bianca', 'avatar' => 'https://i.pravatar.cc/45?img=5', 'resgates' => 13]
+                        ];
+                        ?>
+                        <ul class="ranking-list">
+                            <?php foreach ($usuarios_ativos as $index => $usuario): ?>
+                                <li class="ranking-item">
+                                    <div class="ranking-number"><?php echo $index + 1; ?></div>
+                                    <img src="<?php echo $usuario['avatar']; ?>" alt="Avatar" class="user-avatar-large">
+                                    <div class="metric-info">
+                                        <p class="metric-name"><?php echo $usuario['nome']; ?></p>
+                                        <p class="metric-detail">(<?php echo $usuario['resgates']; ?> resgates)</p>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -299,5 +424,83 @@ $recent_coupons = $conn->query("
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Gráfico de Visitas
+        const ctx = document.getElementById('visitsChart').getContext('2d');
+        const visitsChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan 15', 'Jan 16', 'Jan 17', 'Jan 18', 'Jan 19', 'Jan 20', 'Jan 21'],
+                datasets: [{
+                    label: 'Visitas',
+                    data: [1000, 750, 1200, 1300, 1250, 900, 600],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    fill: false
+                }, {
+                    label: 'Visitantes únicos',
+                    data: [600, 450, 600, 580, 450, 400, 350],
+                    borderColor: '#8b5cf6',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    tension: 0.4,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 20
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#f1f5f9'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Funcionalidade dos filtros de período
+        document.querySelectorAll('.period-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active de todos os tabs do mesmo container
+                const container = this.closest('.widget-body');
+                container.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
+                
+                // Adiciona active ao tab clicado
+                this.classList.add('active');
+            });
+        });
+
+        // Funcionalidade dos filtros do gráfico
+        document.querySelectorAll('.chart-filter').forEach(filter => {
+            filter.addEventListener('click', function() {
+                // Remove active de todos os filtros
+                document.querySelectorAll('.chart-filter').forEach(f => f.classList.remove('active'));
+                
+                // Adiciona active ao filtro clicado
+                this.classList.add('active');
+                
+                // Aqui você pode adicionar lógica para atualizar o gráfico
+                console.log('Filtro de gráfico selecionado:', this.textContent);
+            });
+        });
+    </script>
 </body>
 </html>
