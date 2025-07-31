@@ -35,7 +35,7 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "mysqld --datadir=$PWD/mysql_data --user=$USER --socket=$PWD/mysql_data/mysql.sock --port=3306 --pid-file=$PWD/mysql_data/mysql.pid --skip-mysqlx"
+args = "mysqld --datadir=$PWD/mysql_data --user=$USER --socket=$PWD/mysql_data/mysql.sock --port=3306 --pid-file=$PWD/mysql_data/mysql.pid"
 waitForPort = 3306
 
 [[ports]]
