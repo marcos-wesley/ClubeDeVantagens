@@ -57,8 +57,22 @@ $categories = getCategories($conn);
                     <!-- Botões (À direita) -->
                     <div class="col-md-4">
                         <div class="header-actions text-end">
-                            <a href="public/login.php" class="btn btn-outline-light me-2" style="border-radius: 20px; padding: 8px 20px; font-weight: 500; border: 2px solid white;">Entrar</a>
-                            <a href="empresa/cadastro.php" class="btn btn-light" style="border-radius: 20px; padding: 8px 20px; font-weight: 500; color: #012d6a;">Seja um Parceiro</a>
+                            <?php if (isset($_SESSION['user_id'])): ?>
+                                <div class="dropdown me-2 d-inline-block">
+                                    <button class="btn login-button dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 20px; padding: 8px 16px;">
+                                        <i class="fas fa-user me-2"></i>
+                                        <span><?= htmlspecialchars($_SESSION['user_name']) ?></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end shadow-lg">
+                                        <li><a class="dropdown-item" href="public/dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item text-danger" href="public/logout.php"><i class="fas fa-sign-out-alt me-2"></i>Sair</a></li>
+                                    </ul>
+                                </div>
+                            <?php else: ?>
+                                <a href="public/login.php" class="login-button me-2">Entrar</a>
+                            <?php endif; ?>
+                            <a href="empresa/cadastro.php" class="partner-button">Seja um Parceiro</a>
                         </div>
                     </div>
                 </div>
@@ -351,6 +365,46 @@ $categories = getCategories($conn);
                     const icon = btn.querySelector('i');
                     icon.className = 'fas fa-heart';
                     btn.style.background = 'rgba(220, 53, 69, 0.1)';
+                }
+            });
+            
+            // Initialize dropdown functionality
+            console.log('Initializing dropdowns...');
+            
+            // Force initialize all dropdowns
+            var dropdowns = document.querySelectorAll('[data-bs-toggle="dropdown"]');
+            dropdowns.forEach(function(dropdown) {
+                console.log('Found dropdown:', dropdown);
+                if (typeof bootstrap !== 'undefined') {
+                    new bootstrap.Dropdown(dropdown);
+                }
+            });
+            
+            // Manual click handler as backup
+            document.querySelectorAll('.dropdown-toggle').forEach(function(toggle) {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Manual dropdown click');
+                    var menu = this.nextElementSibling;
+                    if (menu && menu.classList.contains('dropdown-menu')) {
+                        // Close other open menus
+                        document.querySelectorAll('.dropdown-menu.show').forEach(function(openMenu) {
+                            if (openMenu !== menu) {
+                                openMenu.classList.remove('show');
+                            }
+                        });
+                        // Toggle current menu
+                        menu.classList.toggle('show');
+                    }
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.dropdown')) {
+                    document.querySelectorAll('.dropdown-menu.show').forEach(function(menu) {
+                        menu.classList.remove('show');
+                    });
                 }
             });
         });
