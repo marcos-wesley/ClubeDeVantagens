@@ -48,6 +48,67 @@ if ($_POST && isset($_POST['confirm'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 160px;
+        }
+        .company-detail-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            border-radius: 12px;
+            border: 2px solid #dee2e6;
+        }
+        .company-detail-logo-placeholder {
+            width: 120px;
+            height: 120px;
+            background: #6c757d;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            border: 2px solid #dee2e6;
+        }
+        .confirmation-alert {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .coupon-display {
+            background: linear-gradient(135deg, #012d6a 0%, #25a244 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+        .coupon-code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.25rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin: 1rem 0;
+            border: 2px dashed rgba(255,255,255,0.5);
+        }
+        @media (max-width: 768px) {
+            body {
+                padding-top: 140px;
+            }
+            .company-detail-logo,
+            .company-detail-logo-placeholder {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
