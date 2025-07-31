@@ -149,18 +149,18 @@ $total_empresas = count($empresas);
                                 <div class="card-content" style="padding: 25px 20px 20px;">
                                     <!-- Logo no topo da área branca -->
                                     <?php if ($empresa['logo']): ?>
-                                        <div class="logo-top" style="width: 80px; height: 80px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: 3px solid white; margin: 0 auto 15px; position: relative; top: -40px;">
+                                        <div class="logo-top" style="width: 110px; height: 110px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: 3px solid white; margin: 0 auto 15px; position: relative; top: -55px;">
                                             <img src="../uploads/<?php echo htmlspecialchars($empresa['logo']); ?>" 
                                                  alt="Logo <?php echo htmlspecialchars($empresa['nome']); ?>" 
-                                                 style="width: 70px; height: 70px; object-fit: contain; border-radius: 50%;">
+                                                 style="width: 100px; height: 100px; object-fit: contain; border-radius: 50%;">
                                         </div>
                                     <?php else: ?>
-                                        <div class="logo-top" style="width: 80px; height: 80px; background: #012d6a; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: 3px solid white; margin: 0 auto 15px; position: relative; top: -40px; font-size: 1.8rem;">
+                                        <div class="logo-top" style="width: 110px; height: 110px; background: #012d6a; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: 3px solid white; margin: 0 auto 15px; position: relative; top: -55px; font-size: 2rem;">
                                             <i class="fas fa-building"></i>
                                         </div>
                                     <?php endif; ?>
                                     <!-- Company Name -->
-                                    <h5 class="company-name" style="color: #012d6a; font-weight: 700; margin-bottom: 8px; font-size: 1.1rem; line-height: 1.3; margin-top: -25px;">
+                                    <h5 class="company-name" style="color: #012d6a; font-weight: 700; margin-bottom: 8px; font-size: 1.1rem; line-height: 1.3; margin-top: -40px;">
                                         <?php echo htmlspecialchars($empresa['nome']); ?>
                                     </h5>
                                     

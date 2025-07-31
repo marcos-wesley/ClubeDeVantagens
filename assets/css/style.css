@@ -787,8 +787,8 @@
 
 /* Circular Logo in Content Area */
 .recent-card-logo {
-    width: 80px;
-    height: 80px;
+    width: 110px;
+    height: 110px;
     background: white;
     border-radius: 50%;
     display: flex;
@@ -798,13 +798,13 @@
     border: 4px solid white;
     margin: 0 auto 20px;
     position: relative;
-    top: -40px;
+    top: -55px;
     z-index: 2;
 }
 
 .recent-card-logo img {
-    width: 70px;
-    height: 70px;
+    width: 100px;
+    height: 100px;
     object-fit: contain;
     border-radius: 50%;
 }
