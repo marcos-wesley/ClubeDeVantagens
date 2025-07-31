@@ -4,6 +4,10 @@ $is_subdirectory = strpos($_SERVER['PHP_SELF'], '/public/') !== false ||
                   strpos($_SERVER['PHP_SELF'], '/admin/') !== false || 
                   strpos($_SERVER['PHP_SELF'], '/empresa/') !== false;
 $base_path = $is_subdirectory ? '../' : '';
+
+// Check if user is logged in
+$is_logged_in = isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
+$user_name = $is_logged_in ? $_SESSION['user_nome'] : '';
 ?>
 <!-- Header ANETI - Idêntico à Homepage -->
 <header class="main-header fixed-top" style="background: linear-gradient(to right, #012d6a, #25a244); box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
@@ -36,7 +40,20 @@ $base_path = $is_subdirectory ? '../' : '';
                 <!-- Botões (À direita) -->
                 <div class="col-md-4">
                     <div class="header-actions text-end">
-                        <a href="<?= $base_path ?>public/login.php" class="login-button me-2">Entrar</a>
+                        <?php if ($is_logged_in): ?>
+                            <div class="dropdown me-2">
+                                <a href="#" class="login-button dropdown-toggle" data-bs-toggle="dropdown" style="text-decoration: none;">
+                                    <i class="fas fa-user me-1"></i><?= htmlspecialchars($user_name) ?>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="<?= $base_path ?>public/dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="<?= $base_path ?>public/logout.php"><i class="fas fa-sign-out-alt me-2"></i>Sair</a></li>
+                                </ul>
+                            </div>
+                        <?php else: ?>
+                            <a href="<?= $base_path ?>public/login.php" class="login-button me-2">Entrar</a>
+                        <?php endif; ?>
                         <a href="<?= $base_path ?>empresa/cadastro.php" class="partner-button">Seja um Parceiro</a>
                     </div>
                 </div>

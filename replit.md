@@ -6,12 +6,20 @@ This is a comprehensive web system for ANETI's Benefits Club (Clube de Vantagens
 
 ## Recent Changes (July 31, 2025)
 
+### Authentication System Fixes & UI Improvements
+- **Login/Logout Fixed**: Header agora verifica sessão e mostra botão correto (Entrar/Sair)
+- **User Dropdown**: Menu dropdown com nome do usuário, link para dashboard e logout
+- **Session Management**: Sistema de sessão corrigido para persistir login entre páginas
+- **Logout Functionality**: Arquivo logout.php criado para destruir sessão adequadamente
+- **Dashboard Layout**: Padding-top corrigido para compensar header fixo (160px)
+- **Gerar Cupom Layout**: Página de gerar cupom corrigida com estilos ANETI adequados
+
 ### Company Details Page Redesign & Review System 
 - **Complete Redesign**: Página empresa-detalhes.php totalmente redesenhada com layout moderno
 - **Hero Section**: Gradiente ANETI (azul → verde) com logo destacado e informações organizadas
 - **Tab System**: Sistema de tabs profissional (Informações/Avaliações) com navegação suave
 - **Review System**: Sistema completo de avaliações com tabela 'avaliacoes' no MySQL
-- **Sidebar Layout**: Corrigido posicionamento da sidebar com CSS flexbox adequado
+- **Sidebar Layout**: Layout flexbox implementado para posicionar sidebar à direita
 - **Responsive Design**: Layout totalmente responsivo com ANETI branding consistente
 
 ### Database Migration: PostgreSQL → MySQL
