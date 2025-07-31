@@ -182,94 +182,97 @@ try {
         <div class="row">
             <!-- Main Content Column -->
             <div class="col-lg-8">
-                <!-- Main Image -->
-                <div class="card shadow-sm mb-4">
-                    <div class="card-body p-0">
-                        <?php if ($company['imagem_detalhes']): ?>
-                            <img src="../uploads/<?php echo htmlspecialchars($company['imagem_detalhes']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid w-100" style="height: 300px; object-fit: cover; border-radius: 8px;">
-                        <?php elseif ($company['logo']): ?>
-                            <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid w-100" style="height: 300px; object-fit: cover; border-radius: 8px;">
-                        <?php else: ?>
-                            <div class="d-flex align-items-center justify-content-center" style="height: 300px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 8px;">
-                                <div class="text-center text-muted">
-                                    <i class="fas fa-image fa-3x mb-3"></i>
-                                    <p class="mb-0">Imagem do <?php echo htmlspecialchars($company['nome']); ?></p>
+                <div class="tab-content">
+                    <!-- Tab Detalhes -->
+                    <div class="tab-pane fade show active" id="detalhes">
+                        <!-- Main Image -->
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body p-0">
+                                <?php if ($company['imagem_detalhes']): ?>
+                                    <img src="../uploads/<?php echo htmlspecialchars($company['imagem_detalhes']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid w-100" style="height: 300px; object-fit: cover; border-radius: 8px;">
+                                <?php elseif ($company['logo']): ?>
+                                    <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid w-100" style="height: 300px; object-fit: cover; border-radius: 8px;">
+                                <?php else: ?>
+                                    <div class="d-flex align-items-center justify-content-center" style="height: 300px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 8px;">
+                                        <div class="text-center text-muted">
+                                            <i class="fas fa-image fa-3x mb-3"></i>
+                                            <p class="mb-0">Imagem do <?php echo htmlspecialchars($company['nome']); ?></p>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <!-- Como Funciona -->
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0 text-primary">
+                                    <i class="fas fa-play-circle me-2"></i>Como funciona:
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="how-it-works-list">
+                                    <div class="step-item d-flex mb-3">
+                                        <span class="step-number badge bg-primary me-3">1</span>
+                                        <span class="step-text">Clique no botão usar;</span>
+                                    </div>
+                                    <div class="step-item d-flex mb-3">
+                                        <span class="step-number badge bg-primary me-3">2</span>
+                                        <span class="step-text">Na página do parceiro, faça seu cadastro;</span>
+                                    </div>
+                                    <div class="step-item d-flex mb-3">
+                                        <span class="step-number badge bg-primary me-3">3</span>
+                                        <span class="step-text">Escolha seu ingresso na opção individual ou opção 2 ingresso web multi 4 pessoas;</span>
+                                    </div>
+                                    <div class="step-item d-flex mb-3">
+                                        <span class="step-number badge bg-primary me-3">4</span>
+                                        <span class="step-text">Fazer contratação com desconto já aplicado;</span>
+                                    </div>
+                                    <div class="step-item d-flex mb-0">
+                                        <span class="step-number badge bg-primary me-3">5</span>
+                                        <span class="step-text">No dia escolhido para diversão, não esquecer de levar documento pessoal, será necessário para entrar no Parque.</span>
+                                    </div>
                                 </div>
                             </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
+                        </div>
 
-                <!-- Como Funciona -->
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0 text-primary">
-                            <i class="fas fa-play-circle me-2"></i>Como funciona:
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="how-it-works-list">
-                            <div class="step-item d-flex mb-3">
-                                <span class="step-number badge bg-primary me-3">1</span>
-                                <span class="step-text">Clique no botão usar;</span>
+                        <!-- Regulamento -->
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0 text-primary">
+                                    <i class="fas fa-file-contract me-2"></i>Regulamento
+                                </h5>
                             </div>
-                            <div class="step-item d-flex mb-3">
-                                <span class="step-number badge bg-primary me-3">2</span>
-                                <span class="step-text">Na página do parceiro, faça seu cadastro;</span>
+                            <div class="card-body">
+                                <?php if ($company['regras']): ?>
+                                    <p class="mb-0"><?php echo nl2br(htmlspecialchars($company['regras'])); ?></p>
+                                <?php else: ?>
+                                    <div class="regulation-list">
+                                        <div class="regulation-item d-flex mb-2">
+                                            <span class="regulation-number badge bg-secondary me-3">1</span>
+                                            <span class="regulation-text">Desconto válido conforme período determinado.</span>
+                                        </div>
+                                        <div class="regulation-item d-flex mb-0">
+                                            <span class="regulation-number badge bg-secondary me-3">2</span>
+                                            <span class="regulation-text">Os descontos podem variar a cada mês.</span>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
                             </div>
-                            <div class="step-item d-flex mb-3">
-                                <span class="step-number badge bg-primary me-3">3</span>
-                                <span class="step-text">Escolha seu ingresso na opção individual ou opção 2 ingresso web multi 4 pessoas;</span>
+                        </div>
+
+                        <!-- Localização -->
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0 text-primary">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Localização
+                                </h5>
                             </div>
-                            <div class="step-item d-flex mb-3">
-                                <span class="step-number badge bg-primary me-3">4</span>
-                                <span class="step-text">Fazer contratação com desconto já aplicado;</span>
-                            </div>
-                            <div class="step-item d-flex mb-0">
-                                <span class="step-number badge bg-primary me-3">5</span>
-                                <span class="step-text">No dia escolhido para diversão, não esquecer de levar documento pessoal, será necessário para entrar no Parque.</span>
+                            <div class="card-body p-0">
+                                <div id="map" style="height: 300px; width: 100%; border-radius: 0 0 8px 8px;"></div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Regulamento -->
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0 text-primary">
-                            <i class="fas fa-file-contract me-2"></i>Regulamento
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <?php if ($company['regras']): ?>
-                            <p class="mb-0"><?php echo nl2br(htmlspecialchars($company['regras'])); ?></p>
-                        <?php else: ?>
-                            <div class="regulation-list">
-                                <div class="regulation-item d-flex mb-2">
-                                    <span class="regulation-number badge bg-secondary me-3">1</span>
-                                    <span class="regulation-text">Desconto válido conforme período determinado.</span>
-                                </div>
-                                <div class="regulation-item d-flex mb-0">
-                                    <span class="regulation-number badge bg-secondary me-3">2</span>
-                                    <span class="regulation-text">Os descontos podem variar a cada mês.</span>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-
-                <!-- Localização -->
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0 text-primary">
-                            <i class="fas fa-map-marker-alt me-2"></i>Localização
-                        </h5>
-                    </div>
-                    <div class="card-body p-0">
-                        <div id="map" style="height: 300px; width: 100%; border-radius: 0 0 8px 8px;"></div>
-                    </div>
-                </div>
-            </div>
 
                     <!-- Tab Avaliações -->
                     <div class="tab-pane fade" id="avaliacoes">
