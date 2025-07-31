@@ -141,35 +141,30 @@ try {
     </div>
 
     <!-- Benefit Actions -->
-    <div class="bg-light py-3">
+    <div class="benefit-actions">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="d-flex flex-wrap justify-content-center gap-2">
-                        <button class="btn btn-outline-primary btn-sm d-flex align-items-center" onclick="openRoute()">
-                            <i class="fas fa-route me-2"></i>
-                            <span class="d-none d-sm-inline">Traçar Rota</span>
-                            <span class="d-sm-none">Rota</span>
+                    <div class="action-buttons">
+                        <button class="btn-action-icon" onclick="openRoute()">
+                            <i class="fas fa-route"></i>
+                            <span>Traçar Rota</span>
                         </button>
-                        <button class="btn btn-outline-danger btn-sm d-flex align-items-center" onclick="toggleSaveBenefit()" id="saveBenefitBtn">
-                            <i class="fas fa-heart me-2" id="saveIcon"></i>
-                            <span id="saveText" class="d-none d-sm-inline">Salvar benefício</span>
-                            <span class="d-sm-none">Salvar</span>
+                        <button class="btn-action-icon" onclick="toggleSaveBenefit()" id="saveBenefitBtn">
+                            <i class="fas fa-heart" id="saveIcon"></i>
+                            <span id="saveText">Salvar este benefício</span>
                         </button>
-                        <button class="btn btn-outline-info btn-sm d-flex align-items-center" onclick="shareCompany()">
-                            <i class="fas fa-share me-2"></i>
-                            <span class="d-none d-sm-inline">Compartilhar</span>
-                            <span class="d-sm-none">Share</span>
+                        <button class="btn-action-icon" onclick="shareCompany()">
+                            <i class="fas fa-share"></i>
+                            <span>Compartilhar</span>
                         </button>
-                        <button class="btn btn-outline-warning btn-sm d-flex align-items-center" onclick="scrollToReviews()">
-                            <i class="fas fa-star me-2"></i>
-                            <span class="d-none d-sm-inline">Avaliar parceiro</span>
-                            <span class="d-sm-none">Avaliar</span>
+                        <button class="btn-action-icon" onclick="scrollToReviews()">
+                            <i class="fas fa-star"></i>
+                            <span>Avaliar este parceiro</span>
                         </button>
-                        <button class="btn btn-outline-secondary btn-sm d-flex align-items-center" onclick="reportProblem()">
-                            <i class="fas fa-flag me-2"></i>
-                            <span class="d-none d-sm-inline">Reportar problema</span>
-                            <span class="d-sm-none">Reportar</span>
+                        <button class="btn-action-icon" onclick="reportProblem()">
+                            <i class="fas fa-flag"></i>
+                            <span>Reportar um problema</span>
                         </button>
                     </div>
                 </div>
@@ -180,129 +175,118 @@ try {
     <!-- Main Content -->
     <div class="container mt-4">
         <div class="row">
-            <!-- Main Content Column -->
             <div class="col-lg-8">
                 <div class="tab-content">
                     <!-- Tab Detalhes -->
                     <div class="tab-pane fade show active" id="detalhes">
                         <!-- Main Image -->
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-body p-0">
-                                <?php if ($company['imagem_detalhes']): ?>
-                                    <img src="../uploads/<?php echo htmlspecialchars($company['imagem_detalhes']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid w-100" style="height: 300px; object-fit: cover; border-radius: 8px;">
-                                <?php elseif ($company['logo']): ?>
-                                    <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid w-100" style="height: 300px; object-fit: cover; border-radius: 8px;">
-                                <?php else: ?>
-                                    <div class="d-flex align-items-center justify-content-center" style="height: 300px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 8px;">
-                                        <div class="text-center text-muted">
-                                            <i class="fas fa-image fa-3x mb-3"></i>
-                                            <p class="mb-0">Imagem do <?php echo htmlspecialchars($company['nome']); ?></p>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
+                        <div class="benefit-main-image mb-4">
+                            <?php if ($company['imagem_detalhes']): ?>
+                                <img src="../uploads/<?php echo htmlspecialchars($company['imagem_detalhes']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid">
+                            <?php elseif ($company['logo']): ?>
+                                <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid">
+                            <?php else: ?>
+                                <div class="benefit-placeholder-image">
+                                    <i class="fas fa-image fa-3x mb-3"></i>
+                                    <p>Imagem do <?php echo htmlspecialchars($company['nome']); ?></p>
+                                </div>
+                            <?php endif; ?>
                         </div>
 
                         <!-- Como Funciona -->
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-header bg-light">
-                                <h5 class="mb-0 text-primary">
-                                    <i class="fas fa-play-circle me-2"></i>Como funciona:
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="how-it-works-list">
-                                    <div class="step-item d-flex mb-3">
-                                        <span class="step-number badge bg-primary me-3">1</span>
-                                        <span class="step-text">Clique no botão usar;</span>
-                                    </div>
-                                    <div class="step-item d-flex mb-3">
-                                        <span class="step-number badge bg-primary me-3">2</span>
-                                        <span class="step-text">Na página do parceiro, faça seu cadastro;</span>
-                                    </div>
-                                    <div class="step-item d-flex mb-3">
-                                        <span class="step-number badge bg-primary me-3">3</span>
-                                        <span class="step-text">Escolha seu ingresso na opção individual ou opção 2 ingresso web multi 4 pessoas;</span>
-                                    </div>
-                                    <div class="step-item d-flex mb-3">
-                                        <span class="step-number badge bg-primary me-3">4</span>
-                                        <span class="step-text">Fazer contratação com desconto já aplicado;</span>
-                                    </div>
-                                    <div class="step-item d-flex mb-0">
-                                        <span class="step-number badge bg-primary me-3">5</span>
-                                        <span class="step-text">No dia escolhido para diversão, não esquecer de levar documento pessoal, será necessário para entrar no Parque.</span>
-                                    </div>
+                        <div class="benefit-section mb-4">
+                            <h3 class="benefit-section-title">Como funciona:</h3>
+                            <div class="how-it-works">
+                                <div class="step">
+                                    <span class="step-number">1)</span>
+                                    <span class="step-text">Clique no botão USAR</span>
+                                </div>
+                                <div class="step">
+                                    <span class="step-number">2)</span>
+                                    <span class="step-text">Faça seu login e gere seu cupom</span>
+                                </div>
+                                <div class="step">
+                                    <span class="step-number">3)</span>
+                                    <span class="step-text">Apresente o cupom à empresa parceira</span>
+                                </div>
+                                <div class="step">
+                                    <span class="step-number">4)</span>
+                                    <span class="step-text">Aproveite seu desconto exclusivo</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Regulamento -->
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-header bg-light">
-                                <h5 class="mb-0 text-primary">
-                                    <i class="fas fa-file-contract me-2"></i>Regulamento
-                                </h5>
-                            </div>
-                            <div class="card-body">
+                        <div class="benefit-section mb-4">
+                            <h3 class="benefit-section-title">
+                                <i class="fas fa-file-contract"></i> Regulamento
+                            </h3>
+                            <div class="regulation-content">
                                 <?php if ($company['regras']): ?>
-                                    <p class="mb-0"><?php echo nl2br(htmlspecialchars($company['regras'])); ?></p>
+                                    <p><?php echo nl2br(htmlspecialchars($company['regras'])); ?></p>
                                 <?php else: ?>
-                                    <div class="regulation-list">
-                                        <div class="regulation-item d-flex mb-2">
-                                            <span class="regulation-number badge bg-secondary me-3">1</span>
-                                            <span class="regulation-text">Desconto válido conforme período determinado.</span>
-                                        </div>
-                                        <div class="regulation-item d-flex mb-0">
-                                            <span class="regulation-number badge bg-secondary me-3">2</span>
-                                            <span class="regulation-text">Os descontos podem variar a cada mês.</span>
-                                        </div>
+                                    <div class="regulation-item">
+                                        <span class="regulation-number">1)</span>
+                                        <span class="regulation-text">Desconto válido conforme período determinado.</span>
+                                    </div>
+                                    <div class="regulation-item">
+                                        <span class="regulation-number">2)</span>
+                                        <span class="regulation-text">Os descontos podem variar a cada mês.</span>
                                     </div>
                                 <?php endif; ?>
                             </div>
                         </div>
 
                         <!-- Localização -->
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-header bg-light">
-                                <h5 class="mb-0 text-primary">
-                                    <i class="fas fa-map-marker-alt me-2"></i>Localização
-                                </h5>
-                            </div>
-                            <div class="card-body p-0">
-                                <div id="map" style="height: 300px; width: 100%; border-radius: 0 0 8px 8px;"></div>
+                        <div class="benefit-section mb-4">
+                            <h3 class="benefit-section-title">
+                                <i class="fas fa-map-marker-alt"></i> Localização
+                            </h3>
+                            <div class="location-section">
+                                <div class="location-map">
+                                    <div id="map" style="height: 350px; width: 100%; border-radius: 8px; background: #f8f9fa; margin-bottom: 15px;"></div>
+                                </div>
+                                <div class="location-info">
+                                    <p><strong>Endereço:</strong></p>
+                                    <?php if ($company['endereco'] && trim($company['endereco'])): ?>
+                                        <p><?php echo htmlspecialchars($company['endereco']); ?></p>
+                                    <?php endif; ?>
+                                    <p><?php echo htmlspecialchars($company['cidade']); ?>, <?php echo htmlspecialchars($company['estado']); ?></p>
+                                    <?php if ($company['telefone']): ?>
+                                        <p><i class="fas fa-phone"></i> <?php echo htmlspecialchars($company['telefone']); ?></p>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Tab Avaliações -->
                     <div class="tab-pane fade" id="avaliacoes">
-                        <!-- Rating Summary Card -->
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-header bg-light">
-                                <h5 class="card-title mb-0">
-                                    <i class="fas fa-star text-primary me-2"></i>
-                                    Avaliações dos Usuários
-                                </h5>
-                            </div>
-                            <div class="card-body">
+                        <div class="benefit-section">
+                            <h3 class="benefit-section-title">
+                                <i class="fas fa-star"></i> Avaliações dos Usuários
+                            </h3>
+                            
+                            <!-- Resumo das Avaliações -->
+                            <div class="rating-summary mb-4">
                                 <div class="row align-items-center">
                                     <div class="col-md-4 text-center">
-                                        <div class="overall-rating p-4">
-                                            <div class="rating-circle bg-light rounded-circle d-flex flex-column align-items-center justify-content-center mx-auto mb-3" style="width: 120px; height: 120px;">
-                                                <span class="rating-number display-4 fw-bold text-primary"><?php echo $avg_rating; ?></span>
-                                                <div class="rating-stars">
+                                        <div class="overall-rating">
+                                            <span class="rating-number"><?php echo $avg_rating; ?></span>
+                                            <div class="rating-stars">
+                                                <span class="stars">
                                                     <?php
                                                     for ($i = 1; $i <= 5; $i++) {
                                                         if ($i <= $avg_rating) {
-                                                            echo '<i class="fas fa-star text-warning"></i>';
+                                                            echo '★';
                                                         } else {
-                                                            echo '<i class="far fa-star text-muted"></i>';
+                                                            echo '☆';
                                                         }
                                                     }
                                                     ?>
-                                                </div>
+                                                </span>
                                             </div>
-                                            <p class="text-muted mb-0"><?php echo $rating_summary['total']; ?> avaliações</p>
+                                            <p class="rating-text"><?php echo $rating_summary['total']; ?> avaliações</p>
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -313,202 +297,144 @@ try {
                                                 $count = $rating_summary["star$star"];
                                                 $percentage = $total > 0 ? ($count / $total) * 100 : 0;
                                             ?>
-                                            <div class="rating-bar d-flex align-items-center mb-2">
-                                                <span class="bar-label me-2" style="min-width: 80px;">
-                                                    <?php echo $star; ?> estrelas
-                                                </span>
-                                                <div class="progress flex-grow-1 me-2" style="height: 8px;">
-                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage; ?>%" aria-valuenow="<?php echo $percentage; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="rating-bar">
+                                                <span class="bar-label"><?php echo $star; ?> estrelas</span>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-warning" style="width: <?php echo $percentage; ?>%"></div>
                                                 </div>
-                                                <span class="bar-count badge bg-light text-dark"><?php echo $count; ?></span>
+                                                <span class="bar-count"><?php echo $count; ?></span>
                                             </div>
                                             <?php } ?>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Reviews List Card -->
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                                <h6 class="card-title mb-0">
-                                    <i class="fas fa-comments text-primary me-2"></i>
-                                    Avaliações Recentes
-                                </h6>
-                                <span class="badge bg-primary"><?php echo count($reviews); ?> avaliações</span>
-                            </div>
-                            <div class="card-body">
-                                <div class="reviews-list">
-                                    <?php if (count($reviews) > 0): ?>
-                                        <?php foreach ($reviews as $review): ?>
-                                            <div class="review-item border-bottom pb-3 mb-3">
-                                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                                    <div class="d-flex align-items-start">
-                                                        <div class="reviewer-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; font-weight: bold;">
-                                                            <?php echo strtoupper(substr($review['usuario_nome'], 0, 1)); ?>
-                                                        </div>
-                                                        <div>
-                                                            <h6 class="reviewer-name mb-1"><?php echo htmlspecialchars($review['usuario_nome']); ?></h6>
-                                                            <div class="review-rating mb-1">
-                                                                <?php for ($i = 1; $i <= 5; $i++): ?>
-                                                                    <i class="fas fa-star <?php echo $i <= $review['rating'] ? 'text-warning' : 'text-muted'; ?>"></i>
-                                                                <?php endfor; ?>
-                                                            </div>
+                            <!-- Lista de Avaliações -->
+                            <div class="reviews-list">
+                                <?php if (count($reviews) > 0): ?>
+                                    <?php foreach ($reviews as $review): ?>
+                                        <div class="review-item">
+                                            <div class="review-header">
+                                                <div class="reviewer-info">
+                                                    <div class="reviewer-avatar">
+                                                        <?php echo strtoupper(substr($review['usuario_nome'], 0, 1)); ?>
+                                                    </div>
+                                                    <div class="reviewer-details">
+                                                        <h6 class="reviewer-name"><?php echo htmlspecialchars($review['usuario_nome']); ?></h6>
+                                                        <div class="review-rating">
+                                                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                                <span class="star <?php echo $i <= $review['rating'] ? 'filled' : ''; ?>">★</span>
+                                                            <?php endfor; ?>
                                                         </div>
                                                     </div>
-                                                    <span class="review-date text-muted small"><?php echo date('d/m/Y', strtotime($review['created_at'])); ?></span>
                                                 </div>
-                                                <?php if ($review['comentario']): ?>
-                                                    <p class="review-comment mb-0 ms-5 ps-2"><?php echo htmlspecialchars($review['comentario']); ?></p>
-                                                <?php endif; ?>
+                                                <span class="review-date"><?php echo date('d/m/Y', strtotime($review['created_at'])); ?></span>
                                             </div>
-                                        <?php endforeach; ?>
-                                    <?php else: ?>
-                                        <div class="no-reviews text-center py-4">
-                                            <i class="fas fa-comment-slash fa-3x text-muted mb-3"></i>
-                                            <p class="text-muted mb-0">Ainda não há avaliações para esta empresa.<br>Seja o primeiro a avaliar!</p>
+                                            <?php if ($review['comentario']): ?>
+                                                <p class="review-comment"><?php echo htmlspecialchars($review['comentario']); ?></p>
+                                            <?php endif; ?>
                                         </div>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Add Review Form Card -->
-                        <div class="card shadow-sm">
-                            <div class="card-header bg-light">
-                                <h6 class="card-title mb-0">
-                                    <i class="fas fa-plus-circle text-primary me-2"></i>
-                                    Deixe sua avaliação
-                                </h6>
-                            </div>
-                            <div class="card-body">
-                                <?php if (isset($_GET['success'])): ?>
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        <i class="fas fa-check-circle me-2"></i>
-                                        Avaliação adicionada com sucesso!
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <div class="no-reviews">
+                                        <p class="text-muted">Ainda não há avaliações para esta empresa. Seja o primeiro a avaliar!</p>
                                     </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- Formulário para Nova Avaliação -->
+                            <div class="add-review-form mt-4">
+                                <h5>Deixe sua avaliação</h5>
+                                <?php if (isset($_GET['success'])): ?>
+                                    <div class="alert alert-success">Avaliação adicionada com sucesso!</div>
                                 <?php endif; ?>
                                 <?php if (isset($error_message)): ?>
-                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        <i class="fas fa-exclamation-triangle me-2"></i>
-                                        <?php echo $error_message; ?>
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                    </div>
+                                    <div class="alert alert-danger"><?php echo $error_message; ?></div>
                                 <?php endif; ?>
-                                
                                 <form method="POST" class="review-form">
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
-                                            <label for="usuario_nome" class="form-label fw-semibold">
-                                                <i class="fas fa-user me-1"></i>
-                                                Seu nome *
-                                            </label>
-                                            <input type="text" class="form-control" id="usuario_nome" name="usuario_nome" required placeholder="Digite seu nome">
+                                            <label for="usuario_nome" class="form-label">Seu nome:</label>
+                                            <input type="text" class="form-control" id="usuario_nome" name="usuario_nome" required>
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label for="usuario_email" class="form-label fw-semibold">
-                                                <i class="fas fa-envelope me-1"></i>
-                                                Seu email (opcional)
-                                            </label>
-                                            <input type="email" class="form-control" id="usuario_email" name="usuario_email" placeholder="seu@email.com">
+                                            <label for="usuario_email" class="form-label">Seu email (opcional):</label>
+                                            <input type="email" class="form-control" id="usuario_email" name="usuario_email">
                                         </div>
                                     </div>
-                                    
                                     <div class="mb-3">
-                                        <label class="form-label fw-semibold mb-2">
-                                            <i class="fas fa-star me-1"></i>
-                                            Sua avaliação *
-                                        </label>
-                                        <div class="rating-input d-flex gap-1">
-                                            <input type="radio" name="rating" value="5" id="star5" required class="d-none">
-                                            <label for="star5" class="rating-star fs-4" data-rating="5">★</label>
-                                            <input type="radio" name="rating" value="4" id="star4" required class="d-none">
-                                            <label for="star4" class="rating-star fs-4" data-rating="4">★</label>
-                                            <input type="radio" name="rating" value="3" id="star3" required class="d-none">
-                                            <label for="star3" class="rating-star fs-4" data-rating="3">★</label>
-                                            <input type="radio" name="rating" value="2" id="star2" required class="d-none">
-                                            <label for="star2" class="rating-star fs-4" data-rating="2">★</label>
-                                            <input type="radio" name="rating" value="1" id="star1" required class="d-none">
-                                            <label for="star1" class="rating-star fs-4" data-rating="1">★</label>
+                                        <label class="form-label">Sua avaliação:</label>
+                                        <div class="rating-input">
+                                            <input type="radio" name="rating" value="5" id="star5" required>
+                                            <label for="star5">★</label>
+                                            <input type="radio" name="rating" value="4" id="star4" required>
+                                            <label for="star4">★</label>
+                                            <input type="radio" name="rating" value="3" id="star3" required>
+                                            <label for="star3">★</label>
+                                            <input type="radio" name="rating" value="2" id="star2" required>
+                                            <label for="star2">★</label>
+                                            <input type="radio" name="rating" value="1" id="star1" required>
+                                            <label for="star1">★</label>
                                         </div>
-                                        <small class="text-muted">Clique para avaliar</small>
                                     </div>
-                                    
                                     <div class="mb-3">
-                                        <label for="comentario" class="form-label fw-semibold">
-                                            <i class="fas fa-comment me-1"></i>
-                                            Comentário
-                                        </label>
-                                        <textarea class="form-control" name="comentario" rows="4" placeholder="Conte como foi sua experiência com esta empresa..."></textarea>
+                                        <label for="comentario" class="form-label">Comentário:</label>
+                                        <textarea class="form-control" name="comentario" rows="3" placeholder="Conte como foi sua experiência..."></textarea>
                                     </div>
-                                    
-                                    <div class="d-grid">
-                                        <button type="submit" class="btn btn-primary btn-lg">
-                                            <i class="fas fa-paper-plane me-2"></i>
-                                            Enviar Avaliação
-                                        </button>
-                                    </div>
+                                    <button type="submit" class="btn btn-primary">Enviar Avaliação</button>
                                 </form>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
 
             <!-- Sidebar -->
             <div class="col-lg-4">
-                <div class="sidebar-content">
-                    <!-- Action Button (Bottom of sidebar like in model) -->
-                    <div class="action-button-section mb-4">
+                <div class="benefit-sidebar">
+                    <div class="use-button-container">
                         <?php if (isLoggedIn()): ?>
-                            <a href="gerar-cupom.php?empresa=<?php echo $company['id']; ?>" class="btn btn-usar-destaque w-100">
+                            <a href="gerar-cupom.php?empresa=<?php echo $company['id']; ?>" class="btn-use">
                                 USAR
                             </a>
                         <?php else: ?>
-                            <a href="login.php" class="btn btn-login-destaque w-100">
+                            <a href="login.php" class="btn-use">
                                 FAZER LOGIN
                             </a>
                         <?php endif; ?>
-                    </div>
-                    
-                    <!-- Company Logo Card -->
-                    <div class="card shadow-sm mb-4">
-                        <div class="card-body text-center">
+                        
+                        <div class="company-mini-logo">
                             <?php if ($company['logo']): ?>
-                                <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="company-logo-sidebar rounded-circle mb-3">
+                                <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>">
                             <?php else: ?>
-                                <div class="company-logo-placeholder rounded-circle mx-auto mb-3">
+                                <div class="logo-placeholder-mini">
                                     <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
                                 </div>
                             <?php endif; ?>
-                            
-                            <h6 class="company-name-sidebar mb-2"><?php echo htmlspecialchars($company['nome']); ?></h6>
-                            <small class="text-muted"><?php echo htmlspecialchars($company['categoria']); ?></small>
-                            
-                            <?php if ($company['desconto']): ?>
-                                <div class="discount-info mt-2">
-                                    <span class="badge bg-success">
-                                        <?php echo $company['desconto']; ?>% de desconto
-                                    </span>
-                                </div>
-                            <?php endif; ?>
                         </div>
                     </div>
                     
-                    <!-- Company Description Card -->
-                    <div class="card shadow-sm mb-4">
-                        <div class="card-body">
-                            <div class="company-description-text">
-                                <?php if ($company['descricao']): ?>
-                                    <p class="mb-0 small text-justify"><?php echo nl2br(htmlspecialchars($company['descricao'])); ?></p>
-                                <?php else: ?>
-                                    <p class="mb-0 small text-justify">Inaugurado em 2015, o novo Parque da Mônica voltou com atrações para a alegria das famílias brasileiras e do mundo! Localizado no Shopping SP Market, Zona Sul de São Paulo, o novo Parque coberto da América Latina com 1 mil m² e superatrações que divertem pais e filhos, de forma lúdica educativa e interativa, dentro do universo mais encantador das histórias em quadrinhas criadas pelo Cartunist Maurício de Sousa. Com infraestrutura completa, o novo Parque da Mônica proporciona conveniência, conforto, alegria e segurança a todos os visitantes, tudo isso e muito mais do lado da Turma da Mônica!</p>
+                    <div class="company-description">
+                        <?php if ($company['descricao']): ?>
+                            <p><?php echo nl2br(htmlspecialchars($company['descricao'])); ?></p>
+                        <?php else: ?>
+                            <p>Aproveite os benefícios exclusivos do <?php echo htmlspecialchars($company['nome']); ?>! Uma experiência única que oferece descontos especiais para membros do Clube de Vantagens da ANETI.</p>
+                        <?php endif; ?>
+                        
+                        <?php if ($company['website'] || $company['telefone'] || $company['email']): ?>
+                            <div class="contact-info mt-3">
+                                <?php if ($company['website']): ?>
+                                    <p><i class="fas fa-globe"></i> <a href="<?php echo htmlspecialchars($company['website']); ?>" target="_blank"><?php echo htmlspecialchars($company['website']); ?></a></p>
+                                <?php endif; ?>
+                                <?php if ($company['telefone']): ?>
+                                    <p><i class="fas fa-phone"></i> <?php echo htmlspecialchars($company['telefone']); ?></p>
+                                <?php endif; ?>
+                                <?php if ($company['email']): ?>
+                                    <p><i class="fas fa-envelope"></i> <a href="mailto:<?php echo htmlspecialchars($company['email']); ?>"><?php echo htmlspecialchars($company['email']); ?></a></p>
                                 <?php endif; ?>
                             </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -669,61 +595,6 @@ try {
             
             // Inicializar funcionalidades dos botões de ação
             checkIfSaved();
-        });
-        
-        // FUNCIONALIDADES DA PÁGINA DE DETALHES
-        
-        // Rating system for review form
-        document.querySelectorAll('.rating-star').forEach(star => {
-            star.addEventListener('click', function() {
-                const rating = this.getAttribute('data-rating');
-                const allStars = document.querySelectorAll('.rating-star');
-                
-                // Update visual feedback
-                allStars.forEach((s, index) => {
-                    if (index >= (5 - rating)) {
-                        s.style.color = '#ffc107';
-                    } else {
-                        s.style.color = '#ddd';
-                    }
-                });
-                
-                // Set the radio button value
-                document.getElementById('star' + rating).checked = true;
-            });
-            
-            // Hover effect
-            star.addEventListener('mouseenter', function() {
-                const rating = this.getAttribute('data-rating');
-                const allStars = document.querySelectorAll('.rating-star');
-                
-                allStars.forEach((s, index) => {
-                    if (index >= (5 - rating)) {
-                        s.style.color = '#ffc107';
-                    } else {
-                        s.style.color = '#ddd';
-                    }
-                });
-            });
-        });
-        
-        // Reset hover effect
-        document.querySelector('.rating-input').addEventListener('mouseleave', function() {
-            const checkedRating = document.querySelector('input[name="rating"]:checked');
-            const allStars = document.querySelectorAll('.rating-star');
-            
-            if (checkedRating) {
-                const rating = checkedRating.value;
-                allStars.forEach((s, index) => {
-                    if (index >= (5 - rating)) {
-                        s.style.color = '#ffc107';
-                    } else {
-                        s.style.color = '#ddd';
-                    }
-                });
-            } else {
-                allStars.forEach(s => s.style.color = '#ddd');
-            }
         });
         
         // FUNCIONALIDADES DOS BOTÕES DE AÇÃO
