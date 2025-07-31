@@ -26,38 +26,39 @@ $categories = getCategories($conn);
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Header com Degradê - Modelo Referência -->
-    <header class="gradient-header fixed-top">
-        <!-- Linha 1: Barra Superior -->
-        <div class="header-top-bar">
-            <div class="container-fluid">
-                <div class="row align-items-center py-2">
+    <!-- Header ANETI - Modelo Padrão -->
+    <header class="main-header fixed-top" style="background: linear-gradient(to right, #012d6a, #25a244); box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <!-- Linha 1: Info Principal -->
+        <div style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <div class="container">
+                <div class="row align-items-center">
                     <!-- Nome do Clube (À esquerda) -->
-                    <div class="col-md-3">
-                        <div class="brand-section d-flex align-items-center">
-                            <span class="brand-name">Clube de Benefícios ANETI</span>
-                        </div>
+                    <div class="col-md-4">
+                        <h1 style="color: white; font-size: 22px; font-weight: 700; margin: 0; text-decoration: none;">
+                            <a href="index.php" style="color: white; text-decoration: none;">
+                                Clube de Benefícios ANETI
+                            </a>
+                        </h1>
                     </div>
                     
                     <!-- Campo de Busca (Ao centro) -->
-                    <div class="col-md-6">
-                        <div class="search-container">
-                            <form action="public/buscar.php" method="GET" class="header-search-form">
-                                <div class="search-input-group">
-                                    <input type="text" name="q" class="search-input" placeholder="Encontrar um benefício">
-                                    <button type="submit" class="search-btn">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                    <div class="col-md-4">
+                        <form method="GET" action="public/categorias.php">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="search" placeholder="Buscar empresas..." 
+                                       style="border-radius: 20px 0 0 20px; border: none; padding: 10px 15px;">
+                                <button class="btn btn-light" type="submit" style="border-radius: 0 20px 20px 0; border: none; padding: 10px 15px;">
+                                    <i class="fas fa-search" style="color: #012d6a;"></i>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                     
                     <!-- Botões (À direita) -->
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="header-actions text-end">
-                            <a href="public/login.php" class="login-button me-2">Entrar</a>
-                            <a href="empresa/cadastro.php" class="partner-button">Seja um Parceiro</a>
+                            <a href="public/login.php" class="btn btn-outline-light me-2" style="border-radius: 20px; padding: 8px 20px; font-weight: 500; border: 2px solid white;">Entrar</a>
+                            <a href="empresa/cadastro.php" class="btn btn-light" style="border-radius: 20px; padding: 8px 20px; font-weight: 500; color: #012d6a;">Seja um Parceiro</a>
                         </div>
                     </div>
                 </div>
@@ -65,47 +66,67 @@ $categories = getCategories($conn);
         </div>
         
         <!-- Linha 2: Menu de Categorias -->
-        <div class="categories-bar">
-            <div class="container-fluid">
-                <div class="categories-menu">
-                    <a href="public/categorias.php?cat=destaque" class="category-item">
-                        <i class="fas fa-star"></i>
+        <div style="background: rgba(255,255,255,0.1); padding: 8px 0;">
+            <div class="container">
+                <div class="d-flex justify-content-center flex-wrap" style="gap: 15px;">
+                    <a href="public/categorias.php?cat=destaque" style="color: white; text-decoration: none; padding: 8px 15px; border-radius: 15px; transition: all 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500;" 
+                       onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                       onmouseout="this.style.background='transparent'">
+                        <i class="fas fa-star" style="font-size: 16px;"></i>
                         <span>Destaque</span>
                     </a>
-                    <a href="public/categorias.php?cat=comer-beber" class="category-item">
-                        <i class="fas fa-utensils"></i>
+                    <a href="public/categorias.php?cat=comer-beber" style="color: white; text-decoration: none; padding: 8px 15px; border-radius: 15px; transition: all 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500;" 
+                       onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                       onmouseout="this.style.background='transparent'">
+                        <i class="fas fa-utensils" style="font-size: 16px;"></i>
                         <span>Comer e Beber</span>
                     </a>
-                    <a href="public/categorias.php?cat=compras" class="category-item">
-                        <i class="fas fa-shopping-bag"></i>
+                    <a href="public/categorias.php?cat=compras" style="color: white; text-decoration: none; padding: 8px 15px; border-radius: 15px; transition: all 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500;" 
+                       onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                       onmouseout="this.style.background='transparent'">
+                        <i class="fas fa-shopping-bag" style="font-size: 16px;"></i>
                         <span>Compras</span>
                     </a>
-                    <a href="public/categorias.php?cat=conveniencia" class="category-item">
-                        <i class="fas fa-store"></i>
+                    <a href="public/categorias.php?cat=conveniencia" style="color: white; text-decoration: none; padding: 8px 15px; border-radius: 15px; transition: all 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500;" 
+                       onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                       onmouseout="this.style.background='transparent'">
+                        <i class="fas fa-store" style="font-size: 16px;"></i>
                         <span>Conveniência</span>
                     </a>
-                    <a href="public/categorias.php?cat=cultura-educacao" class="category-item">
-                        <i class="fas fa-graduation-cap"></i>
+                    <a href="public/categorias.php?cat=cultura-educacao" style="color: white; text-decoration: none; padding: 8px 15px; border-radius: 15px; transition: all 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500;" 
+                       onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                       onmouseout="this.style.background='transparent'">
+                        <i class="fas fa-graduation-cap" style="font-size: 16px;"></i>
                         <span>Cultura e Educação</span>
                     </a>
-                    <a href="public/categorias.php?cat=lazer-diversao" class="category-item">
-                        <i class="fas fa-gamepad"></i>
+                    <a href="public/categorias.php?cat=lazer-diversao" style="color: white; text-decoration: none; padding: 8px 15px; border-radius: 15px; transition: all 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500;" 
+                       onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                       onmouseout="this.style.background='transparent'">
+                        <i class="fas fa-gamepad" style="font-size: 16px;"></i>
                         <span>Lazer e Diversão</span>
                     </a>
-                    <a href="public/categorias.php?cat=mundo-pet" class="category-item">
-                        <i class="fas fa-paw"></i>
+                    <a href="public/categorias.php?cat=mundo-pet" style="color: white; text-decoration: none; padding: 8px 15px; border-radius: 15px; transition: all 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500;" 
+                       onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                       onmouseout="this.style.background='transparent'">
+                        <i class="fas fa-paw" style="font-size: 16px;"></i>
                         <span>Mundo Pet</span>
                     </a>
-                    <a href="public/categorias.php?cat=saude-bem-estar" class="category-item">
-                        <i class="fas fa-heartbeat"></i>
+                    <a href="public/categorias.php?cat=saude-bem-estar" style="color: white; text-decoration: none; padding: 8px 15px; border-radius: 15px; transition: all 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500;" 
+                       onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                       onmouseout="this.style.background='transparent'">
+                        <i class="fas fa-heartbeat" style="font-size: 16px;"></i>
                         <span>Saúde e Bem-estar</span>
                     </a>
-                    <a href="public/categorias.php?cat=servicos" class="category-item">
-                        <i class="fas fa-tools"></i>
+                    <a href="public/categorias.php?cat=servicos" style="color: white; text-decoration: none; padding: 8px 15px; border-radius: 15px; transition: all 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500;" 
+                       onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                       onmouseout="this.style.background='transparent'">
+                        <i class="fas fa-tools" style="font-size: 16px;"></i>
                         <span>Serviços</span>
                     </a>
-                    <a href="public/categorias.php?cat=viagem-turismo" class="category-item">
-                        <i class="fas fa-plane"></i>
+                    <a href="public/categorias.php?cat=viagem-turismo" style="color: white; text-decoration: none; padding: 8px 15px; border-radius: 15px; transition: all 0.3s; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500;" 
+                       onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                       onmouseout="this.style.background='transparent'">
+                        <i class="fas fa-plane" style="font-size: 16px;"></i>
                         <span>Viagem e Turismo</span>
                     </a>
                 </div>

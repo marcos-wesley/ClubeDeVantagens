@@ -17,11 +17,11 @@ $base_path = $is_subdirectory ? '../' : '';
                         <i class="fas fa-star me-2"></i>Clube de Vantagens ANETI
                     </h5>
                     <p class="mb-3" style="color: rgba(255,255,255,0.9); line-height: 1.6;">
-                        Benefícios exclusivos para membros da Associação Nacional de Engenheiros de Tecnologia da Informação.
+                        Benefícios exclusivos para membros da Associação Nacional dos Especialistas em Tecnologia da Informação.
                     </p>
                     <div class="d-flex align-items-center mb-2">
                         <i class="fas fa-users me-2" style="color: #25a244;"></i>
-                        <span style="color: rgba(255,255,255,0.9);">Mais de 1.000 membros ativos</span>
+                        <span style="color: rgba(255,255,255,0.9);">Mais de 1.800 membros ativos</span>
                     </div>
                     <div class="d-flex align-items-center">
                         <i class="fas fa-store me-2" style="color: #25a244;"></i>
@@ -95,26 +95,26 @@ $base_path = $is_subdirectory ? '../' : '';
                     <div class="mb-3">
                         <div class="d-flex align-items-center mb-2">
                             <i class="fas fa-envelope me-2" style="color: #25a244;"></i>
-                            <a href="mailto:contato@aneti.net.br" class="footer-link">contato@aneti.net.br</a>
+                            <a href="mailto:contato@aneti.org.br" class="footer-link">contato@aneti.org.br</a>
                         </div>
                         <div class="d-flex align-items-center mb-3">
                             <i class="fas fa-phone me-2" style="color: #25a244;"></i>
-                            <span style="color: rgba(255,255,255,0.9);">(11) 1234-5678</span>
+                            <span style="color: rgba(255,255,255,0.9);">(61) 93618-0637</span>
                         </div>
                     </div>
                     <div class="social-links">
                         <h6 class="mb-2" style="color: white; font-size: 14px;">Siga-nos:</h6>
-                        <a href="#" class="social-link me-3" title="Facebook">
+                        <a href="https://www.facebook.com/profile.php?id=100092650971851&mibextid=LQQJ4d" target="_blank" class="social-link me-3" title="Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="social-link me-3" title="Instagram">
+                        <a href="https://instagram.com/anetioficial?igshid=MzRlODBiNWFlZA" target="_blank" class="social-link me-3" title="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="social-link me-3" title="LinkedIn">
+                        <a href="https://www.linkedin.com/company/anetioficial/" target="_blank" class="social-link me-3" title="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
-                        <a href="#" class="social-link" title="WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
+                        <a href="https://www.youtube.com/@anetioficial" target="_blank" class="social-link" title="Youtube">
+                            <i class="fab fa-youtube"></i>
                         </a>
                     </div>
                 </div>
@@ -133,7 +133,7 @@ $base_path = $is_subdirectory ? '../' : '';
                     <div>
                         <div style="color: white; font-weight: 600; font-size: 16px;">um produto ANETI</div>
                         <div style="color: rgba(255,255,255,0.8); font-size: 12px;">
-                            Associação Nacional de Engenheiros de TI
+                            Associação Nacional dos Especialistas em TI
                         </div>
                     </div>
                 </div>
