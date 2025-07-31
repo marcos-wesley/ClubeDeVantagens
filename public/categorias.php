@@ -136,14 +136,7 @@ $total_empresas = count($empresas);
                                         </div>
                                     <?php endif; ?>
                                     
-                                    <!-- Circular Logo Overlay -->
-                                    <?php if ($empresa['logo']): ?>
-                                        <div class="logo-overlay" style="position: absolute; bottom: -30px; left: 20px; width: 60px; height: 60px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: 3px solid white;">
-                                            <img src="../uploads/<?php echo htmlspecialchars($empresa['logo']); ?>" 
-                                                 alt="Logo <?php echo htmlspecialchars($empresa['nome']); ?>" 
-                                                 style="width: 45px; height: 45px; object-fit: contain; border-radius: 50%;">
-                                        </div>
-                                    <?php endif; ?>
+
                                     
                                     <!-- Favorite Heart -->
                                     <button class="favorite-heart" onclick="toggleFavorite(<?php echo $empresa['id']; ?>)" 
@@ -172,8 +165,11 @@ $total_empresas = count($empresas);
                                     </h5>
                                     
                                     <!-- Description -->
-                                    <p class="company-description" style="color: #666; font-size: 0.85rem; margin-bottom: 12px; line-height: 1.4; height: 40px; overflow: hidden;">
-                                        <?php echo htmlspecialchars(substr($empresa['descricao'], 0, 70)) . (strlen($empresa['descricao']) > 70 ? '...' : ''); ?>
+                                    <p class="company-description" style="color: #666; font-size: 0.85rem; margin-bottom: 12px; line-height: 1.4; height: auto; min-height: 40px;">
+                                        <?php 
+                                        $descricao = $empresa['descricao'] ?: 'Aproveite os benefícios exclusivos para membros da ANETI com descontos especiais.';
+                                        echo htmlspecialchars(substr($descricao, 0, 120)) . (strlen($descricao) > 120 ? '...' : ''); 
+                                        ?>
                                     </p>
                                     
                                     <!-- Rating Stars -->
