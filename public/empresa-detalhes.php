@@ -366,33 +366,29 @@ try {
             font-size: 1.5rem;
             font-weight: bold;
         }
-        .container {
+        /* Bootstrap grid override for layout fix */
+        .main-layout {
+            display: flex;
+            gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 15px;
         }
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-            margin-left: -15px;
-            margin-right: -15px;
+        .main-content {
+            flex: 2;
         }
-        .col-md-8 {
-            flex: 0 0 66.666667%;
-            max-width: 66.666667%;
-            padding-left: 15px;
-            padding-right: 15px;
+        .sidebar-content {
+            flex: 1;
+            max-width: 350px;
         }
-        .col-md-4 {
-            flex: 0 0 33.333333%;
-            max-width: 33.333333%;
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-        @media (max-width: 768px) {
-            .col-md-8, .col-md-4 {
-                flex: 0 0 100%;
-                max-width: 100%;
+        @media (max-width: 992px) {
+            .main-layout {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .sidebar-content {
+                max-width: none;
+                order: -1;
             }
         }
         @media (max-width: 768px) {
@@ -505,26 +501,25 @@ try {
     </div>
 
     <!-- Main Content -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="company-content">
-                    <!-- Tabs Navigation -->
-                    <div class="content-tabs">
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#detalhes">
-                                    <i class="fas fa-info-circle me-2"></i>Informações
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#avaliacoes">
-                                    <i class="fas fa-star me-2"></i>Avaliações 
-                                    <span class="badge bg-primary ms-1"><?php echo $rating_summary['total']; ?></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+    <div class="main-layout">
+        <div class="main-content">
+            <div class="company-content">
+                <!-- Tabs Navigation -->
+                <div class="content-tabs">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#detalhes">
+                                <i class="fas fa-info-circle me-2"></i>Informações
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#avaliacoes">
+                                <i class="fas fa-star me-2"></i>Avaliações 
+                                <span class="badge bg-primary ms-1"><?php echo $rating_summary['total']; ?></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
                     <div class="tab-content">
                         <!-- Tab Informações -->
@@ -752,11 +747,12 @@ try {
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Sidebar -->
-            <div class="col-md-4">
-                <!-- Action Card -->
-                <div class="sidebar-card">
+        <!-- Sidebar -->
+        <div class="sidebar-content">
+            <!-- Action Card -->
+            <div class="sidebar-card">
                     <div class="company-mini-logo">
                         <?php if ($company['logo']): ?>
                             <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>">
@@ -834,7 +830,6 @@ try {
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 
