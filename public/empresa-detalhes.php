@@ -366,38 +366,30 @@ try {
             font-size: 1.5rem;
             font-weight: bold;
         }
-        .row {
+        .main-content-container {
             display: flex;
-            flex-wrap: wrap;
-            margin-left: -15px;
-            margin-right: -15px;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
         }
-        .col-lg-8, .col-lg-4 {
-            padding-left: 15px;
-            padding-right: 15px;
-            box-sizing: border-box;
+        .content-left {
+            flex: 2;
+            min-width: 0;
         }
-        .col-lg-8 {
-            flex: 0 0 66.666667%;
-            max-width: 66.666667%;
-        }
-        .col-lg-4 {
-            flex: 0 0 33.333333%;
-            max-width: 33.333333%;
+        .content-right {
+            flex: 1;
+            min-width: 320px;
+            max-width: 380px;
         }
         @media (max-width: 991.98px) {
-            .col-lg-8, .col-lg-4 {
-                flex: 0 0 100%;
-                max-width: 100%;
-                margin-bottom: 2rem;
+            .main-content-container {
+                flex-direction: column;
+                gap: 1rem;
             }
-            .row {
-                margin-left: 0;
-                margin-right: 0;
-            }
-            .col-lg-8, .col-lg-4 {
-                padding-left: 0;
-                padding-right: 0;
+            .content-right {
+                max-width: none;
+                order: -1;
             }
         }
         @media (max-width: 768px) {
@@ -511,8 +503,8 @@ try {
 
     <!-- Main Content -->
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
+        <div class="main-content-container">
+            <div class="content-left">
                 <div class="company-content">
                     <!-- Tabs Navigation -->
                     <div class="content-tabs">
@@ -759,7 +751,7 @@ try {
             </div>
 
             <!-- Sidebar -->
-            <div class="col-lg-4">
+            <div class="content-right">
                 <!-- Action Card -->
                 <div class="sidebar-card">
                     <div class="company-mini-logo">
