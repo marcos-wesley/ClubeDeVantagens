@@ -1,9 +1,10 @@
 /* ANETI Clube de Vantagens - Custom CSS */
 
 :root {
-    --aneti-primary: #012d6a;
-    --aneti-primary-dark: #001d4a;
-    --aneti-primary-light: #1a4b8c;
+    --aneti-primary: #8B5CF6;
+    --aneti-primary-dark: #7C3AED;
+    --aneti-primary-light: #A78BFA;
+    --aneti-purple-gradient: linear-gradient(135deg, #8B5CF6 0%, #A855F7 50%, #9333EA 100%);
     --aneti-secondary: #6c757d;
     --aneti-success: #28a745;
     --aneti-warning: #ffc107;
@@ -11,6 +12,7 @@
     --aneti-info: #17a2b8;
     --aneti-light: #f8f9fa;
     --aneti-dark: #343a40;
+    --aneti-white: #ffffff;
 }
 
 /* Bootstrap color overrides */
@@ -43,91 +45,493 @@
     transform: scale(1.05);
 }
 
-/* Hero section */
-.hero-section {
-    background: linear-gradient(135deg, var(--aneti-primary) 0%, var(--aneti-primary-light) 100%);
+/* Modern header with categories */
+.modern-header {
+    background: var(--aneti-purple-gradient);
     color: white;
-    padding: 4rem 0;
-    margin-bottom: 2rem;
+    padding: 1rem 0;
 }
 
-.hero-title {
-    font-size: 2.5rem;
-    font-weight: 700;
+.header-top {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 1rem;
     margin-bottom: 1rem;
 }
 
-.hero-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    opacity: 0.9;
+.brand-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-.hero-svg {
-    max-width: 100%;
-    height: auto;
+.brand-logo {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.brand-text h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: 700;
+}
+
+.brand-text p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 0.9rem;
+}
+
+.user-menu {
+    text-align: right;
+}
+
+.user-menu a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1rem;
+    opacity: 0.9;
+    transition: opacity 0.3s;
+}
+
+.user-menu a:hover {
+    opacity: 1;
+    color: white;
+}
+
+/* Categories navigation horizontal */
+.categories-nav-horizontal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding: 0 1rem;
+}
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+    border-radius: 12px;
+    min-width: 80px;
+}
+
+.category-item:hover {
+    color: white;
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.category-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.category-item:hover .category-icon {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.category-name {
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* Hero section with modern design */
+.hero-section {
+    background: var(--aneti-purple-gradient);
+    color: white;
+    padding: 3rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+    font-weight: 400;
+}
+
+.hero-search {
+    max-width: 500px;
+    margin-bottom: 2rem;
 }
 
 .search-form .form-control {
     border: none;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 50px;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
 }
 
 .search-form .btn {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Categories navigation */
-.categories-nav {
-    background-color: var(--aneti-light);
-    border-bottom: 1px solid #dee2e6;
-}
-
-.category-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.25rem;
-    background-color: white;
-    border: 1px solid #dee2e6;
-    border-radius: 25px;
-    text-decoration: none;
+    border-radius: 50px;
+    padding: 1rem 2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    font-weight: 600;
+    background: white;
     color: var(--aneti-primary);
-    font-weight: 500;
-    transition: all 0.3s ease;
+    border: none;
 }
 
-.category-link:hover {
-    background-color: var(--aneti-primary);
-    color: white;
+.search-form .btn:hover {
+    background: #f8f9fa;
+    color: var(--aneti-primary);
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(1, 45, 106, 0.3);
+}
+
+.hero-illustration {
+    position: relative;
+    text-align: center;
+}
+
+.hero-people {
+    max-width: 400px;
+    height: auto;
+}
+
+/* Sections styling */
+.benefits-section {
+    padding: 4rem 0;
+    background: white;
+}
+
+.recent-section {
+    padding: 4rem 0;
+    background: #fafbfc;
 }
 
 /* Section titles */
 .section-title {
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 2.2rem;
+    font-weight: 700;
     color: var(--aneti-primary);
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     text-align: center;
 }
 
-/* Company cards */
-.company-card {
-    background: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    height: 100%;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+/* Featured benefits grid */
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
-.company-card:hover {
+.benefit-item {
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    padding: 1rem;
+    border-radius: 16px;
+}
+
+.benefit-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(1, 45, 106, 0.15);
-    border-color: var(--aneti-primary);
+    color: inherit;
+}
+
+.benefit-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 16px;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.benefit-item:hover .benefit-logo {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    transform: scale(1.05);
+}
+
+.benefit-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.benefit-placeholder {
+    background: var(--aneti-primary);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.benefit-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--aneti-dark);
+    margin: 0;
+}
+
+/* Recent companies grid */
+.recent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.recent-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.recent-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    color: inherit;
+}
+
+.recent-card-image {
+    height: 160px;
+    background: linear-gradient(45deg, #f0f2f5, #e1e5e9);
+    position: relative;
+    overflow: hidden;
+}
+
+.recent-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.recent-card-overlay {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.recent-card-overlay img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.recent-card-placeholder {
+    background: var(--aneti-primary);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.recent-card-content {
+    padding: 1.5rem;
+}
+
+.recent-card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--aneti-dark);
+    margin-bottom: 0.5rem;
+}
+
+.recent-card-category {
+    color: var(--aneti-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.recent-card-description {
+    color: #6c757d;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.recent-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid #f0f2f5;
+}
+
+.recent-card-location {
+    color: #6c757d;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.favorite-btn {
+    color: #ddd;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.favorite-btn:hover {
+    color: #ff6b6b;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .categories-nav-horizontal {
+        gap: 1rem;
+        padding: 1rem;
+    }
+    
+    .category-item {
+        min-width: 60px;
+    }
+    
+    .category-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .category-name {
+        font-size: 0.7rem;
+    }
+    
+    .benefits-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .benefit-logo {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .recent-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .brand-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .user-menu {
+        text-align: left;
+        margin-top: 1rem;
+    }
+    
+    .user-menu a {
+        margin-left: 0;
+        margin-right: 1rem;
+        display: inline-block;
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+    }
+    
+    .benefits-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .benefit-logo {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .benefit-name {
+        font-size: 0.8rem;
+    }
 }
 
 .company-card-header {
