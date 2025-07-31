@@ -366,6 +366,28 @@ try {
             font-size: 1.5rem;
             font-weight: bold;
         }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .col-lg-8, .col-lg-4 {
+            display: flex;
+            flex-direction: column;
+        }
+        .col-lg-8 {
+            flex: 0 0 66.666667%;
+            max-width: 66.666667%;
+        }
+        .col-lg-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+        @media (max-width: 991.98px) {
+            .col-lg-8, .col-lg-4 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
         @media (max-width: 768px) {
             body {
                 padding-top: 130px;
