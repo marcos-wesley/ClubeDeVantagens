@@ -61,13 +61,14 @@ if ($_POST) {
                 $stmt = $conn->prepare("
                     UPDATE empresas SET 
                     nome = ?, categoria = ?, descricao = ?, endereco = ?, 
-                    cidade = ?, telefone = ?, email = ?, website = ?, logo = ?,
+                    cidade = ?, estado = ?, telefone = ?, email = ?, website = ?, logo = ?,
                     regras = ?, desconto = ?, avaliacao_media = ?, status = ?, destaque = ?, updated_at = NOW()
                     WHERE id = ?
                 ");
+                $estado = sanitizeInput($_POST['estado']);
                 $stmt->execute([
                     $nome, $categoria, $descricao, $endereco, 
-                    $cidade, $telefone, $email, $website, $logo_filename,
+                    $cidade, $estado, $telefone, $email, $website, $logo_filename,
                     $regras_beneficio, $desconto, $avaliacao, $status, $destaque, $empresa_id
                 ]);
                 $message = 'Empresa atualizada com sucesso!';
@@ -81,13 +82,14 @@ if ($_POST) {
                 // Insert new empresa
                 $stmt = $conn->prepare("
                     INSERT INTO empresas (
-                        nome, categoria, descricao, endereco, cidade, 
+                        nome, categoria, descricao, endereco, cidade, estado,
                         telefone, email, website, logo, regras, desconto, avaliacao_media,
                         status, destaque, created_at, updated_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
                 ");
+                $estado = sanitizeInput($_POST['estado']);
                 $stmt->execute([
-                    $nome, $categoria, $descricao, $endereco, $cidade, 
+                    $nome, $categoria, $descricao, $endereco, $cidade, $estado,
                     $telefone, $email, $website, $logo_filename, $regras_beneficio, 
                     $desconto, $avaliacao, $status, $destaque
                 ]);
@@ -194,11 +196,18 @@ $categories = getCategories($conn);
                                                value="<?php echo htmlspecialchars($empresa['endereco'] ?? ''); ?>">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label class="form-label">Cidade</label>
                                         <input type="text" class="form-control" name="cidade" 
                                                value="<?php echo htmlspecialchars($empresa['cidade'] ?? ''); ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="mb-3">
+                                        <label class="form-label">Estado</label>
+                                        <input type="text" class="form-control" name="estado" maxlength="2" placeholder="SP"
+                                               value="<?php echo htmlspecialchars($empresa['estado'] ?? ''); ?>">
                                     </div>
                                 </div>
                             </div>
