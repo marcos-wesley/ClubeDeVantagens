@@ -184,170 +184,76 @@ try {
                 <div class="tab-content">
                     <!-- Tab Detalhes -->
                     <div class="tab-pane fade show active" id="detalhes">
-                        <!-- Main Image Card -->
-                        <div class="card shadow-sm mb-4">
-                            <div class="benefit-main-image">
-                                <?php if ($company['imagem_detalhes']): ?>
-                                    <img src="../uploads/<?php echo htmlspecialchars($company['imagem_detalhes']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid card-img-top" style="height: 300px; object-fit: cover; border-radius: 0.375rem 0.375rem 0 0;">
-                                <?php elseif ($company['logo']): ?>
-                                    <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid card-img-top" style="height: 300px; object-fit: cover; border-radius: 0.375rem 0.375rem 0 0;">
-                                <?php else: ?>
-                                    <div class="benefit-placeholder-image d-flex align-items-center justify-content-center" style="height: 300px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 0.375rem 0.375rem 0 0;">
-                                        <div class="text-center text-muted">
-                                            <i class="fas fa-image fa-3x mb-3"></i>
-                                            <p class="mb-0">Imagem do <?php echo htmlspecialchars($company['nome']); ?></p>
-                                        </div>
+                        <!-- Main Image -->
+                        <div class="benefit-main-image mb-4">
+                            <?php if ($company['imagem_detalhes']): ?>
+                                <img src="../uploads/<?php echo htmlspecialchars($company['imagem_detalhes']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid rounded" style="width: 100%; height: 400px; object-fit: cover;">
+                            <?php elseif ($company['logo']): ?>
+                                <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="img-fluid rounded" style="width: 100%; height: 400px; object-fit: cover;">
+                            <?php else: ?>
+                                <div class="benefit-placeholder-image d-flex align-items-center justify-content-center rounded" style="height: 400px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                                    <div class="text-center text-muted">
+                                        <i class="fas fa-image fa-3x mb-3"></i>
+                                        <p class="mb-0">Imagem do <?php echo htmlspecialchars($company['nome']); ?></p>
                                     </div>
-                                <?php endif; ?>
-                            </div>
+                                </div>
+                            <?php endif; ?>
                         </div>
 
-                        <!-- Como Funciona Card -->
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-header bg-light">
-                                <h5 class="card-title mb-0">
-                                    <i class="fas fa-info-circle text-primary me-2"></i>
-                                    Como funciona:
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <div class="d-flex align-items-start p-3 bg-light rounded">
-                                            <div class="step-number-badge me-3">1</div>
-                                            <div>
-                                                <h6 class="mb-1">Clique no botão USAR</h6>
-                                                <small class="text-muted">Na página do parceiro, faça login ou cadastre-se</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="d-flex align-items-start p-3 bg-light rounded">
-                                            <div class="step-number-badge me-3">2</div>
-                                            <div>
-                                                <h6 class="mb-1">Gere seu cupom</h6>
-                                                <small class="text-muted">Seu cupom de desconto será gerado automaticamente</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="d-flex align-items-start p-3 bg-light rounded">
-                                            <div class="step-number-badge me-3">3</div>
-                                            <div>
-                                                <h6 class="mb-1">Apresente o cupom</h6>
-                                                <small class="text-muted">Mostre o cupom na empresa parceira</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="d-flex align-items-start p-3 bg-light rounded">
-                                            <div class="step-number-badge me-3">4</div>
-                                            <div>
-                                                <h6 class="mb-1">Aproveite o desconto</h6>
-                                                <small class="text-muted">Desfrute do seu benefício exclusivo</small>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <!-- Como Funciona -->
+                        <div class="benefit-section mb-4">
+                            <h4 class="benefit-section-title text-primary mb-3">Como funciona:</h4>
+                            <div class="how-it-works">
+                                <div class="step mb-2">
+                                    <span class="step-number me-2">1)</span>
+                                    <span class="step-text">Clique no botão usar;</span>
+                                </div>
+                                <div class="step mb-2">
+                                    <span class="step-number me-2">2)</span>
+                                    <span class="step-text">Na página do parceiro, faça seu cadastro;</span>
+                                </div>
+                                <div class="step mb-2">  
+                                    <span class="step-number me-2">3)</span>
+                                    <span class="step-text">Escolha seu ingresso na opção individual ou opção 2 ingresso web multi 4 pessoas;</span>
+                                </div>
+                                <div class="step mb-2">
+                                    <span class="step-number me-2">4)</span>
+                                    <span class="step-text">Fazer contratação com desconto já aplicado;</span>
+                                </div>
+                                <div class="step mb-2">
+                                    <span class="step-number me-2">5)</span>
+                                    <span class="step-text">Na dia escolhido para diversão, não esquecer de levar documento pessoal, será necessário para entrar no Parque.</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Regulamento Card -->
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-header bg-light">
-                                <h5 class="card-title mb-0">
-                                    <i class="fas fa-file-contract text-primary me-2"></i>
-                                    Regulamento
-                                </h5>
-                            </div>
-                            <div class="card-body">
+                        <!-- Regulamento -->  
+                        <div class="benefit-section mb-4">
+                            <h4 class="benefit-section-title text-primary mb-3">Regulamento</h4>
+                            <div class="regulation-content">
                                 <?php if ($company['regras']): ?>
-                                    <div class="regulation-content">
-                                        <?php echo nl2br(htmlspecialchars($company['regras'])); ?>
-                                    </div>
+                                    <p><?php echo nl2br(htmlspecialchars($company['regras'])); ?></p>
                                 <?php else: ?>
-                                    <div class="regulation-content">
-                                        <div class="d-flex mb-2">
-                                            <span class="badge bg-primary me-2">1</span>
-                                            <span>Desconto válido conforme período determinado.</span>
-                                        </div>
-                                        <div class="d-flex mb-0">
-                                            <span class="badge bg-primary me-2">2</span>
-                                            <span>Os descontos podem variar a cada mês.</span>
-                                        </div>
+                                    <div class="regulation-item mb-2">
+                                        <span class="regulation-number me-2">1)</span>
+                                        <span class="regulation-text">Desconto válido conforme período determinado.</span>
+                                    </div>
+                                    <div class="regulation-item mb-2">
+                                        <span class="regulation-number me-2">2)</span>
+                                        <span class="regulation-text">Os descontos podem variar a cada mês.</span>
                                     </div>
                                 <?php endif; ?>
                             </div>
                         </div>
 
-                        <!-- Localização Card -->
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-header bg-light">
-                                <h5 class="card-title mb-0">
-                                    <i class="fas fa-map-marker-alt text-primary me-2"></i>
-                                    Localização
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <div class="location-map">
-                                            <div id="map" style="height: 350px; width: 100%; border-radius: 8px; background: #f8f9fa; margin-bottom: 15px;"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="location-info">
-                                            <h6 class="text-primary mb-3">Informações de Contato</h6>
-                                            
-                                            <div class="contact-item mb-3">
-                                                <div class="d-flex align-items-start">
-                                                    <i class="fas fa-map-marker-alt text-muted me-2 mt-1"></i>
-                                                    <div>
-                                                        <strong>Endereço:</strong><br>
-                                                        <?php if ($company['endereco'] && trim($company['endereco'])): ?>
-                                                            <?php echo htmlspecialchars($company['endereco']); ?><br>
-                                                        <?php endif; ?>
-                                                        <?php echo htmlspecialchars($company['cidade']); ?>, <?php echo htmlspecialchars($company['estado']); ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <?php if ($company['telefone']): ?>
-                                            <div class="contact-item mb-3">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="fas fa-phone text-muted me-2"></i>
-                                                    <span><?php echo htmlspecialchars($company['telefone']); ?></span>
-                                                </div>
-                                            </div>
-                                            <?php endif; ?>
-                                            
-                                            <?php if ($company['email']): ?>
-                                            <div class="contact-item mb-3">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="fas fa-envelope text-muted me-2"></i>
-                                                    <a href="mailto:<?php echo htmlspecialchars($company['email']); ?>" class="text-decoration-none">
-                                                        <?php echo htmlspecialchars($company['email']); ?>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <?php endif; ?>
-                                            
-                                            <?php if ($company['website']): ?>
-                                            <div class="contact-item mb-3">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="fas fa-globe text-muted me-2"></i>
-                                                    <a href="<?php echo htmlspecialchars($company['website']); ?>" target="_blank" class="text-decoration-none">
-                                                        Site da empresa
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <?php endif; ?>
-                                            
-                                            <button class="btn btn-outline-primary btn-sm w-100" onclick="openRoute()">
-                                                <i class="fas fa-directions me-2"></i>Como chegar
-                                            </button>
-                                        </div>
-                                    </div>
+                        <!-- Localização -->
+                        <div class="benefit-section mb-4">
+                            <h4 class="benefit-section-title text-primary mb-3">
+                                <i class="fas fa-map-marker-alt me-2"></i>Localização
+                            </h4>
+                            <div class="location-section">
+                                <div class="location-map mb-3">
+                                    <div id="map" style="height: 350px; width: 100%; border-radius: 8px; background: #f8f9fa;"></div>
                                 </div>
                             </div>
                         </div>
@@ -539,125 +445,40 @@ try {
 
             <!-- Sidebar -->
             <div class="col-lg-4">
-                <!-- Main Action Card -->
-                <div class="card shadow-sm mb-4 sticky-top" style="top: 160px;">
-                    <div class="card-body text-center p-4">
-                        <div class="company-mini-logo mb-3">
-                            <?php if ($company['logo']): ?>
-                                <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover; border: 3px solid #e9ecef;">
-                            <?php else: ?>
-                                <div class="logo-placeholder-mini bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; font-size: 2rem; font-weight: bold; margin: 0 auto;">
-                                    <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                        
-                        <h5 class="text-primary mb-2"><?php echo htmlspecialchars($company['nome']); ?></h5>
-                        <p class="text-muted small mb-3"><?php echo htmlspecialchars($company['categoria']); ?></p>
-                        
-                        <?php if ($company['desconto']): ?>
-                            <div class="discount-badge mb-3">
-                                <span class="badge bg-success fs-6 px-3 py-2">
-                                    <i class="fas fa-percentage me-1"></i>
-                                    <?php echo $company['desconto']; ?>% de desconto
-                                </span>
-                            </div>
-                        <?php endif; ?>
-                        
+                <div class="benefit-sidebar sticky-top" style="top: 160px;">
+                    <!-- Main Action Button -->
+                    <div class="use-button-container mb-4">
                         <?php if (isLoggedIn()): ?>
-                            <a href="gerar-cupom.php?empresa=<?php echo $company['id']; ?>" class="btn btn-primary btn-lg w-100 shadow-sm mb-3">
-                                <i class="fas fa-ticket-alt me-2"></i>
-                                USAR BENEFÍCIO
+                            <a href="gerar-cupom.php?empresa=<?php echo $company['id']; ?>" class="btn-use-main">
+                                USAR
                             </a>
                         <?php else: ?>
-                            <a href="login.php" class="btn btn-outline-primary btn-lg w-100 shadow-sm mb-3">
-                                <i class="fas fa-sign-in-alt me-2"></i>
+                            <a href="login.php" class="btn-use-main">
                                 FAZER LOGIN
                             </a>
                         <?php endif; ?>
-                        
-                        <!-- Rating display -->
-                        <div class="rating-display mb-3">
-                            <div class="d-flex align-items-center justify-content-center">
-                                <div class="stars me-2">
-                                    <?php
-                                    $avg_rating = $rating_summary['media'] ? round($rating_summary['media'], 1) : 0;
-                                    for ($i = 1; $i <= 5; $i++) {
-                                        if ($i <= $avg_rating) {
-                                            echo '<i class="fas fa-star text-warning"></i>';
-                                        } else {
-                                            echo '<i class="far fa-star text-muted"></i>';
-                                        }
-                                    }
-                                    ?>
-                                </div>
-                                <span class="text-muted small">
-                                    <?php echo $avg_rating; ?> (<?php echo $rating_summary['total']; ?> avaliações)
-                                </span>
-                            </div>
-                        </div>
                     </div>
-                </div>
-                
-                <!-- Company Info Card -->
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-light">
-                        <h6 class="card-title mb-0">
-                            <i class="fas fa-info-circle text-primary me-2"></i>
-                            Sobre a Empresa
-                        </h6>
-                    </div>
-                    <div class="card-body">
-                        <?php if ($company['descricao']): ?>
-                            <p class="mb-0"><?php echo nl2br(htmlspecialchars($company['descricao'])); ?></p>
+                    
+                    <!-- Company Logo -->
+                    <div class="company-mini-logo text-center mb-4">
+                        <?php if ($company['logo']): ?>
+                            <img src="../uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid #e9ecef;">
                         <?php else: ?>
-                            <p class="mb-0">Aproveite os benefícios exclusivos do <?php echo htmlspecialchars($company['nome']); ?>! Uma experiência única que oferece descontos especiais para membros do Clube de Vantagens da ANETI.</p>
+                            <div class="logo-placeholder-mini bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 100px; height: 100px; font-size: 2.5rem; font-weight: bold;">
+                                <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    
+                    <!-- Company Description -->
+                    <div class="company-description bg-light p-3 rounded">
+                        <?php if ($company['descricao']): ?>
+                            <p class="mb-0 text-justify"><?php echo nl2br(htmlspecialchars($company['descricao'])); ?></p>
+                        <?php else: ?>
+                            <p class="mb-0 text-justify">Inaugurado em 2015, o novo Parque da Mônica voltou com atrações para a alegria das famílias brasileiras e do mundo! Localizado no Shopping SP Market, Zona Sul de São Paulo, o novo Parque coberto da América Latina com 1 mil m² e superatrações que divertem pais e filhos, de forma lúdica educativa e interativa, dentro do universo mais encantador das histórias em quadrinhas criadas pelo Cartunist Maurício de Sousa. Com infraestrutura completa, o novo Parque da Mônica proporciona conveniência, conforto, alegria e segurança a todos os visitantes, tudo isso e muito mais do lado da Turma da Mônica!</p>
                         <?php endif; ?>
                     </div>
                 </div>
-                
-                <!-- Contact Info Card -->
-                <?php if ($company['website'] || $company['telefone'] || $company['email']): ?>
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-light">
-                        <h6 class="card-title mb-0">
-                            <i class="fas fa-address-book text-primary me-2"></i>
-                            Contato
-                        </h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="contact-list">
-                            <?php if ($company['website']): ?>
-                                <div class="contact-item d-flex align-items-center mb-2">
-                                    <i class="fas fa-globe text-muted me-3" style="width: 20px;"></i>
-                                    <a href="<?php echo htmlspecialchars($company['website']); ?>" target="_blank" class="text-decoration-none flex-grow-1">
-                                        Site da empresa
-                                        <i class="fas fa-external-link-alt ms-1 small"></i>
-                                    </a>
-                                </div>
-                            <?php endif; ?>
-                            
-                            <?php if ($company['telefone']): ?>
-                                <div class="contact-item d-flex align-items-center mb-2">
-                                    <i class="fas fa-phone text-muted me-3" style="width: 20px;"></i>
-                                    <a href="tel:<?php echo htmlspecialchars($company['telefone']); ?>" class="text-decoration-none flex-grow-1">
-                                        <?php echo htmlspecialchars($company['telefone']); ?>
-                                    </a>
-                                </div>
-                            <?php endif; ?>
-                            
-                            <?php if ($company['email']): ?>
-                                <div class="contact-item d-flex align-items-center mb-0">
-                                    <i class="fas fa-envelope text-muted me-3" style="width: 20px;"></i>
-                                    <a href="mailto:<?php echo htmlspecialchars($company['email']); ?>" class="text-decoration-none flex-grow-1">
-                                        <?php echo htmlspecialchars($company['email']); ?>
-                                    </a>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                </div>
-                <?php endif; ?>
             </div>
         </div>
     </div>
