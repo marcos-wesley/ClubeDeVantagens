@@ -187,14 +187,18 @@ $categories = getCategories($conn);
                         <!-- Avaliação com estrelas -->
                         <?php
                         // Buscar avaliação média da empresa
-                        $rating_query = $pdo->prepare("
-                            SELECT AVG(nota) as media, COUNT(*) as total 
-                            FROM avaliacoes 
-                            WHERE empresa_id = ? AND status = 'aprovada'
-                        ");
-                        $rating_query->execute([$company['id']]);
-                        $rating = $rating_query->fetch();
-                        $avg_rating = $rating['media'] ? round($rating['media'], 1) : 0;
+                        try {
+                            $rating_query = $conn->prepare("
+                                SELECT AVG(nota) as media, COUNT(*) as total 
+                                FROM avaliacoes 
+                                WHERE empresa_id = ? AND status = 'aprovada'
+                            ");
+                            $rating_query->execute([$company['id']]);
+                            $rating = $rating_query->fetch();
+                            $avg_rating = $rating['media'] ? round($rating['media'], 1) : 0;
+                        } catch (Exception $e) {
+                            $avg_rating = 0; // Fallback se não houver conexão com BD
+                        }
                         ?>
                         
                         <div class="recent-card-rating">
