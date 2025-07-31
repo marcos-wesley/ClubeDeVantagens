@@ -37,7 +37,7 @@ if ($_POST) {
     $website = sanitizeInput($_POST['website']);
     $regras_beneficio = sanitizeInput($_POST['regras_beneficio']);
     $desconto = sanitizeInput($_POST['desconto']);
-    $avaliacao = sanitizeInput($_POST['avaliacao']);
+    // $avaliacao field removed - using avaliacao_media from database
     $status = sanitizeInput($_POST['status']);
     $destaque = isset($_POST['destaque']) ? true : false;
     
@@ -95,13 +95,13 @@ if ($_POST) {
                     UPDATE empresas SET 
                     nome = ?, categoria = ?, descricao = ?, endereco = ?, 
                     cidade = ?, estado = ?, telefone = ?, email = ?, website = ?, logo = ?, imagem_detalhes = ?,
-                    regras = ?, desconto = ?, avaliacao_media = ?, status = ?, destaque = ?, updated_at = NOW()
+                    regras = ?, desconto = ?, status = ?, destaque = ?, updated_at = NOW()
                     WHERE id = ?
                 ");
                 $stmt->execute([
                     $nome, $categoria, $descricao, $endereco, 
                     $cidade, $estado, $telefone, $email, $website, $logo_filename, $imagem_detalhes_filename,
-                    $regras_beneficio, $desconto, $avaliacao, $status, $destaque, $empresa_id
+                    $regras_beneficio, $desconto, $status, $destaque, $empresa_id
                 ]);
                 $message = 'Empresa atualizada com sucesso!';
                 
@@ -116,14 +116,14 @@ if ($_POST) {
                 $stmt = $conn->prepare("
                     INSERT INTO empresas (
                         nome, categoria, descricao, endereco, cidade, estado,
-                        telefone, email, website, logo, imagem_detalhes, regras, desconto, avaliacao_media,
+                        telefone, email, website, logo, imagem_detalhes, regras, desconto,
                         status, destaque, created_at, updated_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
                 ");
                 $stmt->execute([
                     $nome, $categoria, $descricao, $endereco, $cidade, $estado,
                     $telefone, $email, $website, $logo_filename, $imagem_detalhes_filename, $regras_beneficio, 
-                    $desconto, $avaliacao, $status, $destaque
+                    $desconto, $status, $destaque
                 ]);
                 $message = 'Empresa cadastrada com sucesso!';
             }
