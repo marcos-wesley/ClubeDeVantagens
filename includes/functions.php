@@ -25,8 +25,9 @@ function generateUUID() {
  * Get featured companies
  */
 function getFeaturedCompanies($conn, $limit = 10) {
-    $stmt = $conn->prepare("SELECT * FROM empresas WHERE status = 'aprovada' AND destaque = true ORDER BY created_at DESC LIMIT ?");
-    $stmt->execute([$limit]);
+    $stmt = $conn->prepare("SELECT * FROM empresas WHERE status = 'aprovada' AND destaque = 1 ORDER BY created_at DESC LIMIT ?");
+    $stmt->bindValue(1, (int)$limit, PDO::PARAM_INT);
+    $stmt->execute();
     return $stmt->fetchAll();
 }
 
@@ -35,7 +36,8 @@ function getFeaturedCompanies($conn, $limit = 10) {
  */
 function getRecentCompanies($conn, $limit = 8) {
     $stmt = $conn->prepare("SELECT * FROM empresas WHERE status = 'aprovada' ORDER BY created_at DESC LIMIT ?");
-    $stmt->execute([$limit]);
+    $stmt->bindValue(1, (int)$limit, PDO::PARAM_INT);
+    $stmt->execute();
     return $stmt->fetchAll();
 }
 
