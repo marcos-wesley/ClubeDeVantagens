@@ -17,6 +17,39 @@ $user_coupons = getUserCoupons($conn, $_SESSION['user_id']);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 160px; /* Ajuste para compensar o header fixo */
+        }
+        .dashboard-header {
+            margin-bottom: 2rem;
+        }
+        .coupon-table-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .coupon-table-logo-placeholder {
+            width: 40px;
+            height: 40px;
+            background: #6c757d;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .btn-sm i {
+            font-size: 0.875rem;
+        }
+        @media (max-width: 768px) {
+            body {
+                padding-top: 140px;
+            }
+        }
+    </style>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>

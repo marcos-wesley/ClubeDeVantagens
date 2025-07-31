@@ -322,6 +322,7 @@ try {
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             margin-bottom: 2rem;
             text-align: center;
+            margin-top: 30px
         }
         .use-button {
             background: linear-gradient(135deg, #012d6a 0%, #25a244 100%);
