@@ -154,8 +154,20 @@ $total_empresas = count($empresas);
                                 
                                 <!-- Card Content -->
                                 <div class="card-content" style="padding: 25px 20px 20px;">
+                                    <!-- Logo no topo da área branca -->
+                                    <?php if ($empresa['logo']): ?>
+                                        <div class="logo-top" style="width: 60px; height: 60px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: 3px solid white; margin: 0 auto 15px; position: relative; top: -40px;">
+                                            <img src="../uploads/<?php echo htmlspecialchars($empresa['logo']); ?>" 
+                                                 alt="Logo <?php echo htmlspecialchars($empresa['nome']); ?>" 
+                                                 style="width: 45px; height: 45px; object-fit: contain; border-radius: 50%;">
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="logo-top" style="width: 60px; height: 60px; background: #012d6a; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: 3px solid white; margin: 0 auto 15px; position: relative; top: -40px; font-size: 1.2rem;">
+                                            <i class="fas fa-building"></i>
+                                        </div>
+                                    <?php endif; ?>
                                     <!-- Company Name -->
-                                    <h5 class="company-name" style="color: #012d6a; font-weight: 700; margin-bottom: 8px; font-size: 1.1rem; line-height: 1.3;">
+                                    <h5 class="company-name" style="color: #012d6a; font-weight: 700; margin-bottom: 8px; font-size: 1.1rem; line-height: 1.3; margin-top: -25px;">
                                         <?php echo htmlspecialchars($empresa['nome']); ?>
                                     </h5>
                                     

@@ -249,7 +249,15 @@ $categories = getCategories($conn);
                             </div>
                         <?php endif; ?>
                         
-                        <!-- Logo circular sobreposto -->
+                        <!-- Botão de favoritar -->
+                        <button class="favorite-btn" onclick="toggleFavorite(<?php echo $company['id']; ?>, event)">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Conteúdo do card -->
+                    <div class="recent-card-content">
+                        <!-- Logo circular no topo da área branca -->
                         <div class="recent-card-logo">
                             <?php if ($company['logo']): ?>
                                 <img src="uploads/<?php echo htmlspecialchars($company['logo']); ?>" alt="<?php echo htmlspecialchars($company['nome']); ?>">
@@ -259,15 +267,6 @@ $categories = getCategories($conn);
                                 </div>
                             <?php endif; ?>
                         </div>
-                        
-                        <!-- Botão de favoritar -->
-                        <button class="favorite-btn" onclick="toggleFavorite(<?php echo $company['id']; ?>, event)">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    
-                    <!-- Conteúdo do card -->
-                    <div class="recent-card-content">
                         <h3 class="recent-card-title"><?php echo htmlspecialchars($company['nome']); ?></h3>
                         
                         <div class="recent-card-category">

@@ -785,12 +785,8 @@
     font-size: 48px;
 }
 
-/* Circular Logo Overlay */
+/* Circular Logo in Content Area */
 .recent-card-logo {
-    position: absolute;
-    bottom: -30px;
-    left: 50%;
-    transform: translateX(-50%);
     width: 80px;
     height: 80px;
     background: white;
@@ -800,6 +796,9 @@
     justify-content: center;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     border: 4px solid white;
+    margin: 0 auto 20px;
+    position: relative;
+    top: -40px;
     z-index: 2;
 }
 
@@ -852,7 +851,7 @@
 
 /* Card Content */
 .recent-card-content {
-    padding: 50px 25px 25px;
+    padding: 25px 25px 25px;
     text-align: center;
 }
 
