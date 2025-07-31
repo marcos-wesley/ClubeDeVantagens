@@ -12,18 +12,7 @@ function loginUser($conn, $email, $password) {
     $stmt->execute([$email]);
     $user = $stmt->fetch();
     
-    // Debug - log tentativa de login
-    error_log("Login attempt: email=$email, password_hash=" . md5($password));
-    if ($user) {
-        error_log("User found: " . json_encode($user));
-        error_log("Password field exists: " . (isset($user['password']) ? 'YES' : 'NO'));
-        if (isset($user['password'])) {
-            error_log("Stored password hash: " . $user['password']);
-            error_log("Password match: " . (md5($password) === $user['password'] ? 'YES' : 'NO'));
-        }
-    } else {
-        error_log("User not found for email: $email");
-    }
+
     
     if ($user && isset($user['password']) && md5($password) === $user['password']) {
         $_SESSION['user_id'] = $user['id'];
@@ -31,11 +20,11 @@ function loginUser($conn, $email, $password) {
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['user_plano'] = $user['plano'];
         $_SESSION['login_time'] = time();
-        error_log("Login successful for user: " . $user['nome']);
+
         return true;
     }
     
-    error_log("Login failed - password mismatch or user not found");
+
     return false;
 }
 
