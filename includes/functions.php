@@ -1,5 +1,12 @@
 <?php
-require_once 'config/config.php';
+// Determine the correct path to config based on current directory
+$config_path = '';
+if (strpos($_SERVER['SCRIPT_NAME'], '/public/') !== false || 
+    strpos($_SERVER['SCRIPT_NAME'], '/admin/') !== false || 
+    strpos($_SERVER['SCRIPT_NAME'], '/empresa/') !== false) {
+    $config_path = '../';
+}
+require_once $config_path . 'config/config.php';
 
 /**
  * Generate UUID for coupons
