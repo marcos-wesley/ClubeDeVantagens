@@ -295,21 +295,23 @@ foreach ($active_users as $index => $user) {
                             <button class="period-tab">Últimos 7 dias</button>
                             <button class="period-tab">Últimas 24 horas</button>
                         </div>
-                        <?php if (empty($most_visited)): ?>
-                            <p class="text-muted text-center">Nenhuma empresa cadastrada ainda.</p>
-                        <?php else: ?>
-                            <?php foreach ($most_visited as $company): ?>
-                                <div class="metric-item">
-                                    <div class="metric-avatar">
-                                        <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
+                        <div id="most-visited-content">
+                            <?php if (empty($most_visited)): ?>
+                                <p class="text-muted text-center">Nenhuma empresa cadastrada ainda.</p>
+                            <?php else: ?>
+                                <?php foreach ($most_visited as $company): ?>
+                                    <div class="metric-item">
+                                        <div class="metric-avatar">
+                                            <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
+                                        </div>
+                                        <div class="metric-info">
+                                            <p class="metric-name"><?php echo htmlspecialchars($company['nome']); ?></p>
+                                            <p class="metric-detail"><?php echo htmlspecialchars($company['categoria']); ?> • (<?php echo $company['visits']; ?> visitas)</p>
+                                        </div>
                                     </div>
-                                    <div class="metric-info">
-                                        <p class="metric-name"><?php echo htmlspecialchars($company['nome']); ?></p>
-                                        <p class="metric-detail"><?php echo htmlspecialchars($company['categoria']); ?> • (<?php echo $company['visits']; ?> visitas)</p>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -329,28 +331,30 @@ foreach ($active_users as $index => $user) {
                             <button class="period-tab">Últimos 7 dias</button>
                             <button class="period-tab">Últimas 24 horas</button>
                         </div>
-                        <?php if (empty($most_visited)): ?>
-                            <p class="text-muted text-center">Nenhum cupom gerado ainda.</p>
-                        <?php else: ?>
-                            <?php 
-                            $coupon_counts = [84, 72, 56, 52, 51];
-                            $actions = ['Cupom acionado', 'Desconto acionado', 'Cupom acionado', 'Desconto acionado', 'Cupom acionado'];
-                            foreach ($most_visited as $index => $company): 
-                            ?>
-                                <div class="metric-item">
-                                    <div class="metric-avatar">
-                                        <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
+                        <div id="most-used-content">
+                            <?php if (empty($most_visited)): ?>
+                                <p class="text-muted text-center">Nenhum cupom gerado ainda.</p>
+                            <?php else: ?>
+                                <?php 
+                                $coupon_counts = [84, 72, 56, 52, 51];
+                                $actions = ['Cupom acionado', 'Desconto acionado', 'Cupom acionado', 'Desconto acionado', 'Cupom acionado'];
+                                foreach ($most_visited as $index => $company): 
+                                ?>
+                                    <div class="metric-item">
+                                        <div class="metric-avatar">
+                                            <?php echo strtoupper(substr($company['nome'], 0, 2)); ?>
+                                        </div>
+                                        <div class="metric-info">
+                                            <p class="metric-name"><?php echo htmlspecialchars($company['nome']); ?></p>
+                                            <p class="metric-detail"><?php echo $actions[$index] ?? 'Cupom acionado'; ?> <?php echo $coupon_counts[$index] ?? rand(30, 90); ?> vezes</p>
+                                        </div>
+                                        <div class="text-muted">
+                                            <i class="fas fa-file-invoice"></i>
+                                        </div>
                                     </div>
-                                    <div class="metric-info">
-                                        <p class="metric-name"><?php echo htmlspecialchars($company['nome']); ?></p>
-                                        <p class="metric-detail"><?php echo $actions[$index] ?? 'Cupom acionado'; ?> <?php echo $coupon_counts[$index] ?? rand(30, 90); ?> vezes</p>
-                                    </div>
-                                    <div class="text-muted">
-                                        <i class="fas fa-file-invoice"></i>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -373,18 +377,20 @@ foreach ($active_users as $index => $user) {
                             <button class="period-tab">Últimos 7 dias</button>
                             <button class="period-tab">Últimas 24 horas</button>
                         </div>
-                        <ul class="ranking-list">
-                            <?php foreach ($active_users as $index => $usuario): ?>
-                                <li class="ranking-item">
-                                    <div class="ranking-number"><?php echo $index + 1; ?></div>
-                                    <img src="<?php echo $usuario['avatar']; ?>" alt="Avatar" class="user-avatar-large">
-                                    <div class="metric-info">
-                                        <p class="metric-name"><?php echo htmlspecialchars($usuario['nome']); ?></p>
-                                        <p class="metric-detail">(<?php echo $usuario['sessions']; ?> sessões)</p>
-                                    </div>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
+                        <div id="most-present-content">
+                            <ul class="ranking-list">
+                                <?php foreach ($active_users as $index => $usuario): ?>
+                                    <li class="ranking-item">
+                                        <div class="ranking-number"><?php echo $index + 1; ?></div>
+                                        <img src="<?php echo $usuario['avatar']; ?>" alt="Avatar" class="user-avatar-large">
+                                        <div class="metric-info">
+                                            <p class="metric-name"><?php echo htmlspecialchars($usuario['nome']); ?></p>
+                                            <p class="metric-detail">(<?php echo $usuario['sessions']; ?> sessões)</p>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -404,18 +410,20 @@ foreach ($active_users as $index => $user) {
                             <button class="period-tab">Últimos 7 dias</button>
                             <button class="period-tab">Últimas 24 horas</button>
                         </div>
-                        <ul class="ranking-list">
-                            <?php foreach ($active_users as $index => $usuario): ?>
-                                <li class="ranking-item">
-                                    <div class="ranking-number"><?php echo $index + 1; ?></div>
-                                    <img src="<?php echo $usuario['avatar']; ?>" alt="Avatar" class="user-avatar-large">
-                                    <div class="metric-info">
-                                        <p class="metric-name"><?php echo htmlspecialchars($usuario['nome']); ?></p>
-                                        <p class="metric-detail">(<?php echo $usuario['resgates']; ?> resgates)</p>
-                                    </div>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
+                        <div id="most-active-content">
+                            <ul class="ranking-list">
+                                <?php foreach ($active_users as $index => $usuario): ?>
+                                    <li class="ranking-item">
+                                        <div class="ranking-number"><?php echo $index + 1; ?></div>
+                                        <img src="<?php echo $usuario['avatar']; ?>" alt="Avatar" class="user-avatar-large">
+                                        <div class="metric-info">
+                                            <p class="metric-name"><?php echo htmlspecialchars($usuario['nome']); ?></p>
+                                            <p class="metric-detail">(<?php echo $usuario['resgates']; ?> resgates)</p>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -427,7 +435,7 @@ foreach ($active_users as $index => $user) {
     <script>
         // Gráfico de Visitas
         const ctx = document.getElementById('visitsChart').getContext('2d');
-        const visitsChart = new Chart(ctx, {
+        let visitsChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: ['Jan 15', 'Jan 16', 'Jan 17', 'Jan 18', 'Jan 19', 'Jan 20', 'Jan 21'],
@@ -475,19 +483,97 @@ foreach ($active_users as $index => $user) {
             }
         });
 
-        // Funcionalidade dos filtros de período
-        document.querySelectorAll('.period-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                // Remove active de todos os tabs do mesmo container
-                const container = this.closest('.widget-body');
-                container.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
-                
-                // Adiciona active ao tab clicado
-                this.classList.add('active');
-            });
-        });
+        // Função para atualizar o gráfico de visitas
+        function updateVisitsChart(period) {
+            fetch(`ajax/dashboard_data.php?type=visits&period=${period}`)
+                .then(response => response.json())
+                .then(data => {
+                    visitsChart.data.labels = data.labels;
+                    visitsChart.data.datasets[0].data = data.visits;
+                    visitsChart.data.datasets[1].data = data.unique_visitors;
+                    visitsChart.update();
+                    
+                    // Atualizar estatísticas de visitas
+                    document.querySelector('.stat-number').textContent = data.totals.visits_24h.toLocaleString();
+                    document.querySelectorAll('.stat-number')[1].textContent = data.totals.visits_7d.toLocaleString();
+                    document.querySelectorAll('.stat-number')[2].textContent = data.totals.visits_30d.toLocaleString();
+                    
+                    // Atualizar visitantes únicos
+                    const uniqueStats = document.querySelectorAll('.widget-card')[2].querySelectorAll('.stat-number');
+                    uniqueStats[0].textContent = data.totals.unique_24h.toLocaleString();
+                    uniqueStats[1].textContent = data.totals.unique_7d.toLocaleString();
+                    uniqueStats[2].textContent = data.totals.unique_30d.toLocaleString();
+                })
+                .catch(error => console.error('Erro ao carregar dados:', error));
+        }
 
-        // Funcionalidade dos filtros do gráfico
+        // Função para atualizar rankings/listas
+        function updateRanking(type, period, containerId) {
+            fetch(`ajax/dashboard_data.php?type=${type}&period=${period}`)
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById(containerId);
+                    if (!container) return;
+                    
+                    let html = '';
+                    
+                    if (type === 'most_visited') {
+                        data.forEach(item => {
+                            html += `
+                                <div class="metric-item">
+                                    <div class="metric-avatar">
+                                        ${item.nome.substring(0, 2).toUpperCase()}
+                                    </div>
+                                    <div class="metric-info">
+                                        <p class="metric-name">${item.nome}</p>
+                                        <p class="metric-detail">${item.categoria} • (${item.visits} visitas)</p>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    } else if (type === 'most_used') {
+                        data.forEach(item => {
+                            html += `
+                                <div class="metric-item">
+                                    <div class="metric-avatar">
+                                        ${item.nome.substring(0, 2).toUpperCase()}
+                                    </div>
+                                    <div class="metric-info">
+                                        <p class="metric-name">${item.nome}</p>
+                                        <p class="metric-detail">${item.action} ${item.usage_count} vezes</p>
+                                    </div>
+                                    <div class="text-muted">
+                                        <i class="fas fa-file-invoice"></i>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    } else if (type === 'most_present' || type === 'most_active') {
+                        const metricType = type === 'most_present' ? 'sessões' : 'resgates';
+                        const metricValue = type === 'most_present' ? 'sessions' : 'resgates';
+                        
+                        html = '<ul class="ranking-list">';
+                        data.forEach((item, index) => {
+                            html += `
+                                <li class="ranking-item">
+                                    <div class="ranking-number">${index + 1}</div>
+                                    <img src="${item.avatar}" alt="Avatar" class="user-avatar-large">
+                                    <div class="metric-info">
+                                        <p class="metric-name">${item.nome}</p>
+                                        <p class="metric-detail">(${item[metricValue]} ${metricType})</p>
+                                    </div>
+                                </li>
+                            `;
+                        });
+                        html += '</ul>';
+                    }
+                    
+                    container.innerHTML = html;
+                })
+                .catch(error => console.error('Erro ao carregar dados:', error));
+        }
+
+        // Funcionalidade dos filtros do gráfico de visitas
         document.querySelectorAll('.chart-filter').forEach(filter => {
             filter.addEventListener('click', function() {
                 // Remove active de todos os filtros
@@ -496,8 +582,58 @@ foreach ($active_users as $index => $user) {
                 // Adiciona active ao filtro clicado
                 this.classList.add('active');
                 
-                // Aqui você pode adicionar lógica para atualizar o gráfico
-                console.log('Filtro de gráfico selecionado:', this.textContent);
+                // Mapear texto para período
+                const periodMap = {
+                    'Últimas 24 horas': '24h',
+                    'Últimos 7 dias': '7d', 
+                    'Último mês': '30d',
+                    'Últimos 6 meses': '6m',
+                    'Últimos 12 meses': '12m'
+                };
+                
+                const period = periodMap[this.textContent] || '30d';
+                updateVisitsChart(period);
+            });
+        });
+
+        // Funcionalidade dos filtros de período para outros widgets
+        document.querySelectorAll('.period-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active de todos os tabs do mesmo container
+                const container = this.closest('.widget-body');
+                container.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
+                
+                // Adiciona active ao tab clicado
+                this.classList.add('active');
+                
+                // Mapear texto para período
+                const periodMap = {
+                    'Últimas 24 horas': '24h',
+                    'Últimos 7 dias': '7d',
+                    'Último mês': '30d',
+                    'Últimos 6 meses': '6m',
+                    'Últimos 12 meses': '12m'
+                };
+                
+                const period = periodMap[this.textContent] || '30d';
+                
+                // Identificar tipo de widget baseado no título
+                const widgetTitle = container.closest('.widget-card').querySelector('.widget-title').textContent;
+                const widgetContent = container.querySelector('.ranking-list, .metric-item')?.parentElement || container.lastElementChild;
+                
+                if (widgetTitle.includes('mais visitados')) {
+                    updateRanking('most_visited', period, widgetContent.id || 'most-visited-content');
+                    if (!widgetContent.id) widgetContent.id = 'most-visited-content';
+                } else if (widgetTitle.includes('mais utilizados')) {
+                    updateRanking('most_used', period, widgetContent.id || 'most-used-content');
+                    if (!widgetContent.id) widgetContent.id = 'most-used-content';
+                } else if (widgetTitle.includes('mais presentes')) {
+                    updateRanking('most_present', period, widgetContent.id || 'most-present-content');
+                    if (!widgetContent.id) widgetContent.id = 'most-present-content';
+                } else if (widgetTitle.includes('mais ativos')) {
+                    updateRanking('most_active', period, widgetContent.id || 'most-active-content');
+                    if (!widgetContent.id) widgetContent.id = 'most-active-content';
+                }
             });
         });
     </script>
