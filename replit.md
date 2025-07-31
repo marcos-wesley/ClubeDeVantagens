@@ -6,14 +6,28 @@ This is a comprehensive web system for ANETI's Benefits Club (Clube de Vantagens
 
 ## Recent Changes (July 31, 2025)
 
+### Company Details Page Redesign & Review System 
+- **Complete Redesign**: Página empresa-detalhes.php totalmente redesenhada com layout moderno
+- **Hero Section**: Gradiente ANETI (azul → verde) com logo destacado e informações organizadas
+- **Tab System**: Sistema de tabs profissional (Informações/Avaliações) com navegação suave
+- **Review System**: Sistema completo de avaliações com tabela 'avaliacoes' no MySQL
+- **Sidebar Layout**: Corrigido posicionamento da sidebar com CSS flexbox adequado
+- **Responsive Design**: Layout totalmente responsivo com ANETI branding consistente
+
 ### Database Migration: PostgreSQL → MySQL
 - **Complete Migration**: Sistema migrado de PostgreSQL para MySQL 8.0
 - **MySQL Server**: Configurado para rodar na porta 3306 com socket local
 - **Schema Updated**: Schema MySQL aplicado com todas as tabelas e dados
 - **Connection Fixed**: Conexão PHP atualizada para usar MySQL com socket
-- **New Tables**: Adicionada tabela slides_banner e membros
+- **New Tables**: Adicionadas tabelas slides_banner, membros e avaliacoes
 - **Enhanced Fields**: Empresas agora têm campos desconto, website, endereco, imagem_detalhes
 - **SQL Fixes**: Corrigidas funções PHP para compatibilidade com MySQL (LIMIT com prepared statements)
+
+### Server Configuration Support
+- **Upload Issues**: Criados arquivos de diagnóstico para problemas de upload em servidor local
+- **Debug Tools**: test_upload.php para testar uploads e verificar configurações
+- **Documentation**: CONFIGURACAO_SERVIDOR_LOCAL.md com soluções para problemas comuns
+- **Common Issues**: Permissões de pasta, paths relativos, configuração PHP
 
 ### WebP Image Support Added
 - **Image Upload Support**: Todos os campos de upload de imagem agora aceitam WebP
