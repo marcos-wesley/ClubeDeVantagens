@@ -9,14 +9,14 @@ define('ENABLE_API_DEBUG', false); // Set to false in production
 /**
  * Authenticate user via ANETI WordPress API
  * 
- * @param string $email User email
+ * @param string $userInput User email or username
  * @param string $password User password
  * @return array|false Returns user data on success, false on failure
  */
-function authenticateViaAPI($email, $password) {
+function authenticateViaAPI($userInput, $password) {
     // Prepare the data for API request
     $postData = json_encode([
-        'email' => $email,
+        'email' => $userInput,
         'senha' => $password
     ]);
     
@@ -145,12 +145,12 @@ function authenticateViaAPI($email, $password) {
 /**
  * Login user and create session
  * 
- * @param string $email User email
+ * @param string $userInput User email or username
  * @param string $password User password
  * @return array Returns result with success status and message
  */
-function loginUserViaAPI($email, $password) {
-    $result = authenticateViaAPI($email, $password);
+function loginUserViaAPI($userInput, $password) {
+    $result = authenticateViaAPI($userInput, $password);
     
     if ($result === false) {
         return ['success' => false, 'message' => 'Erro de conexão com o servidor. Tente novamente.'];

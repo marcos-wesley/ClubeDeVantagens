@@ -14,18 +14,16 @@ $error = '';
 $success = '';
 
 if ($_POST) {
-    $email = sanitizeInput($_POST['email']);
+    $userInput = sanitizeInput($_POST['user_input']);
     $password = sanitizeInput($_POST['password']);
     
-    if (empty($email)) {
-        $error = 'Por favor, informe seu e-mail.';
+    if (empty($userInput)) {
+        $error = 'Por favor, informe seu usuário ou e-mail.';
     } elseif (empty($password)) {
         $error = 'Por favor, informe sua senha.';
-    } elseif (!validateEmail($email)) {
-        $error = 'E-mail inválido.';
     } else {
-        // Use WordPress API for authentication
-        $loginResult = loginUserViaAPI($email, $password);
+        // Use WordPress API for authentication (accepts both username and email)
+        $loginResult = loginUserViaAPI($userInput, $password);
         
         if ($loginResult['success']) {
             redirect('dashboard.php');
@@ -133,9 +131,9 @@ if ($_POST) {
 
                         <form method="POST">
                             <div class="mb-3">
-                                <label for="email" class="form-label">E-mail</label>
-                                <input type="email" class="form-control" id="email" name="email" required value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
-                                <div class="form-text">Use seu e-mail cadastrado na ANETI</div>
+                                <label for="user_input" class="form-label">Usuário ou E-mail</label>
+                                <input type="text" class="form-control" id="user_input" name="user_input" required value="<?php echo isset($_POST['user_input']) ? htmlspecialchars($_POST['user_input']) : ''; ?>">
+                                <div class="form-text">Use seu usuário ou e-mail cadastrado na ANETI</div>
                             </div>
                             
                             <div class="mb-3">
