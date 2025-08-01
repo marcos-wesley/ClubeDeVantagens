@@ -85,8 +85,8 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
         </div>
     </div>
     
-    <!-- Linha 2: Menu de Categorias Desktop -->
-    <div class="categories-bar d-none d-md-block">
+    <!-- Linha 2: Menu de Categorias (Desktop Only) -->
+    <div class="categories-bar">
         <div class="container-fluid">
             <div class="categories-menu">
                 <a href="<?= $base_path ?>public/categorias.php?cat=destaque" class="category-item">
@@ -133,8 +133,8 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
         </div>
     </div>
     
-    <!-- Menu Mobile Expansível -->
-    <div class="mobile-menu d-md-none" id="mobile-menu" style="display: none;">
+    <!-- Menu Mobile Hambúrguer -->
+    <div class="mobile-menu" id="mobile-menu" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: linear-gradient(to right, #012d6a, #25a244); z-index: 999; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
         <!-- Campo de Busca Mobile -->
         <div class="mobile-search" style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             <form method="GET" action="<?= $base_path ?>public/categorias.php">
@@ -250,8 +250,13 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
 /* Header Mobile Responsive Styles */
 @media (max-width: 767.98px) {
     .main-header {
-        height: auto;
+        height: 60px !important;
         min-height: 60px;
+    }
+    
+    .main-header-line {
+        padding: 8px 0 !important;
+        border-bottom: none !important;
     }
     
     .header-title {
@@ -259,9 +264,8 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
     }
     
     .mobile-menu {
-        background: rgba(0,0,0,0.1);
-        border-top: 1px solid rgba(255,255,255,0.1);
         animation: slideDown 0.3s ease-out;
+        border-top: 1px solid rgba(255,255,255,0.1);
     }
     
     .mobile-category-item {
@@ -277,6 +281,7 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
         transition: all 0.3s ease;
         text-align: center;
         min-height: 80px;
+        margin-bottom: 10px;
     }
     
     .mobile-category-item:hover {
@@ -296,21 +301,18 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
         line-height: 1.2;
     }
     
-    /* Adjust body padding for mobile */
-    body {
-        padding-top: 60px !important;
-    }
-    
-    .main-header.mobile-menu-open {
-        height: auto;
-    }
-    
     .mobile-menu-toggle {
         transition: transform 0.3s ease;
+        cursor: pointer;
     }
     
     .mobile-menu-toggle.active {
         transform: rotate(90deg);
+    }
+    
+    .mobile-menu-toggle:hover {
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
     }
 }
 
