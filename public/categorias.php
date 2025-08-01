@@ -79,7 +79,7 @@ $total_empresas = count($empresas);
     <?php include '../includes/header.php'; ?>
 
     <!-- Page Header -->
-    <section class="page-header" style="background: linear-gradient(135deg, #012d6a 0%, #25a244 100%); padding: 30px 0; color: white; margin-top: 140px;">
+    <section class="page-header" style="background: linear-gradient(135deg, #012d6a 0%, #25a244 100%); padding: 30px 0; color: white; position: fixed; top: 140px; width: 100%; z-index: 999;">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-8">
@@ -114,7 +114,7 @@ $total_empresas = count($empresas);
     </section>
 
     <!-- Companies Grid - Same as Homepage Layout -->
-    <section class="companies-grid" style="padding: 40px 0 60px 0; background: #f8f9fa;">
+    <section class="companies-grid" style="padding: 40px 0 60px 0; background: #f8f9fa; margin-top: 220px;">
         <div class="container">
             <?php if (!empty($empresas)): ?>
                 <div class="row g-4">
