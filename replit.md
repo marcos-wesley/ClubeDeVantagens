@@ -6,6 +6,15 @@ This is a comprehensive web system for ANETI's Benefits Club (Clube de Vantagens
 
 ## Recent Changes (August 1, 2025)
 
+### Project Cleanup and Backup - COMPLETED
+- **Database Backup**: Created clean database export `aneti_clube_limpo_20250801_124428.sql` (28KB)
+- **File Cleanup**: Removed 98+ temporary images and unnecessary files from `attached_assets/`
+- **Space Optimization**: Reduced `attached_assets/` from 22MB to 116KB (95% reduction)
+- **Documentation**: Added `README_BACKUP_LIMPO.md` with restoration instructions
+- **Star Ratings Fix**: Corrected homepage star ratings display using proper database fields
+- **Functions Updated**: `getFeaturedCompanies()` and `getRecentCompanies()` now include rating calculations
+- **Database Integration**: Fixed field name mismatch (rating vs nota) in evaluation system
+
 ### Administrative Panel Standardization - COMPLETED
 - **Header Standardization**: All admin pages now use the same responsive header with ANETI brand identity
 - **Visual Identity**: Complete application of blue-to-green gradient (ANETI colors) across all admin pages
