@@ -22,11 +22,11 @@ $params = [];
 $where_conditions = [];
 
 if ($date_filter == 'hoje') {
-    $where_conditions[] = "DATE(c.created_at) = CURRENT_DATE";
+    $where_conditions[] = "DATE(c.created_at) = CURDATE()";
 } elseif ($date_filter == 'semana') {
-    $where_conditions[] = "c.created_at >= CURRENT_DATE - INTERVAL '7 days'";
+    $where_conditions[] = "c.created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
 } elseif ($date_filter == 'mes') {
-    $where_conditions[] = "c.created_at >= CURRENT_DATE - INTERVAL '30 days'";
+    $where_conditions[] = "c.created_at >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)";
 }
 
 if ($empresa_filter) {
@@ -50,37 +50,14 @@ $companies = $conn->query("SELECT id, nome FROM empresas WHERE status = 'aprovad
 // Statistics
 $stats = [
     'total' => count($coupons),
-    'hoje' => $conn->query("SELECT COUNT(*) as total FROM cupons WHERE DATE(created_at) = CURRENT_DATE")->fetch()['total'],
-    'semana' => $conn->query("SELECT COUNT(*) as total FROM cupons WHERE created_at >= CURRENT_DATE - INTERVAL '7 days'")->fetch()['total'],
-    'mes' => $conn->query("SELECT COUNT(*) as total FROM cupons WHERE created_at >= CURRENT_DATE - INTERVAL '30 days'")->fetch()['total']
+    'hoje' => $conn->query("SELECT COUNT(*) as total FROM cupons WHERE DATE(created_at) = CURDATE()")->fetch()['total'],
+    'semana' => $conn->query("SELECT COUNT(*) as total FROM cupons WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)")->fetch()['total'],
+    'mes' => $conn->query("SELECT COUNT(*) as total FROM cupons WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)")->fetch()['total']
 ];
+
+$page_title = "Gerenciar Cupons";
+include 'includes/admin-header.php';
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Cupons - Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/css/style.css" rel="stylesheet">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">
-                <i class="fas fa-cog"></i> Admin ANETI
-            </a>
-            
-            <div class="navbar-nav">
-                <a class="nav-link" href="index.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                <a class="nav-link" href="empresas.php"><i class="fas fa-store"></i> Empresas</a>
-                <a class="nav-link active" href="cupons.php"><i class="fas fa-ticket-alt"></i> Cupons</a>
-                <a class="nav-link" href="categorias.php"><i class="fas fa-tags"></i> Categorias</a>
-                <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> Sair</a>
-            </div>
-        </div>
-    </nav>
 
     <div class="container-fluid mt-4">
         <div class="row">

@@ -55,34 +55,10 @@ try {
         'cupons_mes' => 0
     ];
 }
+
+$page_title = "Gerenciar Membros";
+include 'includes/admin-header.php';
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Membros - Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/css/style.css" rel="stylesheet">
-</head>
-<body class="admin-body">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">
-                <i class="fas fa-cog"></i> Admin ANETI
-            </a>
-            
-            <div class="navbar-nav">
-                <a class="nav-link" href="index.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                <a class="nav-link" href="empresas.php"><i class="fas fa-store"></i> Empresas</a>
-                <a class="nav-link" href="cupons.php"><i class="fas fa-ticket-alt"></i> Cupons</a>
-                <a class="nav-link" href="categorias.php"><i class="fas fa-tags"></i> Categorias</a>
-                <a class="nav-link active" href="membros.php"><i class="fas fa-users"></i> Membros</a>
-                <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> Sair</a>
-            </div>
-        </div>
-    </nav>
 
     <div class="container-fluid mt-4">
         <div class="row">

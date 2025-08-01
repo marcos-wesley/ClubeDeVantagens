@@ -89,70 +89,37 @@ if ($_POST) {
 
 // Buscar todos os slides
 $slides = getAllBannerSlides($conn);
-?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slides do Banner - Admin ANETI</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --aneti-primary: #012d6a;
-            --aneti-dark: #2c3e50;
-        }
-        
-        .admin-header {
-            background: var(--aneti-primary);
-            color: white;
-            padding: 1rem 0;
-        }
-        
-        .slide-preview {
-            width: 150px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        
-        .status-badge {
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .status-ativo {
-            background: #d4edda;
-            color: #155724;
-        }
-        
-        .status-inativo {
-            background: #f8d7da;
-            color: #721c24;
-        }
-    </style>
-</head>
-<body>
-    <!-- Header Admin -->
-    <header class="admin-header">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h1 class="mb-0"><i class="fas fa-images me-2"></i>Slides do Banner</h1>
-                </div>
-                <div class="col-md-6 text-end">
-                    <a href="index.php" class="btn btn-outline-light">
-                        <i class="fas fa-arrow-left me-2"></i>Voltar ao Dashboard
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
 
-    <div class="container mt-4">
+$page_title = "Slides do Banner";
+include 'includes/admin-header.php';
+?>
+<style>
+    .slide-preview {
+        width: 150px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    
+    .status-ativo {
+        background: #d4edda;
+        color: #155724;
+    }
+    
+    .status-inativo {
+        background: #f8d7da;
+        color: #721c24;
+    }
+</style>
+
+    <div class="container-fluid mt-4">
         <!-- Mensagens -->
         <?php if (isset($success)): ?>
             <div class="alert alert-success alert-dismissible fade show">

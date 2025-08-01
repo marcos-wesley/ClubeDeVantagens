@@ -44,47 +44,16 @@ $sql .= " ORDER BY created_at DESC";
 $stmt = $conn->prepare($sql);
 $stmt->execute($params);
 $companies = $stmt->fetchAll();
+
+// Buscar estatísticas para o header
+$stats = [];
+$stats['empresas_pendentes'] = $conn->query("SELECT COUNT(*) as total FROM empresas WHERE status = 'pendente'")->fetch()['total'];
+
+$page_title = "Gerenciar Empresas";
+include 'includes/admin-header.php';
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Empresas - Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/css/style.css" rel="stylesheet">
-</head>
-<body class="admin-body">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">
-                <i class="fas fa-cog"></i> Admin ANETI
-            </a>
-            
-            <div class="navbar-nav">
-                <a class="nav-link" href="index.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                <a class="nav-link active" href="empresas.php"><i class="fas fa-store"></i> Empresas</a>
-                <a class="nav-link" href="cupons.php"><i class="fas fa-ticket-alt"></i> Cupons</a>
-                <a class="nav-link" href="categorias.php"><i class="fas fa-tags"></i> Categorias</a>
-                <a class="nav-link" href="membros.php"><i class="fas fa-users"></i> Membros</a>
-                <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> Sair</a>
-            </div>
-        </div>
-    </nav>
 
-    <div class="admin-header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <h1 class="admin-greeting">Gerenciar Empresas</h1>
-                    <p class="admin-subtitle">Controle de empresas parceiras e benefícios</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid">
+    <div class="container-fluid mt-4">
         <div class="row">
             <div class="col-12">
                 <div class="search-filters">

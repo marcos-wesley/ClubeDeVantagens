@@ -102,100 +102,66 @@ try {
     $usuarios = [];
     $error = "Erro ao buscar usuários: " . $e->getMessage();
 }
+$page_title = "Usuários Administrativos";
+include 'includes/admin-header.php';
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usuários Administrativos - Admin ANETI</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --aneti-primary: #012d6a;
-            --aneti-dark: #2c3e50;
-        }
-        
-        .admin-header {
-            background: var(--aneti-primary);
-            color: white;
-            padding: 1rem 0;
-        }
-        
-        .status-badge {
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .status-ativo {
-            background: #d4edda;
-            color: #155724;
-        }
-        
-        .status-inativo {
-            background: #f8d7da;
-            color: #721c24;
-        }
-        
-        .nivel-badge {
-            padding: 4px 8px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-        
-        .nivel-super {
-            background: #e1ecf4;
-            color: #0056b3;
-        }
-        
-        .nivel-admin {
-            background: #d1ecf1;
-            color: #0c5460;
-        }
-        
-        .nivel-editor {
-            background: #d4edda;
-            color: #155724;
-        }
-        
-        .card-header {
-            background: var(--aneti-primary);
-            color: white;
-        }
-        
-        .btn-primary {
-            background: var(--aneti-primary);
-            border-color: var(--aneti-primary);
-        }
-        
-        .btn-primary:hover {
-            background: #001f4d;
-            border-color: #001f4d;
-        }
-    </style>
-</head>
-<body>
-    <!-- Header Admin -->
-    <header class="admin-header">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h1 class="mb-0"><i class="fas fa-users-cog me-2"></i>Usuários Administrativos</h1>
-                </div>
-                <div class="col-md-6 text-end">
-                    <a href="index.php" class="btn btn-outline-light">
-                        <i class="fas fa-arrow-left me-2"></i>Voltar ao Dashboard
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
+<style>
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    
+    .status-ativo {
+        background: #d4edda;
+        color: #155724;
+    }
+    
+    .status-inativo {
+        background: #f8d7da;
+        color: #721c24;
+    }
+    
+    .nivel-badge {
+        padding: 4px 8px;
+        border-radius: 10px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+    
+    .nivel-super {
+        background: #e1ecf4;
+        color: #0056b3;
+    }
+    
+    .nivel-admin {
+        background: #d1ecf1;
+        color: #0c5460;
+    }
+    
+    .nivel-editor {
+        background: #d4edda;
+        color: #155724;
+    }
+    
+    .card-header {
+        background: var(--aneti-primary);
+        color: white;
+    }
+    
+    .btn-primary {
+        background: var(--aneti-primary);
+        border-color: var(--aneti-primary);
+    }
+    
+    .btn-primary:hover {
+        background: #001f4d;
+        border-color: #001f4d;
+    }
+</style>
 
-    <div class="container mt-4">
+    <div class="container-fluid mt-4">
         <!-- Mensagens -->
         <?php if (isset($success)): ?>
             <div class="alert alert-success alert-dismissible fade show">

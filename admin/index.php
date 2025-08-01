@@ -43,102 +43,12 @@ foreach ($active_users as $index => $user) {
     $active_users[$index]['resgates'] = $user_resgates[$index] ?? rand(10, 20);
     $active_users[$index]['avatar'] = "https://i.pravatar.cc/45?img=" . ($index + 1);
 }
+
+$page_title = "Dashboard";
+include 'includes/admin-header.php';
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - <?php echo SITE_NAME; ?></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/css/style.css" rel="stylesheet">
-</head>
-<body class="admin-body">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">
-                <i class="fas fa-cog"></i> Admin ANETI
-            </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.php">
-                            <i class="fas fa-tachometer-alt"></i> Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="empresas.php">
-                            <i class="fas fa-store"></i> Empresas
-                            <?php if ($stats['empresas_pendentes'] > 0): ?>
-                                <span class="badge bg-warning"><?php echo $stats['empresas_pendentes']; ?></span>
-                            <?php endif; ?>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="cupons.php">
-                            <i class="fas fa-ticket-alt"></i> Cupons
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="categorias.php">
-                            <i class="fas fa-tags"></i> Categorias
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="membros.php">
-                            <i class="fas fa-users"></i> Membros
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="slides-banner.php">
-                            <i class="fas fa-images"></i> Slides do Banner
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="usuarios-admin.php">
-                            <i class="fas fa-users-cog"></i> Usuários Admin
-                        </a>
-                    </li>
-                </ul>
-                
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user-shield"></i> <?php echo htmlspecialchars($_SESSION['admin_nome']); ?>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="../index.php" target="_blank">
-                                <i class="fas fa-external-link-alt"></i> Ver Site
-                            </a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="logout.php">
-                                <i class="fas fa-sign-out-alt"></i> Sair
-                            </a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-    <div class="admin-header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <h1 class="admin-greeting">Olá, Gestor</h1>
-                    <p class="admin-subtitle">Bem-vindo ao painel de administração do Clube de Vantagens ANETI</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid">
+    <div class="container-fluid mt-4">
 
         <!-- Statistics Cards -->
         <div class="row mb-4">
