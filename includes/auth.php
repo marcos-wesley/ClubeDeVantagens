@@ -32,17 +32,16 @@ function loginUser($conn, $email, $password) {
  * Login admin
  */
 function loginAdmin($conn, $email, $password) {
-    // Simple admin authentication
-    // In production, implement proper password hashing
-    
-    $stmt = $conn->prepare("SELECT * FROM admins WHERE email = ? AND password = ? AND ativo = true");
-    $stmt->execute([$email, md5($password)]); // Using MD5 for simplicity, use bcrypt in production
+    // Check if admin exists and is active
+    $stmt = $conn->prepare("SELECT * FROM admins WHERE email = ? AND status = 'ativo'");
+    $stmt->execute([$email]);
     $admin = $stmt->fetch();
     
-    if ($admin) {
+    if ($admin && password_verify($password, $admin['senha'])) {
         $_SESSION['admin_id'] = $admin['id'];
         $_SESSION['admin_nome'] = $admin['nome'];
         $_SESSION['admin_email'] = $admin['email'];
+        $_SESSION['admin_nivel'] = $admin['nivel'];
         $_SESSION['admin_login_time'] = time();
         return true;
     }
