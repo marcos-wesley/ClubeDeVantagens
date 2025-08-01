@@ -62,11 +62,11 @@ $categories = getCategories($conn);
                         <div class="header-actions text-end">
                             <?php if (isset($_SESSION['user_id'])): ?>
                                 <div class="dropdown me-2 d-inline-block">
-                                    <button class="btn login-button dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 20px; padding: 8px 16px;">
+                                    <button class="btn login-button dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 20px; padding: 8px 16px;">
                                         <i class="fas fa-user me-2"></i>
                                         <span><?= htmlspecialchars($_SESSION['user_nome']) ?></span>
                                     </button>
-                                    <ul class="dropdown-menu dropdown-menu-end shadow-lg">
+                                    <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="userDropdown">
                                         <li><a class="dropdown-item" href="public/dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item text-danger" href="public/logout.php"><i class="fas fa-sign-out-alt me-2"></i>Sair</a></li>
@@ -386,9 +386,13 @@ $categories = getCategories($conn);
             document.querySelectorAll('.dropdown-toggle').forEach(function(toggle) {
                 toggle.addEventListener('click', function(e) {
                     e.preventDefault();
+                    e.stopPropagation();
                     console.log('Manual dropdown click');
-                    var menu = this.nextElementSibling;
-                    if (menu && menu.classList.contains('dropdown-menu')) {
+                    
+                    var dropdown = this.closest('.dropdown');
+                    var menu = dropdown ? dropdown.querySelector('.dropdown-menu') : null;
+                    
+                    if (menu) {
                         // Close other open menus
                         document.querySelectorAll('.dropdown-menu.show').forEach(function(openMenu) {
                             if (openMenu !== menu) {
@@ -397,6 +401,9 @@ $categories = getCategories($conn);
                         });
                         // Toggle current menu
                         menu.classList.toggle('show');
+                        console.log('Menu toggled, show class:', menu.classList.contains('show'));
+                    } else {
+                        console.log('Menu not found');
                     }
                 });
             });
