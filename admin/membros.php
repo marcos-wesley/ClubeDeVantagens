@@ -5,6 +5,7 @@ require_once '../includes/functions.php';
 require_once '../includes/auth.php';
 
 requireAdminLogin();
+// Editores podem visualizar membros, mas não modificar
 
 $message = '';
 

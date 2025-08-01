@@ -45,10 +45,24 @@ foreach ($active_users as $index => $user) {
 }
 
 $page_title = "Dashboard";
+
+// Verificar se há mensagem de erro de acesso
+$access_error = '';
+if (isset($_GET['error']) && $_GET['error'] === 'access_denied') {
+    $access_error = 'Acesso negado! Você não tem permissão para acessar esta funcionalidade.';
+}
+
 include 'includes/admin-header.php';
 ?>
 
     <div class="container-fluid mt-4">
+        <?php if ($access_error): ?>
+            <div class="alert alert-danger alert-dismissible fade show mb-4">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <?php echo $access_error; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php endif; ?>
 
         <!-- Statistics Cards -->
         <div class="row mb-4">

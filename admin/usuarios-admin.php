@@ -2,12 +2,10 @@
 session_start();
 require_once '../config/database.php';
 require_once '../includes/functions.php';
+require_once '../includes/auth.php';
 
-// Verificar se é admin (implementar conforme sistema de autenticação)
-// if (!isset($_SESSION['admin_logged_in'])) {
-//     header('Location: login.php');
-//     exit;
-// }
+requireAdminLogin();
+requireAdminLevel('admin'); // Apenas Admin e Super Admin podem gerenciar usuários
 
 // Processar ações
 if ($_POST) {

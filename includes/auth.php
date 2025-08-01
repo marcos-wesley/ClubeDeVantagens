@@ -88,4 +88,29 @@ function requireAdminLogin() {
         redirect('login.php');
     }
 }
+
+/**
+ * Check admin permission level
+ */
+function hasAdminPermission($required_level) {
+    if (!isAdminLoggedIn()) {
+        return false;
+    }
+    
+    $current_level = $_SESSION['admin_nivel'] ?? 'editor';
+    
+    // Hierarchy: editor < admin < super
+    $levels = ['editor' => 1, 'admin' => 2, 'super' => 3];
+    
+    return ($levels[$current_level] ?? 0) >= ($levels[$required_level] ?? 0);
+}
+
+/**
+ * Require specific admin level
+ */
+function requireAdminLevel($required_level) {
+    if (!hasAdminPermission($required_level)) {
+        redirect('index.php?error=access_denied');
+    }
+}
 ?>

@@ -5,6 +5,7 @@ require_once '../includes/functions.php';
 require_once '../includes/auth.php';
 
 requireAdminLogin();
+requireAdminLevel('admin'); // Apenas Admin e Super Admin podem gerenciar categorias
 
 $message = '';
 $error = '';

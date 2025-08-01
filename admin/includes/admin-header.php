@@ -126,18 +126,21 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             <i class="fas fa-ticket-alt me-1"></i>Cupons
                         </a>
                     </li>
+                    <?php if (hasAdminPermission('admin')): ?>
                     <li class="nav-item">
                         <a class="nav-link <?php echo $current_page === 'categorias.php' ? 'active' : ''; ?>" 
                            href="categorias.php">
                             <i class="fas fa-tags me-1"></i>Categorias  
                         </a>
                     </li>
+                    <?php endif; ?>
                     <li class="nav-item">
                         <a class="nav-link <?php echo $current_page === 'membros.php' ? 'active' : ''; ?>" 
                            href="membros.php">
                             <i class="fas fa-users me-1"></i>Membros
                         </a>
                     </li>
+                    <?php if (hasAdminPermission('admin')): ?>
                     <li class="nav-item">
                         <a class="nav-link <?php echo $current_page === 'slides-banner.php' ? 'active' : ''; ?>" 
                            href="slides-banner.php">
@@ -150,6 +153,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             <i class="fas fa-users-cog me-1"></i>Usuários Admin
                         </a>
                     </li>
+                    <?php endif; ?>
                 </ul>
                 
                 <ul class="navbar-nav">
@@ -157,7 +161,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <a class="nav-link dropdown-toggle admin-user-menu" href="#" id="adminUserDropdown" 
                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user-shield me-2"></i>
-                            Administrador ANETI
+                            <?php echo htmlspecialchars($_SESSION['admin_nome'] ?? 'Admin'); ?>
+                            <?php 
+                            $nivel = $_SESSION['admin_nivel'] ?? 'editor';
+                            $badge_class = $nivel === 'super' ? 'bg-danger' : ($nivel === 'admin' ? 'bg-warning text-dark' : 'bg-info');
+                            $nivel_display = $nivel === 'super' ? 'Super' : ($nivel === 'admin' ? 'Admin' : 'Editor');
+                            ?>
+                            <span class="badge <?php echo $badge_class; ?> ms-2 small"><?php echo $nivel_display; ?></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
