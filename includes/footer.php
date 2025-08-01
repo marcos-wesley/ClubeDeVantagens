@@ -115,22 +115,20 @@
             </div>
             
             <!-- Coluna 5: Logo ANETI -->
-            <div class="col-lg-3 col-md-12 mb-4">
-                <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
-                    <div style="text-align: center;">
-                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 15px;">
-                            <h3 style="color: white; font-weight: 700; margin: 0; font-size: 2rem; letter-spacing: 3px;">
-                                ANETI
-                            </h3>
-                            <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 0.75rem;">
-                                Um produto ANETI<br>
-                                Associação Nacional dos Especialistas em TI
-                            </p>
+            <div class="col-lg-3 col-md-12 mb-4 text-center">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+                    <div style="margin-bottom: 20px;">
+                        <img src="<?= isset($base_path) ? $base_path : '../' ?>attached_assets/logo-branca_1754052485966.png" 
+                             alt="ANETI Logo" 
+                             style="height: 80px; width: auto; margin-bottom: 10px;">
+                        <div style="color: rgba(255,255,255,0.8); font-size: 0.8rem; line-height: 1.4;">
+                            Um produto ANETI<br>
+                            Associação Nacional dos Especialistas em TI
                         </div>
-                        <p style="color: rgba(255,255,255,0.6); margin: 0; font-size: 0.75rem;">
-                            © <?php echo date('Y'); ?> ANETI. Todos os direitos reservados.<br>
-                            Desenvolvido com ❤️ para membros ANETI
-                        </p>
+                    </div>
+                    <div style="color: rgba(255,255,255,0.6); font-size: 0.75rem; text-align: center;">
+                        © <?php echo date('Y'); ?> ANETI. Todos os direitos reservados.<br>
+                        Desenvolvido com 💙 para membros ANETI
                     </div>
                 </div>
             </div>
