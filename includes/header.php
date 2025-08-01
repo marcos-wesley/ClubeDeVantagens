@@ -1,13 +1,19 @@
 <?php
+// Start session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Determine the correct path based on current directory
 $is_subdirectory = strpos($_SERVER['PHP_SELF'], '/public/') !== false || 
                   strpos($_SERVER['PHP_SELF'], '/admin/') !== false || 
                   strpos($_SERVER['PHP_SELF'], '/empresa/') !== false;
 $base_path = $is_subdirectory ? '../' : '';
 
-// Check if user is logged in
-$is_logged_in = isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
-$user_name = $is_logged_in ? $_SESSION['user_nome'] : '';
+// Check if user is logged in with proper session validation
+$is_logged_in = isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && 
+                isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
+$user_name = ($is_logged_in && isset($_SESSION['user_nome'])) ? $_SESSION['user_nome'] : 'Usuário';
 ?>
 <!-- Header ANETI - Idêntico à Homepage -->
 <header class="main-header fixed-top" style="background: linear-gradient(to right, #012d6a, #25a244); box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
@@ -44,7 +50,7 @@ $user_name = $is_logged_in ? $_SESSION['user_nome'] : '';
                             <div class="dropdown me-2 d-inline-block">
                                 <button class="btn login-button dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 20px; padding: 8px 16px;">
                                     <i class="fas fa-user me-2"></i>
-                                    <span><?= htmlspecialchars($user_name) ?></span>
+                                    <span><?= htmlspecialchars($user_name ?? 'Usuário') ?></span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end shadow-lg">
                                     <li><a class="dropdown-item" href="<?= $base_path ?>public/dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
