@@ -132,7 +132,7 @@
     font-weight: 500;
 }
 
-/* Hide categories completely on mobile */
+/* Hide desktop categories on mobile and fix body padding */
 @media (max-width: 767.98px) {
     .categories-bar {
         display: none !important;
@@ -140,6 +140,22 @@
     
     .categories-menu {
         display: none !important;
+    }
+    
+    /* Fix body padding for mobile */
+    body {
+        padding-top: 60px !important;
+    }
+    
+    /* Ensure mobile menu is properly positioned */
+    .mobile-menu {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 1050 !important;
+        background: linear-gradient(to right, #012d6a, #25a244) !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
     }
 }
 

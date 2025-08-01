@@ -348,54 +348,70 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
 </style>
 
 <script>
-// Mobile Menu and Dropdown Functions
+// Mobile Menu Functions
+let mobileMenuOpen = false;
+
 function toggleMobileMenu() {
     const mobileMenu = document.getElementById('mobile-menu');
     const menuIcon = document.getElementById('mobile-menu-icon');
-    const header = document.querySelector('.main-header');
     
-    if (mobileMenu.style.display === 'none' || mobileMenu.style.display === '') {
+    if (!mobileMenuOpen) {
+        // Open menu
         mobileMenu.style.display = 'block';
-        menuIcon.classList.remove('fa-bars');
-        menuIcon.classList.add('fa-times');
-        header.classList.add('mobile-menu-open');
-        document.querySelector('.mobile-menu-toggle').classList.add('active');
+        menuIcon.className = 'fas fa-times';
+        mobileMenuOpen = true;
+        
+        // Add click listener to close menu when clicking outside
+        setTimeout(() => {
+            document.addEventListener('click', closeMobileMenuOutside);
+        }, 100);
     } else {
-        mobileMenu.style.display = 'none';
-        menuIcon.classList.remove('fa-times');
-        menuIcon.classList.add('fa-bars');
-        header.classList.remove('mobile-menu-open');
-        document.querySelector('.mobile-menu-toggle').classList.remove('active');
+        // Close menu
+        closeMobileMenu();
+    }
+}
+
+function closeMobileMenu() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('mobile-menu-icon');
+    
+    mobileMenu.style.display = 'none';
+    menuIcon.className = 'fas fa-bars';
+    mobileMenuOpen = false;
+    
+    document.removeEventListener('click', closeMobileMenuOutside);
+}
+
+function closeMobileMenuOutside(event) {
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    
+    if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+        closeMobileMenu();
     }
 }
 
 function toggleUserDropdown() {
     const dropdown = document.getElementById('user-dropdown');
-    dropdown.classList.toggle('show');
+    if (dropdown) {
+        dropdown.classList.toggle('show');
+    }
 }
 
-// Close mobile menu when clicking on category
+// Initialize when document loads
 document.addEventListener('DOMContentLoaded', function() {
-    // Close mobile menu when clicking on a category
+    // Close mobile menu when clicking on category links
     document.querySelectorAll('.mobile-category-item').forEach(function(item) {
         item.addEventListener('click', function() {
-            toggleMobileMenu();
+            closeMobileMenu();
         });
     });
     
-    // Close dropdown when clicking outside
+    // Close user dropdown when clicking outside
     document.addEventListener('click', function(e) {
-        if (!e.target.closest('.dropdown')) {
-            document.querySelectorAll('.dropdown-menu').forEach(function(menu) {
-                menu.classList.remove('show');
-            });
-        }
-    });
-    
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.main-header') && document.getElementById('mobile-menu').style.display === 'block') {
-            toggleMobileMenu();
+        const dropdown = document.getElementById('user-dropdown');
+        if (dropdown && !e.target.closest('.dropdown') && !e.target.closest('button[onclick*="toggleUserDropdown"]')) {
+            dropdown.classList.remove('show');
         }
     });
 });
