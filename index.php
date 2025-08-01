@@ -62,7 +62,7 @@ $categories = getCategories($conn);
                         <div class="header-actions text-end">
                             <?php if (isset($_SESSION['user_id'])): ?>
                                 <div class="dropdown me-2 d-inline-block">
-                                    <button class="btn login-button dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 20px; padding: 8px 16px;">
+                                    <button class="btn login-button d-flex align-items-center" type="button" id="userDropdown" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 20px; padding: 8px 16px; cursor: pointer;">
                                         <i class="fas fa-user me-2"></i>
                                         <span><?= htmlspecialchars($_SESSION['user_nome']) ?></span>
                                     </button>
@@ -370,48 +370,32 @@ $categories = getCategories($conn);
                 }
             });
             
-            // Initialize dropdown functionality
-            console.log('Initializing dropdowns...');
-            
-            // Force initialize all dropdowns
-            var dropdowns = document.querySelectorAll('[data-bs-toggle="dropdown"]');
-            dropdowns.forEach(function(dropdown) {
-                console.log('Found dropdown:', dropdown);
-                if (typeof bootstrap !== 'undefined') {
-                    new bootstrap.Dropdown(dropdown);
-                }
-            });
-            
-            // Manual click handler as backup
-            document.querySelectorAll('.dropdown-toggle').forEach(function(toggle) {
-                toggle.addEventListener('click', function(e) {
+            // Simple dropdown functionality - definitive solution
+            const userDropdown = document.getElementById('userDropdown');
+            if (userDropdown) {
+                console.log('User dropdown found, adding event listener');
+                userDropdown.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log('Manual dropdown click');
                     
-                    var dropdown = this.closest('.dropdown');
-                    var menu = dropdown ? dropdown.querySelector('.dropdown-menu') : null;
-                    
+                    const menu = document.querySelector('#userDropdown + .dropdown-menu');
                     if (menu) {
-                        // Close other open menus
-                        document.querySelectorAll('.dropdown-menu.show').forEach(function(openMenu) {
-                            if (openMenu !== menu) {
-                                openMenu.classList.remove('show');
-                            }
+                        // Close all other dropdowns
+                        document.querySelectorAll('.dropdown-menu.show').forEach(m => {
+                            if (m !== menu) m.classList.remove('show');
                         });
-                        // Toggle current menu
+                        
+                        // Toggle this dropdown
                         menu.classList.toggle('show');
-                        console.log('Menu toggled, show class:', menu.classList.contains('show'));
-                    } else {
-                        console.log('Menu not found');
+                        console.log('Dropdown menu toggled. Visible:', menu.classList.contains('show'));
                     }
                 });
-            });
+            }
             
             // Close dropdown when clicking outside
             document.addEventListener('click', function(e) {
                 if (!e.target.closest('.dropdown')) {
-                    document.querySelectorAll('.dropdown-menu.show').forEach(function(menu) {
+                    document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
                         menu.classList.remove('show');
                     });
                 }
