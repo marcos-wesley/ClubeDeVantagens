@@ -25,7 +25,17 @@ function generateUUID() {
  * Get featured companies
  */
 function getFeaturedCompanies($conn, $limit = 10) {
-    $stmt = $conn->prepare("SELECT * FROM empresas WHERE status = 'aprovada' AND destaque = 1 ORDER BY created_at DESC LIMIT ?");
+    $stmt = $conn->prepare("
+        SELECT e.*, 
+               COUNT(a.id) as total_avaliacoes, 
+               COALESCE(AVG(a.rating), 0) as media_avaliacoes 
+        FROM empresas e 
+        LEFT JOIN avaliacoes a ON e.id = a.empresa_id 
+        WHERE e.status = 'aprovada' AND e.destaque = 1 
+        GROUP BY e.id 
+        ORDER BY e.created_at DESC 
+        LIMIT ?
+    ");
     $stmt->bindValue(1, (int)$limit, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchAll();
@@ -35,7 +45,17 @@ function getFeaturedCompanies($conn, $limit = 10) {
  * Get recent companies
  */
 function getRecentCompanies($conn, $limit = 8) {
-    $stmt = $conn->prepare("SELECT * FROM empresas WHERE status = 'aprovada' ORDER BY created_at DESC LIMIT ?");
+    $stmt = $conn->prepare("
+        SELECT e.*, 
+               COUNT(a.id) as total_avaliacoes, 
+               COALESCE(AVG(a.rating), 0) as media_avaliacoes 
+        FROM empresas e 
+        LEFT JOIN avaliacoes a ON e.id = a.empresa_id 
+        WHERE e.status = 'aprovada' 
+        GROUP BY e.id 
+        ORDER BY e.created_at DESC 
+        LIMIT ?
+    ");
     $stmt->bindValue(1, (int)$limit, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchAll();

@@ -188,19 +188,9 @@ $categories = getCategories($conn);
                         
                         <!-- Avaliação com estrelas -->
                         <?php
-                        // Buscar avaliação média da empresa
-                        try {
-                            $rating_query = $conn->prepare("
-                                SELECT AVG(nota) as media, COUNT(*) as total 
-                                FROM avaliacoes 
-                                WHERE empresa_id = ? AND status = 'aprovada'
-                            ");
-                            $rating_query->execute([$company['id']]);
-                            $rating = $rating_query->fetch();
-                            $avg_rating = $rating['media'] ? round($rating['media'], 1) : 0;
-                        } catch (Exception $e) {
-                            $avg_rating = 0; // Fallback se não houver conexão com BD
-                        }
+                        // Usar dados já calculados na função getRecentCompanies
+                        $avg_rating = isset($company['media_avaliacoes']) ? round($company['media_avaliacoes'], 1) : 0;
+                        $total_avaliacoes = isset($company['total_avaliacoes']) ? $company['total_avaliacoes'] : 0;
                         ?>
                         
                         <div class="recent-card-rating">
@@ -210,6 +200,9 @@ $categories = getCategories($conn);
                                 <?php endfor; ?>
                             </div>
                             <span class="rating-value"><?php echo $avg_rating; ?></span>
+                            <?php if ($total_avaliacoes > 0): ?>
+                                <span class="rating-count">(<?php echo $total_avaliacoes; ?>)</span>
+                            <?php endif; ?>
                         </div>
                         
                         <!-- Localização -->
