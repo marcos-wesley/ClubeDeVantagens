@@ -174,6 +174,9 @@ function loginUserViaAPI($userInput, $password) {
         $_SESSION['logged_in'] = true;
         $_SESSION['login_time'] = time();
         
+        // Register member access in control table
+        registrarAcessoMembro($result['user_id'], $result['nome'], $result['email'], $result['plano']);
+        
         return ['success' => true, 'message' => 'Login realizado com sucesso!'];
     }
     

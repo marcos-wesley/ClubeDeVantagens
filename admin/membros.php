@@ -8,50 +8,53 @@ requireAdminLogin();
 
 $message = '';
 
-// Handle actions
-if ($_POST && isset($_POST['action'])) {
-    if ($_POST['action'] == 'add_member') {
-        $nome = sanitizeInput($_POST['nome']);
-        $email = sanitizeInput($_POST['email']);
-        $plano = sanitizeInput($_POST['plano']);
-        $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
-        
-        try {
-            $stmt = $conn->prepare("INSERT INTO membros (nome, email, senha, plano, ativo, created_at) VALUES (?, ?, ?, ?, true, NOW())");
-            $stmt->execute([$nome, $email, $senha, $plano]);
-            $message = 'Membro cadastrado com sucesso!';
-        } catch (Exception $e) {
-            $message = 'Erro ao cadastrar membro: ' . $e->getMessage();
-        }
-    } elseif ($_POST['action'] == 'update_status' && isset($_POST['member_id'])) {
-        $member_id = (int)$_POST['member_id'];
-        $ativo = isset($_POST['ativo']) ? true : false;
-        
-        $stmt = $conn->prepare("UPDATE membros SET ativo = ? WHERE id = ?");
-        $stmt->execute([$ativo, $member_id]);
-        $message = 'Status do membro atualizado!';
-    }
+// Get API members with access statistics (members who logged in via API)
+$sql = "
+    SELECT 
+        user_id,
+        nome,
+        email,
+        plano,
+        primeiro_acesso,
+        ultimo_acesso,
+        total_acessos,
+        COALESCE(cupons_gerados, 0) as cupons_gerados,
+        COALESCE(cupons_30_dias, 0) as cupons_30_dias
+    FROM membros_api_access m
+    LEFT JOIN (
+        SELECT 
+            usuario_id, 
+            COUNT(*) as cupons_gerados,
+            SUM(CASE WHEN created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 1 ELSE 0 END) as cupons_30_dias
+        FROM cupons 
+        GROUP BY usuario_id
+    ) c ON m.user_id = c.usuario_id
+    ORDER BY m.ultimo_acesso DESC
+";
+
+try {
+    $members = $conn->query($sql)->fetchAll();
+} catch (Exception $e) {
+    $members = [];
+    $message = 'Erro ao carregar membros: ' . $e->getMessage();
 }
 
-// Get members with usage statistics
-$sql = "
-    SELECT m.*, 
-           COUNT(c.id) as total_cupons,
-           COUNT(CASE WHEN c.created_at >= CURRENT_DATE - INTERVAL '30 days' THEN 1 END) as cupons_mes
-    FROM membros m
-    LEFT JOIN cupons c ON m.id = c.usuario_id
-    GROUP BY m.id
-    ORDER BY m.created_at DESC
-";
-$members = $conn->query($sql)->fetchAll();
-
 // Statistics
-$stats = [
-    'total_membros' => $conn->query("SELECT COUNT(*) FROM membros")->fetchColumn(),
-    'membros_ativos' => $conn->query("SELECT COUNT(*) FROM membros WHERE ativo = true")->fetchColumn(),
-    'total_cupons_gerados' => $conn->query("SELECT COUNT(*) FROM cupons")->fetchColumn(),
-    'cupons_mes' => $conn->query("SELECT COUNT(*) FROM cupons WHERE created_at >= CURRENT_DATE - INTERVAL '30 days'")->fetchColumn()
-];
+try {
+    $stats = [
+        'total_membros_api' => $conn->query("SELECT COUNT(*) FROM membros_api_access")->fetchColumn(),
+        'membros_ativos_hoje' => $conn->query("SELECT COUNT(*) FROM membros_api_access WHERE DATE(ultimo_acesso) = CURDATE()")->fetchColumn(),
+        'total_cupons_gerados' => $conn->query("SELECT COUNT(*) FROM cupons")->fetchColumn(),
+        'cupons_mes' => $conn->query("SELECT COUNT(*) FROM cupons WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)")->fetchColumn()
+    ];
+} catch (Exception $e) {
+    $stats = [
+        'total_membros_api' => 0,
+        'membros_ativos_hoje' => 0,
+        'total_cupons_gerados' => 0,
+        'cupons_mes' => 0
+    ];
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -85,10 +88,8 @@ $stats = [
         <div class="row">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2><i class="fas fa-users"></i> Gerenciar Membros</h2>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMemberModal">
-                        <i class="fas fa-plus"></i> Novo Membro
-                    </button>
+                    <h2><i class="fas fa-users"></i> Membros da API WordPress</h2>
+                    <small class="text-muted">Controle de membros que acessaram o sistema via integração API</small>
                 </div>
 
                 <?php if ($message): ?>
@@ -105,8 +106,8 @@ $stats = [
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1">
-                                        <h5 class="card-title">Total Membros</h5>
-                                        <h2><?php echo $stats['total_membros']; ?></h2>
+                                        <h5 class="card-title">Membros API</h5>
+                                        <h2><?php echo $stats['total_membros_api']; ?></h2>
                                     </div>
                                     <i class="fas fa-users fa-2x opacity-75"></i>
                                 </div>
@@ -118,8 +119,8 @@ $stats = [
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1">
-                                        <h5 class="card-title">Membros Ativos</h5>
-                                        <h2><?php echo $stats['membros_ativos']; ?></h2>
+                                        <h5 class="card-title">Acessos Hoje</h5>
+                                        <h2><?php echo $stats['membros_ativos_hoje']; ?></h2>
                                     </div>
                                     <i class="fas fa-user-check fa-2x opacity-75"></i>
                                 </div>
@@ -154,114 +155,108 @@ $stats = [
                     </div>
                 </div>
 
-                <!-- Members Table -->
+                <!-- API Members Table -->
                 <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-api"></i> Membros que Acessaram via API WordPress</h5>
+                        <small class="text-muted">Membros que fizeram login através da integração com a API do WordPress da ANETI</small>
+                    </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Nome</th>
-                                        <th>Email</th>
-                                        <th>Plano</th>
-                                        <th>Status</th>
-                                        <th>Cupons Gerados</th>
-                                        <th>Cupons (30 dias)</th>
-                                        <th>Data Cadastro</th>
-                                        <th>Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($members as $member): ?>
-                                    <tr>
-                                        <td><?php echo $member['id']; ?></td>
-                                        <td><?php echo htmlspecialchars($member['nome']); ?></td>
-                                        <td><?php echo htmlspecialchars($member['email']); ?></td>
-                                        <td>
-                                            <span class="badge bg-<?php echo $member['plano'] == 'Senior' ? 'success' : ($member['plano'] == 'Pleno' ? 'warning' : 'primary'); ?>">
-                                                <?php echo $member['plano']; ?>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-<?php echo $member['ativo'] ? 'success' : 'danger'; ?>">
-                                                <?php echo $member['ativo'] ? 'Ativo' : 'Inativo'; ?>
-                                            </span>
-                                        </td>
-                                        <td><?php echo $member['total_cupons']; ?></td>
-                                        <td><?php echo $member['cupons_mes']; ?></td>
-                                        <td><?php echo date('d/m/Y', strtotime($member['created_at'])); ?></td>
-                                        <td>
-                                            <form method="POST" class="d-inline">
-                                                <input type="hidden" name="action" value="update_status">
-                                                <input type="hidden" name="member_id" value="<?php echo $member['id']; ?>">
-                                                <?php if (!$member['ativo']): ?>
-                                                    <input type="hidden" name="ativo" value="1">
-                                                    <button type="submit" class="btn btn-sm btn-success" title="Ativar">
-                                                        <i class="fas fa-check"></i>
-                                                    </button>
-                                                <?php else: ?>
-                                                    <button type="submit" class="btn btn-sm btn-warning" title="Desativar">
-                                                        <i class="fas fa-times"></i>
-                                                    </button>
-                                                <?php endif; ?>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
+                        <?php if (empty($members)): ?>
+                            <div class="text-center py-4">
+                                <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                                <h5>Nenhum membro acessou ainda</h5>
+                                <p class="text-muted">Os membros que fizerem login via API WordPress aparecerão aqui automaticamente.</p>
+                            </div>
+                        <?php else: ?>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>ID WordPress</th>
+                                            <th>Nome</th>
+                                            <th>Email</th>
+                                            <th>Plano</th>
+                                            <th>Primeiro Acesso</th>
+                                            <th>Último Acesso</th>
+                                            <th>Total Acessos</th>
+                                            <th>Cupons Gerados</th>
+                                            <th>Cupons (30 dias)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($members as $member): ?>
+                                        <tr>
+                                            <td>
+                                                <span class="badge bg-info"><?php echo $member['user_id']; ?></span>
+                                            </td>
+                                            <td><?php echo htmlspecialchars($member['nome']); ?></td>
+                                            <td><?php echo htmlspecialchars($member['email']); ?></td>
+                                            <td>
+                                                <?php 
+                                                $plano_colors = [
+                                                    'Júnior' => 'primary',
+                                                    'Pleno' => 'warning', 
+                                                    'Sênior' => 'success',
+                                                    'Honra' => 'info',
+                                                    'Diretivo' => 'dark'
+                                                ];
+                                                $color = $plano_colors[$member['plano']] ?? 'secondary';
+                                                ?>
+                                                <span class="badge bg-<?php echo $color; ?>">
+                                                    <?php echo htmlspecialchars($member['plano']); ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <small>
+                                                    <?php echo date('d/m/Y H:i', strtotime($member['primeiro_acesso'])); ?>
+                                                </small>
+                                            </td>
+                                            <td>
+                                                <?php 
+                                                $ultimo_acesso = strtotime($member['ultimo_acesso']);
+                                                $agora = time();
+                                                $diff = $agora - $ultimo_acesso;
+                                                
+                                                if ($diff < 3600) { // menos de 1 hora
+                                                    $status_class = 'success';
+                                                    $status_text = 'Agora há pouco';
+                                                } elseif ($diff < 86400) { // menos de 1 dia
+                                                    $status_class = 'warning';
+                                                    $status_text = 'Hoje';
+                                                } elseif ($diff < 604800) { // menos de 1 semana
+                                                    $status_class = 'info';
+                                                    $status_text = 'Esta semana';
+                                                } else {
+                                                    $status_class = 'secondary';
+                                                    $status_text = 'Há mais tempo';
+                                                }
+                                                ?>
+                                                <span class="badge bg-<?php echo $status_class; ?> mb-1">
+                                                    <?php echo $status_text; ?>
+                                                </span><br>
+                                                <small class="text-muted">
+                                                    <?php echo date('d/m/Y H:i', $ultimo_acesso); ?>
+                                                </small>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-primary"><?php echo $member['total_acessos']; ?></span>
+                                            </td>
+                                            <td><?php echo $member['cupons_gerados']; ?></td>
+                                            <td><?php echo $member['cupons_30_dias']; ?></td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Add Member Modal -->
-    <div class="modal fade" id="addMemberModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Cadastrar Novo Membro</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <form method="POST">
-                    <div class="modal-body">
-                        <input type="hidden" name="action" value="add_member">
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Nome Completo</label>
-                            <input type="text" class="form-control" name="nome" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control" name="email" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Senha</label>
-                            <input type="password" class="form-control" name="senha" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Plano</label>
-                            <select class="form-select" name="plano" required>
-                                <option value="Junior">Junior</option>
-                                <option value="Pleno">Pleno</option>
-                                <option value="Senior">Senior</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Cadastrar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

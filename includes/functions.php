@@ -50,6 +50,55 @@ function getCategories($conn) {
 }
 
 /**
+ * Sanitize input data
+ */
+function sanitizeInput($input) {
+    if ($input === null) {
+        return '';
+    }
+    return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
+}
+
+/**
+ * Register member API access
+ */
+function registrarAcessoMembro($user_id, $nome, $email, $plano) {
+    global $conn;
+    
+    try {
+        // Check if record already exists for this user_id
+        $stmt = $conn->prepare("SELECT id, total_acessos FROM membros_api_access WHERE user_id = ?");
+        $stmt->execute([$user_id]);
+        $existing = $stmt->fetch();
+        
+        if ($existing) {
+            // Update last access and increment counter
+            $stmt = $conn->prepare("
+                UPDATE membros_api_access 
+                SET ultimo_acesso = NOW(), 
+                    total_acessos = total_acessos + 1,
+                    nome = ?,
+                    email = ?,
+                    plano = ?
+                WHERE user_id = ?
+            ");
+            $stmt->execute([$nome, $email, $plano, $user_id]);
+        } else {
+            // Create new record
+            $stmt = $conn->prepare("
+                INSERT INTO membros_api_access 
+                (user_id, nome, email, plano, primeiro_acesso, ultimo_acesso, total_acessos) 
+                VALUES (?, ?, ?, ?, NOW(), NOW(), 1)
+            ");
+            $stmt->execute([$user_id, $nome, $email, $plano]);
+        }
+    } catch (Exception $e) {
+        // Log error silently - don't break login process
+        error_log("Erro ao registrar acesso do membro: " . $e->getMessage());
+    }
+}
+
+/**
  * Get category icon
  */
 function getCategoryIcon($category) {
@@ -273,15 +322,7 @@ function redirect($url) {
     exit;
 }
 
-/**
- * Sanitize input
- */
-function sanitizeInput($input) {
-    if ($input === null) {
-        return '';
-    }
-    return htmlspecialchars(strip_tags(trim($input)));
-}
+
 
 /**
  * Validate email
