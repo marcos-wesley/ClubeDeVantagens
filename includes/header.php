@@ -126,36 +126,32 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
     </div>
 </header>
 
-<!-- Bootstrap JavaScript for dropdown functionality -->
+<!-- Bootstrap CSS e JS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-// Initialize dropdown functionality
+// Simplified dropdown functionality
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Initializing dropdowns...');
-    
-    // Force initialize all dropdowns
-    var dropdowns = document.querySelectorAll('[data-bs-toggle="dropdown"]');
-    dropdowns.forEach(function(dropdown) {
-        console.log('Found dropdown:', dropdown);
-        if (typeof bootstrap !== 'undefined') {
-            new bootstrap.Dropdown(dropdown);
-        }
-    });
-    
-    // Manual click handler as backup
+    // Manual dropdown toggle - more reliable than Bootstrap's automatic handling
     document.querySelectorAll('.dropdown-toggle').forEach(function(toggle) {
         toggle.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('Manual dropdown click');
-            var menu = this.nextElementSibling;
-            if (menu && menu.classList.contains('dropdown-menu')) {
-                // Close other open menus
-                document.querySelectorAll('.dropdown-menu.show').forEach(function(openMenu) {
-                    if (openMenu !== menu) {
-                        openMenu.classList.remove('show');
-                    }
-                });
-                // Toggle current menu
+            e.stopPropagation();
+            
+            // Find the dropdown menu
+            var dropdown = this.closest('.dropdown');
+            var menu = dropdown.querySelector('.dropdown-menu');
+            
+            // Close all other dropdowns first
+            document.querySelectorAll('.dropdown-menu').forEach(function(otherMenu) {
+                if (otherMenu !== menu) {
+                    otherMenu.classList.remove('show');
+                }
+            });
+            
+            // Toggle current dropdown
+            if (menu) {
                 menu.classList.toggle('show');
             }
         });
@@ -164,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Close dropdown when clicking outside
     document.addEventListener('click', function(e) {
         if (!e.target.closest('.dropdown')) {
-            document.querySelectorAll('.dropdown-menu.show').forEach(function(menu) {
+            document.querySelectorAll('.dropdown-menu').forEach(function(menu) {
                 menu.classList.remove('show');
             });
         }
