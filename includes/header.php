@@ -26,28 +26,21 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
 ?>
 <!-- Header ANETI - Responsivo com Menu Mobile -->
 <header class="main-header fixed-top" style="background: linear-gradient(to right, #012d6a, #25a244); box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-    <!-- Linha 1: Info Principal -->
-    <div class="main-header-line" style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+    <!-- Desktop: Linha completa -->
+    <div class="desktop-header d-none d-md-block" style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
         <div class="container">
             <div class="row align-items-center">
-                <!-- Nome do Clube + Botão Menu Mobile -->
-                <div class="col-12 col-md-4">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <h1 class="header-title" style="color: white; font-size: 22px; font-weight: 700; margin: 0;">
-                            <a href="<?= $base_path ?>index.php" style="color: white; text-decoration: none;">
-                                Clube de Benefícios ANETI
-                            </a>
-                        </h1>
-                        <!-- Botão Menu Mobile (só aparece em mobile) -->
-                        <button class="mobile-menu-toggle d-md-none" type="button" onclick="toggleMobileMenu()" 
-                                style="background: none; border: none; color: white; font-size: 1.5rem; padding: 5px;">
-                            <i class="fas fa-bars" id="mobile-menu-icon"></i>
-                        </button>
-                    </div>
+                <!-- Nome do Clube -->
+                <div class="col-md-4">
+                    <h1 style="color: white; font-size: 22px; font-weight: 700; margin: 0;">
+                        <a href="<?= $base_path ?>index.php" style="color: white; text-decoration: none;">
+                            Clube de Benefícios ANETI
+                        </a>
+                    </h1>
                 </div>
                 
-                <!-- Campo de Busca (Desktop - Ao centro) -->
-                <div class="col-md-4 d-none d-md-block">
+                <!-- Campo de Busca -->
+                <div class="col-md-4">
                     <form method="GET" action="<?= $base_path ?>public/categorias.php">
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Buscar empresas..." 
@@ -59,8 +52,8 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
                     </form>
                 </div>
                 
-                <!-- Botões (Desktop - À direita) -->
-                <div class="col-md-4 d-none d-md-block">
+                <!-- Botões -->
+                <div class="col-md-4">
                     <div class="header-actions text-end">
                         <?php if ($is_logged_in): ?>
                             <div class="dropdown me-2 d-inline-block">
@@ -80,6 +73,49 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
                         <?php endif; ?>
                         <a href="<?= $base_path ?>empresa/cadastro.php" class="partner-button">Seja um Parceiro</a>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile: Header compacto -->
+    <div class="mobile-header d-md-none" style="padding: 10px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Menu Hambúrguer -->
+                <div class="col-2">
+                    <button class="mobile-menu-toggle" type="button" onclick="toggleMobileMenu()" 
+                            style="background: none; border: none; color: white; font-size: 1.4rem; padding: 8px;">
+                        <i class="fas fa-bars" id="mobile-menu-icon"></i>
+                    </button>
+                </div>
+                
+                <!-- Nome Centralizado -->
+                <div class="col-8 text-center">
+                    <h1 style="color: white; font-size: 16px; font-weight: 700; margin: 0;">
+                        <a href="<?= $base_path ?>index.php" style="color: white; text-decoration: none;">
+                            Clube de Benefícios ANETI
+                        </a>
+                    </h1>
+                </div>
+                
+                <!-- Login/User -->
+                <div class="col-2 text-end">
+                    <?php if ($is_logged_in): ?>
+                        <button class="btn p-0" onclick="toggleUserDropdown()" style="background: none; border: none; color: white; font-size: 1.2rem;">
+                            <i class="fas fa-user-circle"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-lg position-absolute" id="user-dropdown" style="right: 15px; top: 50px; z-index: 1050;">
+                            <li><span class="dropdown-item-text text-muted small"><?= htmlspecialchars($user_name) ?></span></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="<?= $base_path ?>public/dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+                            <li><a class="dropdown-item text-danger" href="<?= $base_path ?>public/logout.php"><i class="fas fa-sign-out-alt me-2"></i>Sair</a></li>
+                        </ul>
+                    <?php else: ?>
+                        <a href="<?= $base_path ?>public/login.php" style="color: white; font-size: 1.2rem; text-decoration: none;">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -133,50 +169,35 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
         </div>
     </div>
     
-    <!-- Menu Mobile Hambúrguer -->
-    <div class="mobile-menu" id="mobile-menu" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: linear-gradient(to right, #012d6a, #25a244); z-index: 999; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-        <!-- Campo de Busca Mobile -->
-        <div class="mobile-search" style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+    <!-- Menu Mobile Slidedown -->
+    <div class="mobile-menu d-md-none" id="mobile-menu" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: linear-gradient(to right, #012d6a, #25a244); z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+        
+        <!-- Campo de Busca -->
+        <div style="padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             <form method="GET" action="<?= $base_path ?>public/categorias.php">
                 <div class="input-group">
                     <input type="text" class="form-control" name="search" placeholder="Buscar empresas..." 
-                           style="border-radius: 20px 0 0 20px; border: none; padding: 10px 15px;">
-                    <button class="btn btn-light" type="submit" style="border-radius: 0 20px 20px 0; border: none; padding: 10px 15px;">
+                           style="border-radius: 25px 0 0 25px; border: none; padding: 12px 20px; font-size: 14px;">
+                    <button class="btn btn-light" type="submit" style="border-radius: 0 25px 25px 0; border: none; padding: 12px 20px;">
                         <i class="fas fa-search" style="color: #012d6a;"></i>
                     </button>
                 </div>
             </form>
         </div>
-        
-        <!-- Botões de Ação Mobile -->
-        <div class="mobile-actions" style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
-            <?php if ($is_logged_in): ?>
-                <div class="mobile-user-info" style="margin-bottom: 15px;">
-                    <div style="color: white; font-weight: 600; margin-bottom: 10px;">
-                        <i class="fas fa-user me-2"></i><?= htmlspecialchars($user_name) ?>
-                    </div>
-                    <div class="mobile-user-actions">
-                        <a href="<?= $base_path ?>public/dashboard.php" class="btn btn-sm btn-outline-light me-2" style="border-radius: 15px;">
-                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
-                        </a>
-                        <a href="<?= $base_path ?>public/logout.php" class="btn btn-sm btn-outline-danger" style="border-radius: 15px;">
-                            <i class="fas fa-sign-out-alt me-1"></i>Sair
-                        </a>
-                    </div>
-                </div>
-            <?php else: ?>
-                <a href="<?= $base_path ?>public/login.php" class="btn btn-outline-light me-2 mb-2" style="border-radius: 15px;">
-                    <i class="fas fa-sign-in-alt me-1"></i>Entrar
-                </a>
-            <?php endif; ?>
-            <a href="<?= $base_path ?>empresa/cadastro.php" class="btn btn-light" style="border-radius: 15px; color: #012d6a; font-weight: 600;">
-                <i class="fas fa-handshake me-1"></i>Seja um Parceiro
+
+        <!-- Botão Seja Parceiro -->
+        <div style="padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <a href="<?= $base_path ?>empresa/cadastro.php" class="btn btn-light w-100" style="border-radius: 25px; color: #012d6a; font-weight: 600; padding: 12px;">
+                <i class="fas fa-handshake me-2"></i>Seja um Parceiro
             </a>
         </div>
         
-        <!-- Categorias Mobile em Grid -->
-        <div class="mobile-categories" style="padding: 20px;">
-            <div class="row g-3">
+        <!-- Categorias em Grid Organizado -->
+        <div style="padding: 20px;">
+            <h6 style="color: white; margin-bottom: 15px; font-weight: 600; text-align: center;">
+                <i class="fas fa-list me-2"></i>Categorias
+            </h6>
+            <div class="row g-2">
                 <div class="col-6">
                     <a href="<?= $base_path ?>public/categorias.php?cat=destaque" class="mobile-category-item">
                         <i class="fas fa-star"></i>
@@ -204,13 +225,13 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
                 <div class="col-6">
                     <a href="<?= $base_path ?>public/categorias.php?cat=cultura-educacao" class="mobile-category-item">
                         <i class="fas fa-graduation-cap"></i>
-                        <span>Cultura e Educação</span>
+                        <span>Cultura</span>
                     </a>
                 </div>
                 <div class="col-6">
                     <a href="<?= $base_path ?>public/categorias.php?cat=lazer-diversao" class="mobile-category-item">
                         <i class="fas fa-gamepad"></i>
-                        <span>Lazer e Diversão</span>
+                        <span>Lazer</span>
                     </a>
                 </div>
                 <div class="col-6">
@@ -222,7 +243,7 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
                 <div class="col-6">
                     <a href="<?= $base_path ?>public/categorias.php?cat=saude-bem-estar" class="mobile-category-item">
                         <i class="fas fa-heartbeat"></i>
-                        <span>Saúde e Bem-estar</span>
+                        <span>Saúde</span>
                     </a>
                 </div>
                 <div class="col-6">
@@ -234,7 +255,7 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
                 <div class="col-6">
                     <a href="<?= $base_path ?>public/categorias.php?cat=viagem-turismo" class="mobile-category-item">
                         <i class="fas fa-plane"></i>
-                        <span>Viagem e Turismo</span>
+                        <span>Viagem</span>
                     </a>
                 </div>
             </div>
@@ -247,25 +268,14 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
-/* Header Mobile Responsive Styles */
+/* Mobile Header Styles */
 @media (max-width: 767.98px) {
     .main-header {
         height: 60px !important;
-        min-height: 60px;
-    }
-    
-    .main-header-line {
-        padding: 8px 0 !important;
-        border-bottom: none !important;
-    }
-    
-    .header-title {
-        font-size: 16px !important;
     }
     
     .mobile-menu {
-        animation: slideDown 0.3s ease-out;
-        border-top: 1px solid rgba(255,255,255,0.1);
+        animation: slideDown 0.3s ease;
     }
     
     .mobile-category-item {
@@ -275,44 +285,46 @@ if ($is_logged_in && isset($_SESSION['user_nome']) && !empty($_SESSION['user_nom
         justify-content: center;
         text-decoration: none;
         color: white;
-        background: rgba(255,255,255,0.1);
-        padding: 15px 10px;
-        border-radius: 12px;
-        transition: all 0.3s ease;
+        background: rgba(255,255,255,0.15);
+        padding: 12px 8px;
+        border-radius: 10px;
+        transition: all 0.2s ease;
         text-align: center;
-        min-height: 80px;
-        margin-bottom: 10px;
-    }
-    
-    .mobile-category-item:hover {
-        background: rgba(255,255,255,0.2);
-        color: white;
-        transform: translateY(-2px);
-    }
-    
-    .mobile-category-item i {
-        font-size: 1.5rem;
+        min-height: 70px;
         margin-bottom: 8px;
     }
     
+    .mobile-category-item:hover {
+        background: rgba(255,255,255,0.25);
+        color: white;
+        transform: scale(1.05);
+    }
+    
+    .mobile-category-item i {
+        font-size: 1.3rem;
+        margin-bottom: 6px;
+        opacity: 0.9;
+    }
+    
     .mobile-category-item span {
-        font-size: 0.8rem;
-        font-weight: 500;
-        line-height: 1.2;
+        font-size: 0.75rem;
+        font-weight: 600;
+        line-height: 1.1;
+        opacity: 0.95;
     }
     
     .mobile-menu-toggle {
-        transition: transform 0.3s ease;
+        transition: all 0.2s ease;
         cursor: pointer;
-    }
-    
-    .mobile-menu-toggle.active {
-        transform: rotate(90deg);
+        border-radius: 6px;
     }
     
     .mobile-menu-toggle:hover {
-        background: rgba(255,255,255,0.1);
-        border-radius: 50%;
+        background: rgba(255,255,255,0.1) !important;
+    }
+    
+    .mobile-menu-toggle.active #mobile-menu-icon {
+        transform: rotate(90deg);
     }
 }
 
