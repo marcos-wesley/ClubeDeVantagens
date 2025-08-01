@@ -86,6 +86,13 @@ function authenticateViaAPI($email, $password) {
             // Forbidden - Usually plan access issues
             $errorData = json_decode($response, true);
             if (isset($errorData['error'])) {
+                // Check for specific error messages
+                if (strpos($errorData['error'], 'sem nível de associação') !== false || 
+                    strpos($errorData['error'], 'Usuário sem nível') !== false) {
+                    return ['error' => 'Sua anuidade ANETI não está ativa. Para acessar o Clube de Vantagens, é necessário ter uma anuidade ativa.', 'show_membership_link' => true];
+                } elseif (strpos($errorData['error'], 'Plano não dá acesso') !== false) {
+                    return ['error' => 'Seu plano atual não dá acesso ao Clube de Vantagens. Entre em contato com a ANETI para mais informações.'];
+                }
                 return ['error' => $errorData['error']];
             }
             return ['error' => 'Acesso negado pelo servidor.'];

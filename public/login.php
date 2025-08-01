@@ -31,6 +31,7 @@ if ($_POST) {
             redirect('dashboard.php');
         } else {
             $error = $loginResult['message'];
+            $showMembershipLink = isset($loginResult['show_membership_link']) && $loginResult['show_membership_link'];
         }
     }
 }
@@ -112,9 +113,18 @@ if ($_POST) {
                         <div class="card-header text-white text-center aneti-header">
                             <h4 class="mb-0"><i class="fas fa-user-circle me-2"></i>Login de Membro</h4>
                         </div>
-                    <div class="card-body">
+                        <div class="card-body">
                         <?php if ($error): ?>
-                            <div class="alert alert-danger"><?php echo $error; ?></div>
+                            <div class="alert alert-danger">
+                                <?php echo $error; ?>
+                                <?php if (isset($showMembershipLink) && $showMembershipLink): ?>
+                                    <div class="mt-3">
+                                        <a href="http://aneti.org.br/" target="_blank" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-external-link-alt me-1"></i>Aderir à Anuidade ANETI
+                                        </a>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         <?php endif; ?>
                         
                         <?php if ($success): ?>
