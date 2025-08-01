@@ -64,7 +64,7 @@ $categories = getCategories($conn);
                                 <div class="dropdown me-2 d-inline-block">
                                     <button class="btn login-button dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 20px; padding: 8px 16px;">
                                         <i class="fas fa-user me-2"></i>
-                                        <span><?= htmlspecialchars($_SESSION['user_name']) ?></span>
+                                        <span><?= htmlspecialchars($_SESSION['user_nome']) ?></span>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end shadow-lg">
                                         <li><a class="dropdown-item" href="public/dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
