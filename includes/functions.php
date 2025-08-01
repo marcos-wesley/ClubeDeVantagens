@@ -121,14 +121,25 @@ function getCategoryIcon($category) {
 /**
  * Get active banner slides
  */
-function getBannerSlides($conn) {
+function getBannerSlides($conn, $mobile_only = false) {
     try {
-        $stmt = $conn->prepare("SELECT * FROM slides_banner WHERE status = 'ativo' ORDER BY ordem ASC");
+        if ($mobile_only) {
+            $stmt = $conn->prepare("SELECT * FROM slides_banner WHERE status = 'ativo' AND mobile_only = 1 ORDER BY ordem ASC");
+        } else {
+            $stmt = $conn->prepare("SELECT * FROM slides_banner WHERE status = 'ativo' AND (mobile_only = 0 OR mobile_only IS NULL) ORDER BY ordem ASC");
+        }
         $stmt->execute();
         return $stmt->fetchAll();
     } catch (Exception $e) {
         return [];
     }
+}
+
+/**
+ * Detect if current request is from mobile device
+ */
+function isMobileDevice() {
+    return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
 }
 
 /**
@@ -147,10 +158,10 @@ function getAllBannerSlides($conn) {
 /**
  * Add banner slide
  */
-function addBannerSlide($conn, $imagem, $ordem, $status = 'ativo') {
+function addBannerSlide($conn, $imagem, $ordem, $status = 'ativo', $mobile_only = false) {
     try {
-        $stmt = $conn->prepare("INSERT INTO slides_banner (imagem, ordem, status) VALUES (?, ?, ?)");
-        return $stmt->execute([$imagem, $ordem, $status]);
+        $stmt = $conn->prepare("INSERT INTO slides_banner (imagem, ordem, status, mobile_only) VALUES (?, ?, ?, ?)");
+        return $stmt->execute([$imagem, $ordem, $status, $mobile_only ? 1 : 0]);
     } catch (Exception $e) {
         return false;
     }
@@ -159,10 +170,10 @@ function addBannerSlide($conn, $imagem, $ordem, $status = 'ativo') {
 /**
  * Update banner slide
  */
-function updateBannerSlide($conn, $id, $imagem, $ordem, $status) {
+function updateBannerSlide($conn, $id, $imagem, $ordem, $status, $mobile_only = false) {
     try {
-        $stmt = $conn->prepare("UPDATE slides_banner SET imagem = ?, ordem = ?, status = ?, data_atualizacao = CURRENT_TIMESTAMP WHERE id = ?");
-        return $stmt->execute([$imagem, $ordem, $status, $id]);
+        $stmt = $conn->prepare("UPDATE slides_banner SET imagem = ?, ordem = ?, status = ?, mobile_only = ?, data_atualizacao = CURRENT_TIMESTAMP WHERE id = ?");
+        return $stmt->execute([$imagem, $ordem, $status, $mobile_only ? 1 : 0, $id]);
     } catch (Exception $e) {
         return false;
     }

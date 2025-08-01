@@ -6,8 +6,14 @@ session_start();
 require_once 'config/database.php';
 require_once 'includes/functions.php';
 
-// Get banner slides
-$banner_slides = getBannerSlides($conn);
+// Get banner slides based on device type
+$is_mobile = isMobileDevice();
+$banner_slides = getBannerSlides($conn, $is_mobile);
+
+// If no mobile-specific slides, fallback to desktop slides
+if ($is_mobile && empty($banner_slides)) {
+    $banner_slides = getBannerSlides($conn, false);
+}
 
 // Get featured companies
 $featured_companies = getFeaturedCompanies($conn);

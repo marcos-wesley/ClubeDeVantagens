@@ -26,7 +26,8 @@ if ($_POST) {
             if (move_uploaded_file($_FILES['imagem']['tmp_name'], $file_path)) {
                 $ordem = (int)$_POST['ordem'];
                 $status = $_POST['status'];
-                addBannerSlide($conn, $file_name, $ordem, $status);
+                $mobile_only = isset($_POST['mobile_only']) ? true : false;
+                addBannerSlide($conn, $file_name, $ordem, $status, $mobile_only);
                 $success = "Slide adicionado com sucesso!";
             } else {
                 $error = "Erro ao fazer upload da imagem.";
@@ -173,6 +174,19 @@ $slides = getAllBannerSlides($conn);
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="mobile_only" name="mobile_only" value="1">
+                                    <label class="form-check-label" for="mobile_only">
+                                        <i class="fas fa-mobile-alt me-1"></i>Somente para dispositivos móveis
+                                    </label>
+                                    <div class="form-text">Se marcado, este slide será exibido apenas em smartphones e tablets</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save me-2"></i>Adicionar Slide
                     </button>
@@ -199,6 +213,7 @@ $slides = getAllBannerSlides($conn);
                                     <th>Preview</th>
                                     <th>Ordem</th>
                                     <th>Status</th>
+                                    <th>Tipo</th>
                                     <th>Data Criação</th>
                                     <th>Ações</th>
                                 </tr>
@@ -217,6 +232,17 @@ $slides = getAllBannerSlides($conn);
                                             <span class="status-badge status-<?php echo $slide['status']; ?>">
                                                 <?php echo ucfirst($slide['status']); ?>
                                             </span>
+                                        </td>
+                                        <td>
+                                            <?php if (isset($slide['mobile_only']) && $slide['mobile_only']): ?>
+                                                <span class="badge bg-info">
+                                                    <i class="fas fa-mobile-alt me-1"></i>Mobile
+                                                </span>
+                                            <?php else: ?>
+                                                <span class="badge bg-secondary">
+                                                    <i class="fas fa-desktop me-1"></i>Desktop
+                                                </span>
+                                            <?php endif; ?>
                                         </td>
                                         <td>
                                             <?php echo date('d/m/Y H:i', strtotime($slide['data_criacao'])); ?>

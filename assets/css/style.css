@@ -500,21 +500,23 @@
 /* Responsive para slides */
 @media (max-width: 768px) {
     .banner-slide-image {
-        height: 300px;
+        height: 200px; /* Mais compacto para mobile */
+        background-position: center top; /* Foco na parte superior da imagem */
     }
     
     .banner-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     
     .banner-subtitle {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
     
     .carousel-control-prev,
     .carousel-control-next {
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
     }
     
     .carousel-control-prev {
@@ -526,17 +528,42 @@
     }
     
     .banner-illustration svg {
-        max-width: 250px;
+        max-width: 200px;
+    }
+    
+    /* Indicadores menores para mobile */
+    .carousel-indicators [data-bs-target] {
+        width: 8px;
+        height: 8px;
+        margin: 0 3px;
     }
 }
 
 @media (max-width: 576px) {
     .banner-slide-image {
-        height: 250px;
+        height: 160px; /* Ainda mais compacto em telas pequenas */
     }
     
     .default-slide-content .col-lg-4 {
         display: none;
+    }
+    
+    .banner-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .banner-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Esconder controles em telas muito pequenas se necessário */
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
     }
 }
 
