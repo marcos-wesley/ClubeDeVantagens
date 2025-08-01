@@ -76,10 +76,53 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($company['nome']); ?> - <?php echo SITE_NAME; ?></title>
+    
+    <?php 
+    require_once '../includes/seo.php';
+    
+    // Configurar SEO dinamicamente para a empresa
+    $seo_config = [
+        'title' => $company['nome'] . ' | Clube de Vantagens ANETI',
+        'description' => "Conheça os benefícios exclusivos da " . $company['nome'] . " para membros ANETI. " . 
+                        ($company['desconto'] ? "Desconto de " . $company['desconto'] . ". " : "") .
+                        "Descontos especiais e condições diferenciadas para profissionais de TI.",
+        'keywords' => "benefícios " . $company['nome'] . ", desconto " . $company['nome'] . " ANETI, parceiro clube ANETI, " . 
+                     $company['categoria'] . ", " . $company['cidade'],
+        'canonical' => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . 
+                      $_SERVER['HTTP_HOST'] . '/public/empresa-detalhes.php?id=' . $company['id'],
+        'type' => 'company',
+        'image' => $company['logo'] ? '../uploads/' . $company['logo'] : null,
+        'company_data' => [
+            'nome' => $company['nome'],
+            'descricao' => $company['descricao'] ?? '',
+            'website' => $company['website'] ?? '',
+            'cidade' => $company['cidade'] ?? '',
+            'estado' => $company['estado'] ?? 'Brasil',
+            'rating' => $rating_summary['media'] ? round($rating_summary['media'], 1) : null,
+            'rating_count' => $rating_summary['total'] ?? 0
+        ]
+    ];
+    
+    // Breadcrumbs
+    generateBreadcrumbs([
+        ['name' => 'Início', 'url' => '../index.php'],
+        ['name' => 'Empresas', 'url' => 'categorias.php'],
+        ['name' => $company['categoria'], 'url' => 'categorias.php?cat=' . urlencode(strtolower(str_replace(' ', '-', $company['categoria'])))],
+        ['name' => $company['nome'], 'url' => 'empresa-detalhes.php?id=' . $company['id']]
+    ]);
+    
+    renderSEO($seo_config);
+    ?>
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">
+    
     <style>
         body {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);

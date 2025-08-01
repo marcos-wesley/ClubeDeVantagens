@@ -1,0 +1,26 @@
+User-agent: *
+Allow: /
+
+# Block admin areas
+Disallow: /admin/
+Disallow: /config/
+Disallow: /includes/
+Disallow: /mysql_data/
+Disallow: /attached_assets/
+
+# Block sensitive files
+Disallow: *.sql
+Disallow: *.bak
+Disallow: *.log
+Disallow: *.md
+
+# Allow important directories
+Allow: /assets/
+Allow: /uploads/
+Allow: /public/
+
+# Sitemap
+Sitemap: https://localhost/sitemap.xml
+
+# Crawl-delay for better server performance
+Crawl-delay: 1

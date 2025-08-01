@@ -39,7 +39,27 @@ if ($_POST) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - <?php echo SITE_NAME; ?></title>
+    
+    <?php 
+    require_once '../includes/seo.php';
+    
+    $seo_config = [
+        'title' => 'Entrar | Clube de Vantagens ANETI',
+        'description' => 'Acesse sua conta no Clube de Vantagens ANETI e aproveite todos os benefícios exclusivos para membros da associação.',
+        'keywords' => 'login clube ANETI, entrar clube vantagens, acesso benefícios ANETI, login associado',
+        'canonical' => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . 
+                      $_SERVER['HTTP_HOST'] . '/public/login.php',
+        'type' => 'website'
+    ];
+    
+    renderSEO($seo_config);
+    ?>
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">

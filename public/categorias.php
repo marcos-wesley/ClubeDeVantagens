@@ -2,6 +2,7 @@
 session_start();
 require_once '../config/database.php';
 require_once '../includes/functions.php';
+require_once '../includes/seo.php';
 
 // Get category from URL parameters
 $categoria_param = $_GET['categoria'] ?? $_GET['cat'] ?? '';
@@ -70,7 +71,43 @@ $total_empresas = count($empresas);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($page_title); ?> - Clube de Benefícios ANETI</title>
+    
+    <?php 
+    // Configurar SEO dinamicamente
+    $seo_config = [
+        'title' => $page_title . ' | Clube de Vantagens ANETI',
+        'description' => $search_param ? 
+            "Resultados da busca por '$search_param' no Clube de Vantagens ANETI. Encontre benefícios exclusivos para profissionais de TI." :
+            ($categoria_nome ? 
+                "Empresas parceiras da categoria $categoria_nome no Clube de Vantagens ANETI. Descontos exclusivos para membros associados." :
+                "Explore todas as empresas parceiras do Clube de Vantagens ANETI. Encontre descontos exclusivos em tecnologia, alimentação, saúde, educação e muito mais."
+            ),
+        'keywords' => $categoria_nome ? 
+            "empresas $categoria_nome ANETI, descontos $categoria_nome, benefícios $categoria_nome TI, parceiros clube ANETI" :
+            "empresas parceiras ANETI, descontos exclusivos, categorias benefícios, parceiros clube ANETI",
+        'canonical' => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/public/categorias.php' . 
+                      ($categoria_param ? '?cat=' . urlencode($categoria_param) : '') . 
+                      ($search_param ? ($categoria_param ? '&' : '?') . 'search=' . urlencode($search_param) : ''),
+        'type' => 'category',
+        'category_data' => $categoria_nome ? ['nome' => $categoria_nome] : null
+    ];
+    
+    if ($categoria_nome) {
+        generateBreadcrumbs([
+            ['name' => 'Início', 'url' => '../index.php'],
+            ['name' => 'Empresas', 'url' => 'categorias.php'],
+            ['name' => $categoria_nome, 'url' => 'categorias.php?cat=' . urlencode($categoria_param)]
+        ]);
+    }
+    
+    renderSEO($seo_config);
+    ?>
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">
