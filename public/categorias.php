@@ -78,11 +78,8 @@ $total_empresas = count($empresas);
 <body>
     <?php include '../includes/header.php'; ?>
 
-    <!-- Spacer para Header Fixed -->
-    <div style="height: 140px;"></div>
-    
     <!-- Page Header -->
-    <section class="page-header" style="background: linear-gradient(135deg, #012d6a 0%, #25a244 100%); padding: 30px 0; color: white;">
+    <section class="page-header" style="background: linear-gradient(135deg, #012d6a 0%, #25a244 100%); padding: 30px 0; color: white; margin-top: 140px;">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-8">
@@ -237,8 +234,8 @@ $total_empresas = count($empresas);
         </div>
     </section>
 
-    <!-- Footer Spacer -->
-    <div style="height: 40px;"></div>
+    <!-- Footer -->
+    <?php include '../includes/footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/main.js"></script>
