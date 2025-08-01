@@ -14,8 +14,8 @@ $error = '';
 $success = '';
 
 if ($_POST) {
-    $userInput = sanitizeInput($_POST['user_input']);
-    $password = sanitizeInput($_POST['password']);
+    $userInput = sanitizeInput($_POST['user_input'] ?? '');
+    $password = sanitizeInput($_POST['password'] ?? '');
     
     if (empty($userInput)) {
         $error = 'Por favor, informe seu usuário ou e-mail.';

@@ -277,6 +277,9 @@ function redirect($url) {
  * Sanitize input
  */
 function sanitizeInput($input) {
+    if ($input === null) {
+        return '';
+    }
     return htmlspecialchars(strip_tags(trim($input)));
 }
 
