@@ -4,6 +4,7 @@
  */
 
 define('ANETI_API_URL', 'https://app.aneti.org.br/wp-json/aneti/v1/login');
+define('ENABLE_API_DEBUG', false); // Set to false in production
 
 /**
  * Authenticate user via ANETI WordPress API
@@ -30,30 +31,61 @@ function authenticateViaAPI($email, $password) {
         CURLOPT_POSTFIELDS => $postData,
         CURLOPT_HTTPHEADER => [
             'Content-Type: application/json',
-            'Content-Length: ' . strlen($postData)
+            'Content-Length: ' . strlen($postData),
+            'User-Agent: ANETI-Club/1.0'
         ],
-        CURLOPT_TIMEOUT => 10,
+        CURLOPT_TIMEOUT => 15,
+        CURLOPT_CONNECTTIMEOUT => 10,
         CURLOPT_SSL_VERIFYPEER => true,
-        CURLOPT_FOLLOWLOCATION => true
+        CURLOPT_SSL_VERIFYHOST => 2,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_MAXREDIRS => 3
     ]);
     
     // Execute the request
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $curlError = curl_error($ch);
+    $curlInfo = curl_getinfo($ch);
     
     curl_close($ch);
+    
+    // Debug logging (remove in production)
+    if (ENABLE_API_DEBUG) {
+        error_log("API Request Debug - URL: " . ANETI_API_URL);
+        error_log("API Request Debug - HTTP Code: " . $httpCode);
+        error_log("API Request Debug - Response: " . $response);
+        error_log("API Request Debug - cURL Error: " . $curlError);
+        error_log("API Request Debug - Total Time: " . $curlInfo['total_time']);
+    }
     
     // Check for cURL errors
     if ($curlError) {
         error_log("cURL Error in WordPress API: " . $curlError);
-        return false;
+        return ['error' => 'Erro de conexão com o servidor. Verifique sua conexão com a internet e tente novamente.'];
     }
     
     // Check HTTP response code
     if ($httpCode !== 200) {
         error_log("WordPress API returned HTTP " . $httpCode . ": " . $response);
-        return false;
+        
+        // Handle specific HTTP codes
+        if ($httpCode === 0) {
+            return ['error' => 'Não foi possível conectar ao servidor. Verifique sua conexão com a internet.'];
+        } elseif ($httpCode === 403) {
+            // Try to parse the error message from the response
+            $errorData = json_decode($response, true);
+            if (isset($errorData['error'])) {
+                return ['error' => $errorData['error']];
+            }
+            return ['error' => 'Acesso negado pelo servidor.'];
+        } elseif ($httpCode === 404) {
+            return ['error' => 'Serviço de login temporariamente indisponível.'];
+        } elseif ($httpCode >= 500) {
+            return ['error' => 'Servidor temporariamente indisponível. Tente novamente em alguns minutos.'];
+        } else {
+            return ['error' => 'Erro de conexão com o servidor (HTTP ' . $httpCode . ').'];
+        }
     }
     
     // Decode JSON response
@@ -108,7 +140,12 @@ function loginUserViaAPI($email, $password) {
     }
     
     if (isset($result['error'])) {
-        return ['success' => false, 'message' => $result['error']];
+        // Check if it's a connection error and offer fallback
+        $errorMsg = $result['error'];
+        if (strpos($errorMsg, 'conexão') !== false || strpos($errorMsg, 'conectar') !== false) {
+            $errorMsg .= ' Se o problema persistir, entre em contato com o suporte da ANETI.';
+        }
+        return ['success' => false, 'message' => $errorMsg];
     }
     
     if (isset($result['success']) && $result['success'] === true) {
