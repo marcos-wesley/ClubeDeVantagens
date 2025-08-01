@@ -79,11 +79,11 @@ $total_empresas = count($empresas);
     <?php include '../includes/header.php'; ?>
 
     <!-- Page Header -->
-    <section class="page-header" style="background: linear-gradient(135deg, #012d6a 0%, #25a244 100%); padding: 30px 0; color: white; position: fixed; top: 140px; width: 100%; z-index: 999;">
+    <section class="page-header" style="background: linear-gradient(135deg, #012d6a 0%, #25a244 100%); padding: 20px 0; color: white; position: fixed; top: 140px; width: 100%; z-index: 999;">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h1 class="mb-2" style="font-size: 2rem; font-weight: 700;">
+                    <h1 class="mb-2" style="font-size: 1.5rem; font-weight: 700;">
                         <i class="fas <?php 
                             echo $categoria_nome === 'Destaque' ? 'fa-star' : 
                                 ($categoria_nome === 'Alimentação' ? 'fa-utensils' : 
@@ -95,17 +95,20 @@ $total_empresas = count($empresas);
                                 ($categoria_nome === 'Serviços' ? 'fa-cogs' : 
                                 ($categoria_nome === 'Turismo' ? 'fa-plane' : 
                                 ($categoria_nome === 'Beleza' ? 'fa-spa' : 'fa-th-large')))))))));
-                        ?>" style="margin-right: 15px;"></i>
+                        ?>" style="margin-right: 10px;"></i>
                         <?php echo htmlspecialchars($page_title); ?>
                     </h1>
-                    <p class="mb-0" style="font-size: 1rem; opacity: 0.9;">
+                    <p class="mb-0" style="font-size: 0.9rem; opacity: 0.9;">
                         <?php echo $total_empresas; ?> benefício<?php echo $total_empresas !== 1 ? 's' : ''; ?> encontrado<?php echo $total_empresas !== 1 ? 's' : ''; ?>
                     </p>
                 </div>
                 <div class="col-md-4 text-end">
                     <?php if ($search_param || $categoria_nome): ?>
-                        <a href="categorias.php" class="btn btn-outline-light" style="border-radius: 25px;">
+                        <a href="categorias.php" class="btn btn-outline-light btn-sm d-none d-md-inline-block" style="border-radius: 25px;">
                             <i class="fas fa-times"></i> Limpar Filtros
+                        </a>
+                        <a href="categorias.php" class="btn btn-outline-light btn-sm d-md-none" style="border-radius: 25px; font-size: 0.8rem; padding: 5px 12px;">
+                            <i class="fas fa-times"></i> Limpar
                         </a>
                     <?php endif; ?>
                 </div>
@@ -114,7 +117,25 @@ $total_empresas = count($empresas);
     </section>
 
     <!-- Companies Grid - Same as Homepage Layout -->
-    <section class="companies-grid" style="padding: 40px 0 60px 0; background: #f8f9fa; margin-top: 220px;">
+    <section class="companies-grid" style="padding: 30px 0 60px 0; background: #f8f9fa; margin-top: 190px;">
+        <style>
+        @media (max-width: 768px) {
+            .page-header {
+                top: 60px !important;
+                padding: 15px 0 !important;
+            }
+            .page-header h1 {
+                font-size: 1.3rem !important;
+            }
+            .page-header p {
+                font-size: 0.8rem !important;
+            }
+            .companies-grid {
+                margin-top: 120px !important;
+                padding: 20px 0 40px 0 !important;
+            }
+        }
+        </style>
         <div class="container">
             <?php if (!empty($empresas)): ?>
                 <div class="row g-4">
