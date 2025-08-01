@@ -72,8 +72,18 @@ function authenticateViaAPI($email, $password) {
         // Handle specific HTTP codes
         if ($httpCode === 0) {
             return ['error' => 'Não foi possível conectar ao servidor. Verifique sua conexão com a internet.'];
+        } elseif ($httpCode === 401) {
+            // Unauthorized - Invalid credentials
+            $errorData = json_decode($response, true);
+            if (isset($errorData['error'])) {
+                if (strpos($errorData['error'], 'Credenciais') !== false) {
+                    return ['error' => 'E-mail ou senha incorretos. Verifique seus dados e tente novamente.'];
+                }
+                return ['error' => $errorData['error']];
+            }
+            return ['error' => 'E-mail ou senha incorretos. Verifique seus dados e tente novamente.'];
         } elseif ($httpCode === 403) {
-            // Try to parse the error message from the response
+            // Forbidden - Usually plan access issues
             $errorData = json_decode($response, true);
             if (isset($errorData['error'])) {
                 return ['error' => $errorData['error']];
