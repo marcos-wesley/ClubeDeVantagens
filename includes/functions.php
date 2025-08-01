@@ -161,8 +161,16 @@ function getAllBannerSlides($conn) {
 function addBannerSlide($conn, $imagem, $ordem, $status = 'ativo', $mobile_only = false) {
     try {
         $stmt = $conn->prepare("INSERT INTO slides_banner (imagem, ordem, status, mobile_only) VALUES (?, ?, ?, ?)");
-        return $stmt->execute([$imagem, $ordem, $status, $mobile_only ? 1 : 0]);
+        $result = $stmt->execute([$imagem, $ordem, $status, $mobile_only ? 1 : 0]);
+        
+        // Debug: log any errors
+        if (!$result) {
+            error_log("Error adding banner slide: " . print_r($stmt->errorInfo(), true));
+        }
+        
+        return $result;
     } catch (Exception $e) {
+        error_log("Exception adding banner slide: " . $e->getMessage());
         return false;
     }
 }

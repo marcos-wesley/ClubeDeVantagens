@@ -14,26 +14,52 @@ if ($_POST) {
     $action = $_POST['action'] ?? '';
     
     if ($action === 'add' && isset($_FILES['imagem'])) {
-        $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        if (in_array($_FILES['imagem']['type'], $allowed_types) && $_FILES['imagem']['size'] <= 10 * 1024 * 1024) {
-            $upload_dir = '../uploads/slides/';
-            if (!is_dir($upload_dir)) {
-                mkdir($upload_dir, 0755, true);
-            }
-            $file_name = time() . '_' . $_FILES['imagem']['name'];
-            $file_path = $upload_dir . $file_name;
-            
-            if (move_uploaded_file($_FILES['imagem']['tmp_name'], $file_path)) {
-                $ordem = (int)$_POST['ordem'];
-                $status = $_POST['status'];
-                $mobile_only = isset($_POST['mobile_only']) ? true : false;
-                addBannerSlide($conn, $file_name, $ordem, $status, $mobile_only);
-                $success = "Slide adicionado com sucesso!";
-            } else {
-                $error = "Erro ao fazer upload da imagem.";
-            }
+        // Debug: verificar dados do arquivo
+        $file_error = $_FILES['imagem']['error'] ?? 4;
+        $file_size = $_FILES['imagem']['size'] ?? 0;
+        $file_type = $_FILES['imagem']['type'] ?? '';
+        
+        if ($file_error !== UPLOAD_ERR_OK) {
+            $upload_errors = [
+                UPLOAD_ERR_INI_SIZE => 'Arquivo muito grande (limite do servidor)',
+                UPLOAD_ERR_FORM_SIZE => 'Arquivo muito grande (limite do formulário)',
+                UPLOAD_ERR_PARTIAL => 'Upload incompleto',
+                UPLOAD_ERR_NO_FILE => 'Nenhum arquivo enviado',
+                UPLOAD_ERR_NO_TMP_DIR => 'Pasta temporária não encontrada',
+                UPLOAD_ERR_CANT_WRITE => 'Falha ao escrever arquivo',
+                UPLOAD_ERR_EXTENSION => 'Upload bloqueado por extensão'
+            ];
+            $error = $upload_errors[$file_error] ?? "Erro desconhecido no upload: $file_error";
         } else {
-            $error = "Arquivo inválido. Use JPG, PNG, WebP ou GIF até 10MB.";
+            $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (in_array($file_type, $allowed_types) && $file_size <= 10 * 1024 * 1024 && $file_size > 0) {
+                $upload_dir = '../uploads/slides/';
+                if (!is_dir($upload_dir)) {
+                    mkdir($upload_dir, 0755, true);
+                }
+                $file_name = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $_FILES['imagem']['name']);
+                $file_path = $upload_dir . $file_name;
+                
+                if (move_uploaded_file($_FILES['imagem']['tmp_name'], $file_path)) {
+                    $ordem = (int)$_POST['ordem'];
+                    $status = $_POST['status'];
+                    $mobile_only = isset($_POST['mobile_only']) ? true : false;
+                    
+                    if (addBannerSlide($conn, $file_name, $ordem, $status, $mobile_only)) {
+                        $success = "Slide adicionado com sucesso!";
+                    } else {
+                        $error = "Erro ao salvar slide no banco de dados.";
+                        // Remover arquivo se falhou salvar no banco
+                        if (file_exists($file_path)) {
+                            unlink($file_path);
+                        }
+                    }
+                } else {
+                    $error = "Erro ao fazer upload da imagem. Verifique as permissões da pasta.";
+                }
+            } else {
+                $error = "Arquivo inválido. Use JPG, PNG, WebP ou GIF até 10MB. Tipo: $file_type, Tamanho: " . round($file_size/1024/1024, 2) . "MB";
+            }
         }
     }
     
