@@ -45,8 +45,9 @@ function generateSEOTags($page_config) {
     echo "<meta property=\"og:type\" content=\"" . htmlspecialchars($type) . "\">\n";
     echo "<meta property=\"og:url\" content=\"" . htmlspecialchars($canonical) . "\">\n";
     echo "<meta property=\"og:image\" content=\"" . htmlspecialchars($image) . "\">\n";
-    echo "<meta property=\"og:image:width\" content=\"1200\">\n";
-    echo "<meta property=\"og:image:height\" content=\"630\">\n";
+    echo "<meta property=\"og:image:width\" content=\"1920\">\n";
+    echo "<meta property=\"og:image:height\" content=\"1080\">\n";
+    echo "<meta property=\"og:image:alt\" content=\"Clube de Benefícios ANETI - Vantagens Exclusivas para Profissionais de TI\">\n";
     echo "<meta property=\"og:site_name\" content=\"" . htmlspecialchars($site_config['site_name']) . "\">\n";
     echo "<meta property=\"og:locale\" content=\"pt_BR\">\n";
     
@@ -60,6 +61,7 @@ function generateSEOTags($page_config) {
     echo "<meta name=\"twitter:title\" content=\"" . htmlspecialchars($title) . "\">\n";
     echo "<meta name=\"twitter:description\" content=\"" . htmlspecialchars($description) . "\">\n";
     echo "<meta name=\"twitter:image\" content=\"" . htmlspecialchars($image) . "\">\n";
+    echo "<meta name=\"twitter:image:alt\" content=\"Clube de Benefícios ANETI - Vantagens Exclusivas para Profissionais de TI\">\n";
     echo "<meta name=\"twitter:url\" content=\"" . htmlspecialchars($canonical) . "\">\n";
     
     if (!empty($site_config['twitter_handle'])) {
@@ -72,7 +74,9 @@ function generateSEOTags($page_config) {
     echo "<meta name=\"theme-color\" content=\"#012d6a\">\n";
     echo "<meta name=\"msapplication-TileColor\" content=\"#012d6a\">\n";
     echo "<link rel=\"icon\" type=\"image/x-icon\" href=\"/favicon.ico\">\n";
-    echo "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\">\n";
+    echo "<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/assets/images/favicon.png\">\n";
+    echo "<link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/assets/images/favicon.png\">\n";
+    echo "<meta name=\"msapplication-TileImage\" content=\"/assets/images/favicon.png\">\n";
     
     // Language and geographical targeting
     echo "<meta name=\"language\" content=\"Portuguese\">\n";
