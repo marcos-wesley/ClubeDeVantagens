@@ -1,4 +1,7 @@
 <?php
+// Suppress non-critical warnings for production-like experience
+error_reporting(E_ERROR | E_PARSE | E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_COMPILE_WARNING);
+
 session_start();
 require_once 'config/database.php';
 require_once 'includes/functions.php';
